@@ -20,13 +20,9 @@ public class ShopItemSelector : MonoBehaviour
     {
         var upgradesContainer = shopCanvas.transform.Find("UpgradesContainer").gameObject;
         var enemiesCardsContainer = shopCanvas.transform.Find("EnemiesCardsContainer").gameObject;
-<<<<<<< Updated upstream
-        foreach (Transform upgrade in upgradesContainer.transform)  
-=======
         var controlsContainer = shopCanvas.transform.Find("ShopControlsContainer").gameObject;
         foreach (Transform upgrade in upgradesContainer.transform)
         {
->>>>>>> Stashed changes
             _shopItems.Add(upgrade.gameObject);
             UpdateCost(upgrade);
         }
