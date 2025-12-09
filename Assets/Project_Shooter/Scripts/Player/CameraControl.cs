@@ -72,11 +72,8 @@ namespace Shooter.Gameplay
             float shakeCos = Mathf.Sin(50 * Time.time) * Mathf.Clamp(m_ShakeTimer, 0, 0.5f);
             ShakeOffset = new Vector3(m_ShakeRadius * shakeCos, m_ShakeRadius * shakeSin, 0);
 
-            
-            if (PlayerControl.MainPlayerController.MyPlayerChar.transform.position.z+8>m_MinZ)
-            {
-                m_MinZ = PlayerControl.MainPlayerController.MyPlayerChar.transform.position.z+8;
-            }
+            var zOffset = PlayerControl.MainPlayerController.MyPlayerChar.transform.position.z - m_MinZ;
+            m_MinZ = PlayerControl.MainPlayerController.MyPlayerChar.transform.position.z+8;
 
             float distance = 80;
             Direction = Quaternion.Euler(40, 0, 0) * Vector3.forward;
