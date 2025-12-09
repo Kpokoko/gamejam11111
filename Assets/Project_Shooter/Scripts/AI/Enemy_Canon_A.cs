@@ -25,37 +25,6 @@ namespace Shooter.Gameplay
             {
                 m_FacePlayer = false;
             }
-            //StateSystem stateSys = GetComponent<StateSystem>();
-            //switch (stateSys.CurrentState)
-            //{
-            //    case 0:
-            //        if (Vector3.Distance(transform.position, PlayerChar.m_Current.transform.position) <= 30f)
-            //        {
-            //            stateSys.StartState(1);
-            //            m_FacePlayer = true;
-            //        }
-                        
-            //        break;
-
-            //    case 1:
-            //        if (stateSys.StateTimer > 1f)
-            //        {
-            //            stateSys.StartState(2);
-            //        }
-            //        break;
-
-            //    case 2:
-            //        ShootBullet();
-            //        stateSys.StartState(3);
-            //        break;
-
-            //    case 3:
-            //        if (stateSys.StateTimer > 1f)
-            //        {
-            //            stateSys.StartState(1);
-            //        }
-            //        break;
-            //}
 
             HandleFacePlayer();
             HandleDeath();

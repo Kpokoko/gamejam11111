@@ -18,7 +18,7 @@ namespace Shooter.Gameplay
         // Update is called once per frame
         void Update()
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, .5f);
+            Collider[] hits = Physics.OverlapSphere(transform.position, 0.1f);
             foreach (Collider col in hits)
             {
                 if (col.gameObject == m_Creator)
@@ -26,7 +26,6 @@ namespace Shooter.Gameplay
 
                 if (col.gameObject.tag == "Player" && m_IsEnemyTeam)
                 {
-
                     Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
@@ -47,7 +46,7 @@ namespace Shooter.Gameplay
                     CreateHitParticle();
                     Destroy(gameObject);
                 }
-                else if (col.gameObject.tag == "Enemy" && !m_IsEnemyTeam)
+                else if (col.gameObject.tag == "Enemy" && m_IsEnemyTeam)
                 {
                     Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
