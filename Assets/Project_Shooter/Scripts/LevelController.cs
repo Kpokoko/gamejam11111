@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Shooter.Gameplay;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -24,11 +21,6 @@ public class LevelController : MonoBehaviour
     private void Awake()
     {
         G.LevelController = this;
-    }
-
-    public void Start()
-    {
-        StartLevel();
     }
 
     public void StartLevel()

@@ -17,7 +17,7 @@ public class ShopItemSelector : MonoBehaviour
     {
         var upgradesContainer = shopCanvas.transform.Find("UpgradesContainer").gameObject;
         var enemiesCardsContainer = shopCanvas.transform.Find("EnemiesCardsContainer").gameObject;
-        foreach (Transform upgrade in upgradesContainer.transform)
+        foreach (Transform upgrade in upgradesContainer.transform)  
             _shopItems.Add(upgrade.gameObject);
         foreach (Transform enemyCard in enemiesCardsContainer.transform)
             _enemiesCards.Add(enemyCard.gameObject);

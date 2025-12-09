@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,19 +34,24 @@ namespace Shooter.Gameplay
         public Vector3 m_CameraTopPosition;
 
         Vector3 Direction;
-        // Start is called before the first frame update
+
+        public bool isInit;
         void Awake()
         {
             m_Current = this;
-            
+            G.CameraControl = this;
         }
 
-        void Start()
+        private void Start()
         {
+            G.GameControl.OnGameStart.AddListener(MyStart);
+        }
+
+        void MyStart()
+        {
+            isInit =  true;
             Direction = transform.forward;
             m_MyCamera = GetComponent<Camera>();
-            //Player p = m_Target.gameObject.GetComponent<Player>();
-            //    p.m_MyCamera = this;
             m_MinZ = G.Player.transform.position.z + 10;
             m_CameraBottomPosition = new Vector3(0, 0, -100);
             m_CameraTopPosition = new Vector3(0, 0, -100);
@@ -61,8 +67,8 @@ namespace Shooter.Gameplay
 
         void Update()
         {
+            if(!isInit)  return;
             m_ShakeTimer -= Time.deltaTime;
-            //ShakeArc += 100 * Time.deltaTime;
 
             if (m_ShakeTimer <= 0)
                 m_ShakeTimer = 0;
@@ -81,27 +87,13 @@ namespace Shooter.Gameplay
             targetPosition.z = m_MinZ;
             targetPosition.x = 0.4f * targetPosition.x;
 
-            if (m_BossTarget!=null)
+            if (m_BossTarget)
             {
                 targetPosition = G.Player.transform.position+m_BossTarget.position;
                 targetPosition = 0.5f * targetPosition;
-                //targetPosition.z = m_MinZ;
                 targetPosition.x = 0.6f * targetPosition.x;
             }
 
-            //if (PlayerChar.m_Current.m_LockedTarget==null)
-            //{
-            //    Direction = Quaternion.Euler(40, 0, 0) * Vector3.forward;
-            //    distance = 80;
-            //}
-            //else
-            //{
-            //    targetPosition = PlayerChar.m_Current.transform.position + PlayerChar.m_Current.m_LockedTarget.transform.position;
-            //    targetPosition = 0.5f * targetPosition;
-            //    Direction = Quaternion.Euler(60, 0, 0) * Vector3.forward;
-            //    distance = 80;
-            //}
-            
 
             transform.position =Vector3.Lerp(transform.position,  targetPosition + -distance*Direction,5*Time.deltaTime);// - distance// * m_FaceVector;
             transform.position += ShakeOffset;

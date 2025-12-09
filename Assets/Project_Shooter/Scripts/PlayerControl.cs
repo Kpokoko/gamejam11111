@@ -61,7 +61,8 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.X))
         {
-            Input_Dash = true;
+            if(G.PlayerStats.DashUnlock) 
+                Input_Dash = true;
         }
 
 
