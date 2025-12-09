@@ -91,7 +91,7 @@ namespace Shooter.Gameplay
             {
                 GameObject obj = Instantiate(m_BulletPrefab1);
                 obj.transform.position = m_FirePoint.position;
-                Vector3 dir = PlayerChar.m_Current.transform.position - transform.position;
+                Vector3 dir = G.Player.transform.position - transform.position;
                 dir.y = 0;
                 obj.transform.forward = Quaternion.Euler(0,-5f+i*10,0) *dir;
                 obj.GetComponent<ProjectileCollision>().m_Creator = gameObject;

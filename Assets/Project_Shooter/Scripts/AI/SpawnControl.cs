@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
 namespace Shooter.Gameplay
 {
     public class SpawnControl : MonoBehaviour
@@ -8,23 +8,16 @@ namespace Shooter.Gameplay
         private bool m_DelayingSpawn = true;
 
         public GameObject[] m_EnemyPrefabs;
-        [HideInInspector]
-        public GameObject[] m_SpawnPoints;
+        [HideInInspector] public GameObject[] m_SpawnPoints;
 
 
-        [HideInInspector]
-        public List<GameObject> m_Enemies;
+        [HideInInspector] public List<GameObject> m_Enemies;
 
-        [HideInInspector]
-        public int SpawnCounter = 0;
-        [HideInInspector]
-        public int TotalSpawnCount = 0;
-        [HideInInspector]
-        public int CurrentEnemyCount = 0;
-        [HideInInspector]
-        public bool KeepSpawnning = true;
-        [HideInInspector]
-        public int TotalKillCount = 0;
+        [HideInInspector] public int SpawnCounter = 0;
+        [HideInInspector] public int TotalSpawnCount = 0;
+        [HideInInspector] public int CurrentEnemyCount = 0;
+        [HideInInspector] public bool KeepSpawnning = true;
+        [HideInInspector] public int TotalKillCount = 0;
 
         public static SpawnControl Current;
 
@@ -39,6 +32,7 @@ namespace Shooter.Gameplay
             GameObject[] objs = GameObject.FindGameObjectsWithTag("SpawnPoint");
             m_SpawnPoints = objs;
         }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -47,8 +41,6 @@ namespace Shooter.Gameplay
             CurrentEnemyCount = 0;
             KeepSpawnning = true;
             TotalSpawnCount = 20;
-
-
         }
 
         // Update is called once per frame
@@ -61,7 +53,7 @@ namespace Shooter.Gameplay
                     if (!m_DelayingSpawn)
                     {
                         Transform CurrentSpawnPoint = m_SpawnPoints[m_SpawnPointNumber].transform;
-                        if (Vector3.Distance(CurrentSpawnPoint.position, PlayerChar.m_Current.transform.position) <= 30)
+                        if (Vector3.Distance(CurrentSpawnPoint.position, G.Player.transform.position) <= 30)
                         {
                             m_SpawnPointNumber++;
                         }
@@ -90,20 +82,18 @@ namespace Shooter.Gameplay
 
                             m_SpawnPointNumber++;
                         }
-                        
-                        if (m_SpawnPointNumber>m_SpawnPoints.Length-1)
+
+                        if (m_SpawnPointNumber > m_SpawnPoints.Length - 1)
                         {
                             m_SpawnPointNumber = 0;
                         }
-                        
                     }
                 }
             }
-
         }
 
         private void EnableCanSpawnEnemy()
-        {
+        {  
             m_DelayingSpawn = false;
         }
 

@@ -11,17 +11,12 @@ namespace Shooter.Gameplay
 
         public float m_InitDelay = 0;
         public float m_FireDelay = 1;
-        // Start is called before the first frame update
+        
         void Start()
         {
             StartCoroutine(Co_AttackLoop());
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
 
         IEnumerator Co_AttackLoop()
         {

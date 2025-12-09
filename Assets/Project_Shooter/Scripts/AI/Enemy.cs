@@ -103,7 +103,7 @@ namespace Shooter.Gameplay
         {
             if (m_FacePlayer)
             {
-                Vector3 dir = PlayerChar.m_Current.transform.position - transform.position;
+                Vector3 dir = G.Player.transform.position - transform.position;
                 dir.y = 0;
 
                 dir.Normalize();

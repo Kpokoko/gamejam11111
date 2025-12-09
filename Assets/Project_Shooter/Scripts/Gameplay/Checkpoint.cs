@@ -17,7 +17,7 @@ namespace Shooter.Gameplay
         {
             if (!m_IsActivated)
             {
-                if (Vector3.Distance(PlayerChar.m_Current.transform.position,transform.position)<=6)
+                if (Vector3.Distance(G.Player.transform.position,transform.position)<=6)
                 {
                     Activate();
                 }

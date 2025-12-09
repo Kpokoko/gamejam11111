@@ -30,9 +30,9 @@ namespace Shooter.Gameplay
             //m_Base.localRotation = Quaternion.Euler(0, Time.deltaTime * 100, 0) * m_Base.localRotation;
             if (!picked && m_CanPick)
             {
-                if (Vector3.Distance(transform.position, PlayerChar.m_Current.transform.position) <= 5f)
+                if (Vector3.Distance(transform.position, G.Player.transform.position) <= 5f)
                 {
-                    m_TouchedPlayer = PlayerChar.m_Current;
+                    m_TouchedPlayer = G.Player;
                     picked = true;
                     Collider m_PhysCollider = GetComponent<Collider>();
                     if (m_PhysCollider != null)

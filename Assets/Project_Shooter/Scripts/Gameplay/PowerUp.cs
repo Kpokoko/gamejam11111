@@ -9,21 +9,13 @@ namespace Shooter.Gameplay
         public int m_PowerNum = 0;
         [HideInInspector]
         public bool m_Picked = false;
-
         public GameObject m_BulletPrefab1;
         public GameObject m_ParticlePrefab1;
-
         public GameObject m_DisablingPart;
-        // Start is called before the first frame update
+        
         void Start()
         {
             m_Picked = false;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         void OnTriggerEnter(Collider coll)
@@ -63,7 +55,7 @@ namespace Shooter.Gameplay
                 obj1.transform.position = transform.position;
                 Vector3 v = Quaternion.Euler(0, i * 12, 0) * Vector3.forward;
                 obj1.transform.forward = v;
-                obj1.GetComponent<ProjectileCollision>().m_Creator = PlayerChar.m_Current.gameObject;
+                obj1.GetComponent<ProjectileCollision>().m_Creator = G.Player.gameObject;
                 yield return new WaitForSeconds(.01f);
             }
 

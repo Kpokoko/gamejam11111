@@ -2,28 +2,39 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Shooter.ScriptableObjects;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Shooter.Gameplay
 {
+    [DefaultExecutionOrder(-1000)]
     public class GameControl : MonoBehaviour
     {
-        public GameControl m_Current;
-
+        public GameObject playerPrefab;
+        public Transform PlayerSpawnPoint;
         public GameObject m_LevelBoss;
         public SaveData m_MainSaveData;
         public GameObject m_TextUI_1;
         public GameObject[] m_Tutorials;
         public GameObject m_PauseUI;
-
-
-        public bool m_Pausesd = false;
+        
+        public bool Paused = false;
+        public UnityEvent OnGameOver = new();
+        
         void Awake()
         {
-            m_Current = this;
+            G.GameControl = this;
         }
         void Start()
         {
+            OnGameOver.AddListener(Console);
+            Instantiate(playerPrefab, PlayerSpawnPoint.position, PlayerSpawnPoint.rotation);
             StartCoroutine(Co_Start());
+        }
+
+        void Console()
+        {
+            Debug.Log("DEAth");
         }
 
         IEnumerator Co_Start()
@@ -59,15 +70,15 @@ namespace Shooter.Gameplay
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (!m_Pausesd)
+                if (!Paused)
                 {
-                    m_Pausesd = true;
+                    Paused = true;
                     Time.timeScale = 0;
                     m_PauseUI.SetActive(true);
                 }
                 else
                 {
-                    m_Pausesd = false;
+                    Paused = false;
                     Time.timeScale = 1;
                     m_PauseUI.SetActive(false);
                 }
@@ -100,14 +111,14 @@ namespace Shooter.Gameplay
 
         public void Resume()
         {
-            m_Pausesd = false;
+            Paused = false;
             Time.timeScale = 1;
             m_PauseUI.SetActive(false);
         }
         
         public void Exit()
         {
-            m_Pausesd = false;
+            Paused = false;
             Time.timeScale = 1;
             SceneManager.LoadScene("MainMenu");
         }

@@ -17,7 +17,7 @@ namespace Shooter.Gameplay
         // Update is called once per frame
         void Update()
         {
-            if (Vector3.Distance(transform.position, PlayerChar.m_Current.transform.position) <= 30f)
+            if (Vector3.Distance(transform.position, G.Player.transform.position) <= 30f)
             {
                 m_FacePlayer = true;
             }
@@ -67,7 +67,7 @@ namespace Shooter.Gameplay
             while (true)
             {
                 yield return new WaitForSeconds(.5f);
-                if (Vector3.Distance(transform.position, PlayerChar.m_Current.transform.position) <= 30f)
+                if (Vector3.Distance(transform.position, G.Player.transform.position) <= 30f)
                 {
                     GameObject obj = Instantiate(m_PreFireParticlePrefab1);
                     obj.transform.SetParent(m_FirePoint);
@@ -86,7 +86,7 @@ namespace Shooter.Gameplay
         {
             GameObject obj = Instantiate(m_BulletPrefab1);
             obj.transform.position = m_FirePoint.position;
-            Vector3 dir = PlayerChar.m_Current.transform.position - transform.position;
+            Vector3 dir = G.Player.transform.position - transform.position;
             dir.y = 0;
             obj.transform.forward = dir;
             obj.GetComponent<ProjectileCollision>().m_Creator = gameObject;

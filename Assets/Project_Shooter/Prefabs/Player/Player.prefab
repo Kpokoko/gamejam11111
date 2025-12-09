@@ -11291,11 +11291,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9180820861068994154}
-  - component: {fileID: 9180820861068994196}
   - component: {fileID: 9180820861068994197}
   - component: {fileID: 6243425237513417537}
-  - component: {fileID: 169848666869460904}
   - component: {fileID: 6441805155031466126}
+  - component: {fileID: 9180820861068994196}
+  - component: {fileID: 169848666869460904}
+  - component: {fileID: 8728082711477993297}
+  - component: {fileID: 7021728048323989855}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -11323,33 +11325,6 @@ Transform:
   - {fileID: 6821074899538632145}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &9180820861068994196
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9180820861068994198}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!114 &9180820861068994197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11362,7 +11337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df7a080c6ab83c4bb4ca81e6564c7dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mEnemyHealth: {fileID: 0}
   m_TurnBase: {fileID: 4271409201756722716}
   m_AimBase: {fileID: 9180820860143983975}
   m_MyCamera: {fileID: 0}
@@ -11403,23 +11377,22 @@ MonoBehaviour:
     type: 3}
   m_HitParticlePrefab: {fileID: 5599717751194728857, guid: ba8faf4d6cfa0e2439ba2ff9935ef7a8,
     type: 3}
-  m_CashAmount: 0
-  m_ResourceAmount: 0
   m_IsDead: 0
   m_Weapons:
   - {fileID: 7828577479719584518}
   - {fileID: 1861931349457576133}
   m_WeaponNum: 0
-  m_HaveKey: 0
   m_TempTarget: {fileID: 0}
-  m_LockedTarget: {fileID: 0}
   m_WpnPowerLevel: 0
   m_WpnPowerTime: 0
   m_Animator: {fileID: 5467167871652441488}
   m_GrenadePrefab1: {fileID: 4533703841603293275, guid: fff4b68eeb067f44b9f3092c47295532,
     type: 3}
-  m_PlayerPowers: {fileID: 0}
   m_ShieldObject: {fileID: 7055559785765243090}
+  SoftAimActive: 0
+  Health: {fileID: 0}
+  PlayerPowers: {fileID: 0}
+  PlayerControl: {fileID: 0}
 --- !u!114 &6243425237513417537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11432,7 +11405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0809dd1c0f1ba4885320eba1b0bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  CurrentHealth: 100
   MaxHealth: 6
   IsDead: 0
   m_NoDamage: 0
@@ -11446,6 +11419,50 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6441805155031466126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180820861068994198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411cc4fc1c0328c4faf37ebb520f2735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HavePower: 0
+  m_PowerNum: 0
+  m_HasTimer: 0
+  m_Timer: 0
+  m_AmmoCount: 0
+--- !u!54 &9180820861068994196
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180820861068994198}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!136 &169848666869460904
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11469,7 +11486,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6441805155031466126
+--- !u!114 &8728082711477993297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11478,14 +11495,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 9180820861068994198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 411cc4fc1c0328c4faf37ebb520f2735, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c52b7a65d6f4fe29b25793b96258cd6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  m_HavePower: 0
-  m_PowerNum: 0
-  m_HasTimer: 0
-  m_Timer: 0
-  m_AmmoCount: 0
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  GemCount: 0
+--- !u!114 &7021728048323989855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180820861068994198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b72659238f14a6196fc3cb0c9c0f8a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerControl
+  Input_Movement: {x: 0, y: 0, z: 0}
+  AimPosition: {x: 0, y: 0, z: 0}
+  Input_Fire: 0
+  Input_FireHold: 0
+  Input_Dash: 0
 --- !u!1001 &2473064848571981240
 PrefabInstance:
   m_ObjectHideFlags: 0

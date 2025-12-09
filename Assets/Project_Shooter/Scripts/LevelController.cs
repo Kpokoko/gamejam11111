@@ -9,13 +9,13 @@ using Random = UnityEngine.Random;
 
 public class LevelController : MonoBehaviour
 {
+    public Transform PlayerSpawnPoint;
     public Transform ArenaSize; 
     public float SpawnInterval = 4f;
     
     public List<EnemyPreset> EnemyPresets;
-    
     public UnityEvent AllEnemyDead; 
-    public UnityEvent StartWave; 
+    public UnityEvent StartWave;
     
     private int _enemiesAliveCount;
     private bool _isSpawningFinished;
@@ -27,6 +27,7 @@ public class LevelController : MonoBehaviour
 
     public void Start()
     {
+        G.Player.transform.position = PlayerSpawnPoint.position;
         StartCoroutine(SpawnEnemiesRoutine());
     }
 

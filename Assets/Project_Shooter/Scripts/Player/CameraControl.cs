@@ -46,13 +46,13 @@ namespace Shooter.Gameplay
             m_MyCamera = GetComponent<Camera>();
             //Player p = m_Target.gameObject.GetComponent<Player>();
             //    p.m_MyCamera = this;
-            m_MinZ = PlayerChar.m_Current.transform.position.z + 10;
+            m_MinZ = G.Player.transform.position.z + 10;
             m_CameraBottomPosition = new Vector3(0, 0, -100);
             m_CameraTopPosition = new Vector3(0, 0, -100);
 
             float distance = 80;
             Direction = Quaternion.Euler(40, 0, 0) * Vector3.forward;
-            Vector3 targetPosition = PlayerChar.m_Current.transform.position;
+            Vector3 targetPosition = G.Player.transform.position;
             targetPosition.z = m_MinZ;
             targetPosition.x = 0.4f * targetPosition.x;
             transform.position =  targetPosition + -distance * Direction;// - distance// * m_FaceVector;
@@ -72,18 +72,18 @@ namespace Shooter.Gameplay
             float shakeCos = Mathf.Sin(50 * Time.time) * Mathf.Clamp(m_ShakeTimer, 0, 0.5f);
             ShakeOffset = new Vector3(m_ShakeRadius * shakeCos, m_ShakeRadius * shakeSin, 0);
 
-            var zOffset = PlayerControl.MainPlayerController.MyPlayerChar.transform.position.z - m_MinZ;
-            m_MinZ = PlayerControl.MainPlayerController.MyPlayerChar.transform.position.z+8;
+            var zOffset = G.PlayerControl.transform.position.z - m_MinZ;
+            m_MinZ = G.PlayerControl.transform.transform.position.z+8;
 
             float distance = 80;
             Direction = Quaternion.Euler(40, 0, 0) * Vector3.forward;
-            Vector3 targetPosition = PlayerChar.m_Current.transform.position;
+            Vector3 targetPosition = G.Player.transform.position;
             targetPosition.z = m_MinZ;
             targetPosition.x = 0.4f * targetPosition.x;
 
             if (m_BossTarget!=null)
             {
-                targetPosition = PlayerChar.m_Current.transform.position+m_BossTarget.position;
+                targetPosition = G.Player.transform.position+m_BossTarget.position;
                 targetPosition = 0.5f * targetPosition;
                 //targetPosition.z = m_MinZ;
                 targetPosition.x = 0.6f * targetPosition.x;
@@ -107,10 +107,7 @@ namespace Shooter.Gameplay
             transform.position += ShakeOffset;
             transform.forward = Vector3.Lerp(transform.forward, Direction, 5 * Time.deltaTime);
 
-
-        
-
-            //bottom position and block
+            
             float range = 200;
             Ray ray = GetComponent<Camera>().ScreenPointToRay(new Vector3(0.5f*Screen.width,0,0));
             float dis = 0;

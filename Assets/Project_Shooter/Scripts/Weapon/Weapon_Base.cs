@@ -58,16 +58,9 @@ namespace Shooter.Gameplay
         [HideInInspector]
         public Vector3 Forward;
 
-        [FormerlySerializedAs("m_PowerLevel")] [HideInInspector]
+        [HideInInspector]
         public int PowerLevel = 0;
 
-        //[SerializeField, Space]
-        //private Content m_Contents;
-        // Use this for initialization
-        void Start()
-        {
-
-        }
 
         // Update is called once per frame
         void Update()
@@ -94,7 +87,7 @@ namespace Shooter.Gameplay
                     {
                         if (AmmoCount > 0 || InfiniteAmmo)
                         {
-                            if (Owner == PlayerControl.MainPlayerController)
+                            if (Owner == G.Player)
                             {
                                 CameraControl.m_Current.StartShake(.2f, 1f);
                             }

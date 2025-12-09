@@ -52,9 +52,9 @@ public class ShopItemSelector : MonoBehaviour
             if (_shopIndexator < _shopItems.Count)
             {
                 var upgradeData = _shopItems[_shopIndexator].GetComponent<BaseUpgradeUIData>();
-                if (upgradeData.TryBuy(PlayerControl.MainPlayerController.m_GemCount, out var newMoney))
+                if (upgradeData.TryBuy(G.PlayerStats.GemCount, out var newMoney))
                 {
-                    PlayerControl.MainPlayerController.m_GemCount = newMoney;
+                    G.PlayerStats.GemCount = newMoney;
                     Debug.Log("купили");
                 }
                 else

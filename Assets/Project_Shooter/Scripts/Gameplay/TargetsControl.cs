@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 namespace Shooter.Gameplay
 {
@@ -13,17 +12,6 @@ namespace Shooter.Gameplay
         {
             m_Main = this;
             m_Targets = new List<TargetObject>();
-        }
-        // Start is called before the first frame update
-        void Start()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         public void AddTarget(TargetObject obj)

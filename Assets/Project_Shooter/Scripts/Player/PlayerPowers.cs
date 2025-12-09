@@ -1,28 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace Shooter.Gameplay
 {
     public class PlayerPowers : MonoBehaviour
     {
-        [HideInInspector]
-        public bool m_HavePower = false;
-        [HideInInspector]
-        public int m_PowerNum = 0;
-        [HideInInspector]
-        public bool m_HasTimer = false;
-        [HideInInspector]
-        public float m_Timer = 0;
-        [HideInInspector]
-        public int m_AmmoCount = 0;
-        // Start is called before the first frame update
+        [HideInInspector] public bool m_HavePower = false;
+        [HideInInspector] public int m_PowerNum = 0;
+        [HideInInspector] public bool m_HasTimer = false;
+        [HideInInspector] public float m_Timer = 0;
+
+        [HideInInspector] public int m_AmmoCount = 0;
+
         void Start()
         {
             m_PowerNum = -1;
             m_HavePower = false;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (m_HavePower)
@@ -30,7 +26,7 @@ namespace Shooter.Gameplay
                 if (m_HasTimer)
                 {
                     m_Timer -= Time.deltaTime;
-                    if (m_Timer<=0)
+                    if (m_Timer <= 0)
                     {
                         m_HavePower = false;
                         m_PowerNum = -1;
@@ -50,7 +46,7 @@ namespace Shooter.Gameplay
         public void SetNewPower(int num)
         {
             m_HavePower = true;
-            switch(num)
+            switch (num)
             {
                 case 0:
                     m_HasTimer = false;
