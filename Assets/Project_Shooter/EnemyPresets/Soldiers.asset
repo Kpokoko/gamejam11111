@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a394df8bc62e41dba6ac220180d3efc1, type: 3}
+  m_Name: Soldiers
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
+  Sprite: {fileID: 21300000, guid: d0d4689cba1ec9b43912f1f1d4eac53a, type: 3}
+  EnemyPrefab: {fileID: 4913222759651675319, guid: be6f71c9cb1784742b9ac0766ee58e29,
+    type: 3}
+  Count: 5
+  Reward: 500

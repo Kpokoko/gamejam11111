@@ -8,6 +8,7 @@ TagManager:
   - SpawnPoint
   - Enemy
   - UpgradesContainer
+  - EnemiesCardsContainer
   layers:
   - Default
   - TransparentFX
