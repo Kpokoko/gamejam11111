@@ -148,10 +148,10 @@ namespace Shooter.Gameplay
 
                 m_MovementInput = PlayerControl.MainPlayerController.m_Input_Movement;
 
-                //if (Input.GetMouseButtonDown(1))
-                //{
-                //    StartDash();
-                //}
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    StartDash();
+                }
 
                 Vector3 axis = Vector3.Cross(Vector3.up, m_MovementInput);
                 Quaternion newRotation = Quaternion.AngleAxis(20, axis);
@@ -447,10 +447,10 @@ namespace Shooter.Gameplay
         }
         public void Hit()
         {
-            //m_MyCamera.StartShake(.5f, .5f);
-            //GameObject obj = Instantiate(m_HitParticlePrefab);
-            //obj.transform.position = transform.position;
-            //Destroy(obj, 1);
+            m_MyCamera.StartShake(.5f, .5f);
+            GameObject obj = Instantiate(m_HitParticlePrefab);
+            obj.transform.position = transform.position;
+            Destroy(obj, 1);
         }
     }
 }

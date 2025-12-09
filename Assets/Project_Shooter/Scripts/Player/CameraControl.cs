@@ -6,14 +6,11 @@ namespace Shooter.Gameplay
 {
     public class CameraControl : MonoBehaviour
     {
-
-
         private float m_ShakeTimer;
         private float m_ShakeArc;
         private float m_ShakeRadius = 1;
 
         public float m_MinZ = 0;
-
 
         [HideInInspector]
         public Transform m_Target;
