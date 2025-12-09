@@ -132,7 +132,7 @@ namespace Shooter.Gameplay
             if (m_IsDead) return;
             if (!PlayerChar.m_Current.m_IsDead) return;
             m_IsDead = true;
-            GameControl.m_Current.HandlePlayerDeath();
+            G.GameControl.HandlePlayerDeath();
         }
 
         public void UpdateInputs()
@@ -189,16 +189,16 @@ namespace Shooter.Gameplay
         
         public void Respawn()
         {
-            GameObject obj = Instantiate(PlayerPrefab1);
+            var obj = Instantiate(PlayerPrefab1);
             MyPlayerChar = obj.GetComponent<PlayerChar>();
 
-            if (GameControl.m_Current.m_MainSaveData.m_CheckpointNumber == 0)
+            if (G.GameControl.m_MainSaveData.m_CheckpointNumber == 0)
             {
                 MyPlayerChar.transform.position = m_SpawnPoint.position + new Vector3(0, .1f, 0);
             }
             else
             {
-                int num = GameControl.m_Current.m_MainSaveData.m_CheckpointNumber - 1;
+                int num = G.GameControl.m_MainSaveData.m_CheckpointNumber - 1;
                 MyPlayerChar.transform.position = CheckpointControl.m_Main.m_Checkpoints[num].m_SpawnPoint.position;
             }
 

@@ -7,7 +7,7 @@ namespace Shooter.Gameplay
 {
     public class GameControl : MonoBehaviour
     {
-        public static GameControl m_Current;
+        public GameControl m_Current;
 
         public GameObject m_LevelBoss;
         public SaveData m_MainSaveData;

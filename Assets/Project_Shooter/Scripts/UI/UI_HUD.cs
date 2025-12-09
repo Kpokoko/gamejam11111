@@ -77,9 +77,9 @@ namespace Shooter.UI
 
             m_GunNameText.text = m_WeaponNames[PlayerChar.m_Current.m_WeaponNum];
 
-            if (GameControl.m_Current.m_LevelBoss != null)
+            if (G.GameControl.m_LevelBoss != null)
             {
-                damage = GameControl.m_Current.m_LevelBoss.GetComponent<Health>();
+                damage = G.GameControl.m_LevelBoss.GetComponent<Health>();
                 m_BossHealth.fillAmount = damage.CurrentHealth / damage.MaxHealth;
             }
 

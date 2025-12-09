@@ -2284,6 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f6cbc1041d16b448623bd06e91a619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Current: {fileID: 0}
   m_LevelBoss: {fileID: 1468399506}
   m_MainSaveData: {fileID: 11400000, guid: 80bce051b57a3d04cb10aa215bf1eaa4, type: 2}
   m_TextUI_1: {fileID: 134261833}
@@ -22618,6 +22619,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1440290130013365815, guid: 3a586fb2558fd954b87df22242dd07b8,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 876020984}
     - target: {fileID: 6500575613457565099, guid: 3a586fb2558fd954b87df22242dd07b8,
         type: 3}
       propertyPath: m_Name

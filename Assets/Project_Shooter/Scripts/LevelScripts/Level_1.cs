@@ -71,8 +71,8 @@ namespace Shooter.Gameplay
 
         IEnumerator Co_EndLevel()
         {
-            GameControl.m_Current.m_MainSaveData.m_CheckpointNumber = 0;
-            GameControl.m_Current.m_MainSaveData.Save();
+            G.GameControl.m_MainSaveData.m_CheckpointNumber = 0;
+            G.GameControl.m_MainSaveData.Save();
             yield return new WaitForSeconds(1);
             FadeControl.m_Current.StartFadeOut();
             yield return new WaitForSeconds(2);
