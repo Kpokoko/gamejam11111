@@ -11377,10 +11377,9 @@ MonoBehaviour:
     type: 3}
   m_HitParticlePrefab: {fileID: 5599717751194728857, guid: ba8faf4d6cfa0e2439ba2ff9935ef7a8,
     type: 3}
-  m_IsDead: 0
-  m_Weapons:
-  - {fileID: 7828577479719584518}
-  - {fileID: 1861931349457576133}
+  Weapons:
+  - {fileID: 2617719491304419813, guid: c0d9e94ebdb60d440b657b746b8354c3, type: 3}
+  - {fileID: 4288834026685758845, guid: 0539de59fc8e13b449e42159f1bee771, type: 3}
   m_WeaponNum: 0
   m_TempTarget: {fileID: 0}
   m_WpnPowerLevel: 0
@@ -11389,10 +11388,11 @@ MonoBehaviour:
   m_GrenadePrefab1: {fileID: 4533703841603293275, guid: fff4b68eeb067f44b9f3092c47295532,
     type: 3}
   m_ShieldObject: {fileID: 7055559785765243090}
-  SoftAimActive: 0
   Health: {fileID: 0}
   PlayerPowers: {fileID: 0}
   PlayerControl: {fileID: 0}
+  PlayerStats: {fileID: 0}
+  Rigidbody: {fileID: 0}
 --- !u!114 &6243425237513417537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11499,6 +11499,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   GemCount: 0
+  SoftAimActive: 0
+  DashUnlock: 0
+  MedkitSpawnUnlock: 0
 --- !u!114 &7021728048323989855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11604,18 +11607,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0539de59fc8e13b449e42159f1bee771, type: 3}
---- !u!114 &1861931349457576133 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4288834026685758845, guid: 0539de59fc8e13b449e42159f1bee771,
-    type: 3}
-  m_PrefabInstance: {fileID: 2473064848571981240}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b530a539294ba54094f30fdb64074db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4292540180039634949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1855551136656379325, guid: 0539de59fc8e13b449e42159f1bee771,
@@ -11716,15 +11707,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5255898399934247651}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7828577479719584518 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2617719491304419813, guid: c0d9e94ebdb60d440b657b746b8354c3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5255898399934247651}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e292815e857807d43811247d88afcffa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

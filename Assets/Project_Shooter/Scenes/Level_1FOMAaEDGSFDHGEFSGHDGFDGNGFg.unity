@@ -2196,9 +2196,6 @@ MonoBehaviour:
   OnGameOver:
     m_PersistentCalls:
       m_Calls: []
-  OnGameStart:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &150050767
 Transform:
   m_ObjectHideFlags: 0
@@ -15887,7 +15884,6 @@ MonoBehaviour:
   m_BackBlock: {fileID: 231541865}
   m_CameraBottomPosition: {x: 0, y: 0, z: 0}
   m_CameraTopPosition: {x: 0, y: 0, z: 0}
-  isInit: 0
 --- !u!114 &876020987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21416,7 +21412,6 @@ MonoBehaviour:
   PlayerSpawnPoint: {fileID: 922368029}
   ArenaSize: {fileID: 7354541984436945690}
   SpawnInterval: 2
-  SpawnMedkitInterval: 30
   EnemyPresets:
   - {fileID: 11400000, guid: 90d5492c2fee8d745b9f8fc8d8964364, type: 2}
   AllEnemyDead:
@@ -21473,9 +21468,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  MedkitPrefab: {fileID: 1111121737912469067, guid: feb604b8ff71dd049bb5cb12819b0a42,
-    type: 3}
-  isLevelRunning: 0
 --- !u!4 &1221531874
 Transform:
   m_ObjectHideFlags: 0
@@ -22471,15 +22463,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1440290130013365815, guid: 3a586fb2558fd954b87df22242dd07b8,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 876020984}
     - target: {fileID: 6500575613457565099, guid: 3a586fb2558fd954b87df22242dd07b8,
         type: 3}
       propertyPath: m_Name
       value: ShopCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6500575613457565099, guid: 3a586fb2558fd954b87df22242dd07b8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

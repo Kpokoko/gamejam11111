@@ -1,4 +1,3 @@
-using UnityEngine;
 
 public class DashShotUpgrade : BaseUpgradeUIData
 {
@@ -9,8 +8,6 @@ public class DashShotUpgrade : BaseUpgradeUIData
 
     void OnBuyUpgrade()
     {
-        Debug.Log("купили дэш");
+        G.PlayerStats.DashUnlock = true;
     }
 }
-
-

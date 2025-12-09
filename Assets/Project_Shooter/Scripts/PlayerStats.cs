@@ -9,6 +9,10 @@ public class PlayerStats : MonoBehaviour
         G.PlayerStats = this;
     }
 
-    public Dictionary<BaseUpgradeUIData, int> UpgradeData;
     public int GemCount;
+    
+    
+    public bool SoftAimActive;
+    public bool DashUnlock;
+    public bool MedkitSpawnUnlock;
 }

@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Shooter.Gameplay;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -12,11 +9,15 @@ public class LevelController : MonoBehaviour
     public Transform PlayerSpawnPoint;
     public Transform ArenaSize;
     public float SpawnInterval = 4f;
-
+    public float SpawnMedkitInterval = 30f;
     public List<EnemyPreset> EnemyPresets;
 
     public UnityEvent AllEnemyDead;
     public UnityEvent StartWave;
+
+    public GameObject MedkitPrefab;
+
+    public bool isLevelRunning;
 
     private int _enemiesAliveCount;
     private bool _isSpawningFinished;
@@ -26,15 +27,26 @@ public class LevelController : MonoBehaviour
         G.LevelController = this;
     }
 
-    public void Start()
-    {
-        StartLevel();
-    }
-
     public void StartLevel()
     {
+        isLevelRunning = true;
         G.Player.transform.position = PlayerSpawnPoint.position;
         StartCoroutine(SpawnEnemiesRoutine());
+        //if(G.PlayerStats.MedkitSpawnUnlock)
+            StartCoroutine(SpawnMedkitRoutine());
+    }
+
+    private IEnumerator SpawnMedkitRoutine()
+    {
+        while (isLevelRunning)
+        {
+            yield return new WaitForSeconds(SpawnMedkitInterval);
+            
+            var randomSpawnPos = GetRandomPositionInBounds();
+
+            var newEnemyObj = Instantiate(MedkitPrefab, randomSpawnPos, Quaternion.identity);
+            newEnemyObj.name = $"{MedkitPrefab.name} (Spawned)";
+        }
     }
 
     private IEnumerator SpawnEnemiesRoutine()
@@ -48,18 +60,16 @@ public class LevelController : MonoBehaviour
 
         var shuffledSpawnQueue = CreateShuffledQueue(EnemyPresets);
 
-        // Сбрасываем счетчик и устанавливаем общее количество врагов
         _enemiesAliveCount = shuffledSpawnQueue.Count;
 
         Debug.Log($"Начало спавна. Всего врагов в очереди: {_enemiesAliveCount}");
 
         foreach (GameObject enemyPrefab in shuffledSpawnQueue)
         {
-            Vector3 randomSpawnPos = GetRandomPositionInBounds();
+            var randomSpawnPos = GetRandomPositionInBounds();
 
             var newEnemyObj = Instantiate(enemyPrefab, randomSpawnPos, Quaternion.identity);
             newEnemyObj.name = $"{enemyPrefab.name} (Spawned)";
-
 
             yield return new WaitForSeconds(SpawnInterval);
         }
@@ -83,6 +93,7 @@ public class LevelController : MonoBehaviour
         if (_isSpawningFinished && _enemiesAliveCount <= 0)
         {
             Debug.Log("ВСЕ ВРАГИ УНИЧТОЖЕНЫ! Вызов события AllEnemyDead.");
+            isLevelRunning = false;
             AllEnemyDead.Invoke();
         }
     }
@@ -109,7 +120,7 @@ public class LevelController : MonoBehaviour
 
     private Vector3 GetRandomPositionInBounds()
     {
-        if (ArenaSize == null)
+        if (!ArenaSize)
         {
             Debug.LogError("ArenaSize не назначен! Возвращаю (0,0,0).");
             return Vector3.zero;

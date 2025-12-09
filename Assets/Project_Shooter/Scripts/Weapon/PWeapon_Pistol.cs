@@ -6,34 +6,25 @@ namespace Shooter.Gameplay
     {
         void Update()
         {
-            if (PowerLevel == 0)
-            {
-                FireDelay = .2f;
-            }
-            else if (PowerLevel == 1)
-            {
-                FireDelay = .17f;
-            }
-
-
             FireDelayTimer -= Time.deltaTime;
             if (FireDelayTimer <= 0)
                 FireDelayTimer = 0;
 
-            RecoilTimer -= 10*Time.deltaTime;
+            RecoilTimer -= 10 * Time.deltaTime;
             if (RecoilTimer <= 0)
                 RecoilTimer = 0;
+            //Debug.Log("BEFORE");
 
-            if (Input_FireHold)
+            if (G.PlayerControl.Input_FireHold)
             {
+                //Debug.Log("AFTER");
+
                 if (FireDelayTimer == 0)
                 {
-
                     FireWeapon();
                     FireDelayTimer = FireDelay;
                     RecoilTimer = 1f;
                 }
-
             }
 
             //Input_FireHold = false;
@@ -41,12 +32,10 @@ namespace Shooter.Gameplay
 
         public override void FireWeapon()
         {
-
             GameObject obj;
 
             if (PowerLevel == 0)
             {
-
                 obj = Instantiate(BulletPrefab);
                 obj.transform.position = m_FirePoint.position;
                 obj.transform.forward = m_FirePoint.forward;

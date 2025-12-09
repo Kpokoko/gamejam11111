@@ -25,17 +25,10 @@ namespace Shooter.Gameplay
         public AnimationCurve m_DashCurve;
         public GameObject m_DashParticle;
 
-        bool m_Input_Fire;
-        bool m_Input_Fire2;
-        bool m_Input_LockAim;
-
         public GameObject m_HitParticlePrefab;
 
-        [HideInInspector] public bool m_IsDead = false;
-
-        public Weapon_Base[] m_Weapons;
+        public Weapon_Base[] Weapons;
         [HideInInspector] public int m_WeaponNum = 0;
-
 
         public TargetObject m_TempTarget;
 
@@ -45,13 +38,13 @@ namespace Shooter.Gameplay
         public Animator m_Animator;
         public GameObject m_GrenadePrefab1;
         public GameObject m_ShieldObject;
-
-
-        public bool SoftAimActive;
+        
         
         public Health Health;
         public PlayerPowers PlayerPowers;
         public PlayerControl PlayerControl;
+        public PlayerStats PlayerStats;
+        public Rigidbody Rigidbody;
         
         
         void Awake()
@@ -59,6 +52,8 @@ namespace Shooter.Gameplay
             G.Player = this;
             PlayerPowers = GetComponent<PlayerPowers>();
             PlayerControl = GetComponent<PlayerControl>();
+            PlayerStats = GetComponent<PlayerStats>();
+            Rigidbody =  GetComponent<Rigidbody>();
             Health = GetComponent<Health>();
         }
 
@@ -66,7 +61,7 @@ namespace Shooter.Gameplay
         {
             Health.OnDamaged.AddListener(HandleDamage);
             Health.OnDamaged.AddListener(G.UIHUD.UpdatePlayerHealth);
-            Health.OnDeath.AddListener(G.GameControl.OnGameOver.Invoke);
+            Health.OnDeath.AddListener(DeathHandler);
             
             G.UIHUD.UpdatePlayerHealth();
             m_InControl = true;
@@ -75,90 +70,24 @@ namespace Shooter.Gameplay
             m_WeaponPowerParticle.SetActive(false);
         }
 
+        public void DeathHandler()
+        {
+            if (!(Health.CurrentHealth <= 0)) return;
+            G.GameControl.OnGameOver.Invoke();
+            
+            var obj = Instantiate(m_DeathParticle);
+            obj.transform.position = transform.position + new Vector3(0, 1, 0);
+            Destroy(obj, 3);
+            gameObject.SetActive(false);
+        }
+
         void Update()
         {
-            m_Input_Fire = false;
-            m_Input_Fire2 = false;
-            m_Input_LockAim = false;
-            
             if (m_InControl)
             {
-                m_Input_Fire = G.PlayerControl.Input_FireHold;
-
-
-                if (PlayerControl.Input_Fire)
-                {
-                    if (PlayerPowers.m_HavePower)
-                    {
-                        switch (PlayerPowers.m_PowerNum)
-                        {
-                            case 0:
-                                if (PlayerPowers.m_AmmoCount > 0)
-                                {
-                                    ThrowGrenade();
-                                    PlayerPowers.m_AmmoCount--;
-                                }
-
-                                break;
-                        }
-                    }
-                }
-
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    CheckMelleeAttack();
-                }
-
-                if (Input.GetKeyDown(KeyCode.V))
-                {
-                    SetWeaponPowerLevel(1);
-                }
-
-                if (Input.GetMouseButtonDown(1))
-                {
-                    ThrowGrenade();
-                }
-
-
-
-                if (Input.GetKeyDown(KeyCode.X))
-                {
-                    StartDash();
-                }
-
-                m_MovementInput = G.PlayerControl.Input_Movement;
-
-                var axis = Vector3.Cross(Vector3.up, m_MovementInput);
-                var newRotation = Quaternion.AngleAxis(20, axis);
-
-                if (SoftAimActive)
-                {
-                    UpdateSoftAiming();
-                }
-
-
-                //Vector3 dir = PlayerControl.MainPlayerController.AimPosition - transform.position;
-                //dir.y = 0;
-                //m_AimBase.forward = dir;
-
-                //if (m_Input_LockAim)
-                //{
-                //    if (m_LockedTarget==null)
-                //    {
-                //        m_LockedTarget = bestTarget;
-                //    }
-                //    //m_TargetEnemy = 
-                //    if (m_LockedTarget != null)
-                //    {
-                //        Vector3 faceDirection = m_LockedTarget.transform.position - transform.position;
-                //        faceDirection.y = 0;
-                //        faceDirection.Normalize();
-                //        m_GunBase.rotation = Quaternion.Lerp(m_GunBase.rotation, Quaternion.LookRotation(faceDirection), 20 * Time.deltaTime);
-                //    }
-                //}
-                //else
-                //{
-                //m_LockedTarget = null;
+                UpdateInput();
+                UpdateSoftAiming();
+                
                 if (m_MovementInput != Vector3.zero)
                 {
                     Vector3 faceDirection = m_MovementInput;
@@ -167,11 +96,6 @@ namespace Shooter.Gameplay
                     m_TurnBase.rotation = Quaternion.Lerp(m_TurnBase.rotation, Quaternion.LookRotation(faceDirection),
                         10 * Time.deltaTime);
                 }
-                //}
-
-                m_Weapons[m_WeaponNum].Input_FireHold = m_Input_Fire;
-
-                //m_Weapon2.Input_FireHold = m_Input_Fire2;
             }
 
             if (m_WpnPowerLevel == 1)
@@ -184,30 +108,48 @@ namespace Shooter.Gameplay
                 }
             }
 
-            Vector3 vSpeed = GetComponent<Rigidbody>().linearVelocity;
+            var vSpeed = Rigidbody.linearVelocity;
             vSpeed.y = 0;
-            float runSpeed = Mathf.Clamp(vSpeed.magnitude / 10f, 0, 1);
+            var runSpeed = Mathf.Clamp(vSpeed.magnitude / 10f, 0, 1);
             m_Animator.SetFloat("RunSpeed", runSpeed);
 
             m_ShieldObject.transform.position = transform.position + new Vector3(0, 1, 0);
-
-            if (m_IsDead) return;
-            if (!(Health.CurrentHealth <= 0)) return;
             
-            m_IsDead = true;
-            var obj = Instantiate(m_DeathParticle);
-            obj.transform.position = transform.position + new Vector3(0, 1, 0);
-            Destroy(obj, 3);
-            gameObject.SetActive(false);
+        }
+
+        private void UpdateInput()
+        {
+            Weapons[m_WeaponNum].Input_FireHold = G.PlayerControl.Input_FireHold;
+            //Debug.Log(G.PlayerControl.Input_FireHold);
+
+            if (Input.GetKeyDown(KeyCode.C))
+                CheckMelleeAttack();
+
+            if (Input.GetKeyDown(KeyCode.V))
+                SetWeaponPowerLevel(1);
+
+            if (Input.GetMouseButtonDown(1))
+                ThrowGrenade();
+                
+            if (PlayerControl.Input_Dash)
+                StartDash();
+
+            m_MovementInput = G.PlayerControl.Input_Movement;
         }
 
         void UpdateSoftAiming()
         {
-            List<TargetObject> targets = TargetsControl.m_Main.m_Targets;
+            var targets = TargetsControl.m_Main.m_Targets;
 
             TargetObject bestTarget = null;
-            float minAngle = 40;
-            foreach (TargetObject target in targets)
+            
+            float minAngle = 15f; 
+            if (PlayerStats.SoftAimActive)
+            {
+                minAngle = 40f; 
+            }
+            
+            foreach (var target in targets)
             {
                 if (target == null)
                     continue;
@@ -215,26 +157,29 @@ namespace Shooter.Gameplay
                 Vector3 targetPos = target.m_TargetCenter.position;
                 Vector3 dir = targetPos - transform.position;
                 dir.y = 0;
-                float delta = Vector3.Angle(m_TurnBase.forward, dir);
-                float distance = dir.magnitude;
+                var delta = Vector3.Angle(m_TurnBase.forward, dir);
+                var distance = dir.magnitude;
 
                 if (distance > 30)
                     continue;
 
-                if (delta < minAngle)
+                if (delta < minAngle) 
                 {
                     bestTarget = target;
-                    minAngle = delta;
+                    minAngle = delta; 
                 }
             }
 
-            if (bestTarget != null)
+            if (bestTarget)
             {
-                Vector3 targetPos = bestTarget.m_TargetCenter.position;
-                Vector3 targetDir = targetPos - m_FirePoint.position;
+                var targetPos = bestTarget.m_TargetCenter.position;
+                var targetDir = targetPos - m_FirePoint.position;
                 targetDir.y = 0;
+                
+                var rotationSpeed = PlayerStats.SoftAimActive ? 30f : 20f; 
+                
                 m_AimBase.rotation = Quaternion.Lerp(m_AimBase.rotation, Quaternion.LookRotation(targetDir),
-                    20 * Time.deltaTime);
+                    rotationSpeed * Time.deltaTime);
                 m_TempTarget = bestTarget;
             }
             else
@@ -247,22 +192,20 @@ namespace Shooter.Gameplay
 
         void FixedUpdate()
         {
-            Rigidbody rigidBody = GetComponent<Rigidbody>();
-
-            Vector3 totalVelocity = rigidBody.linearVelocity;
+            var totalVelocity = Rigidbody.linearVelocity;
             if (m_MovementInput != Vector3.zero)
             {
                 totalVelocity += 5 * m_MovementInput;
                 totalVelocity.y = 0;
                 totalVelocity = Vector3.ClampMagnitude(totalVelocity, 11);
-                totalVelocity.y = rigidBody.linearVelocity.y;
-                rigidBody.linearVelocity = totalVelocity;
+                totalVelocity.y = Rigidbody.linearVelocity.y;
+                Rigidbody.linearVelocity = totalVelocity;
             }
             else
             {
                 totalVelocity -= .4f * totalVelocity;
-                totalVelocity.y = rigidBody.linearVelocity.y;
-                rigidBody.linearVelocity = totalVelocity;
+                totalVelocity.y = Rigidbody.linearVelocity.y;
+                Rigidbody.linearVelocity = totalVelocity;
             }
         }
 
@@ -273,7 +216,7 @@ namespace Shooter.Gameplay
 
         void LateUpdate()
         {
-            float recoil = m_Weapons[m_WeaponNum].RecoilTimer;
+            float recoil = Weapons[m_WeaponNum].RecoilTimer;
             m_WeaponHands[0].localRotation *= Quaternion.Euler(0, -4 * recoil, 0);
             m_WeaponHands[1].localRotation *= Quaternion.Euler(0, -4 * recoil, 0);
             m_WeaponHands[0].localPosition += new Vector3(0, 0, -.5f * recoil);
@@ -304,11 +247,10 @@ namespace Shooter.Gameplay
                     //    rb.AddForceAtPosition(3000 * dir, col.gameObject.transform.position);
                     //}
 
-                    var d = col.gameObject.GetComponent<Health>();
-                    if (d != null)
+                    var health = col.gameObject.GetComponent<Health>();
+                    if (health)
                     {
-                        //float lerp = Vector3.Distance(col.bounds.center, transform.position) / Radius;
-                        d.ApplyDamage(1, transform.forward, 1);
+                        health.ApplyDamage(1, transform.forward, 1);
                     }
                 }
             }
@@ -323,7 +265,7 @@ namespace Shooter.Gameplay
                 m_WeaponPowerParticle.SetActive(true);
             }
 
-            foreach (Weapon_Base w in m_Weapons)
+            foreach (var w in Weapons)
             {
                 w.PowerLevel = level;
             }
@@ -331,21 +273,21 @@ namespace Shooter.Gameplay
 
         public void SetWeapon(int num)
         {
-            foreach (Weapon_Base w in m_Weapons)
+            foreach (Weapon_Base w in Weapons)
             {
                 w.Input_FireHold = false;
             }
-
+        
             m_WeaponNum = num;
         }
 
         public void ThrowGrenade()
         {
-            Vector3 start = transform.position;
-            Vector3 end = G.PlayerControl.AimPosition + new Vector3(0, 1, 0);
-            GameObject obj = Instantiate(m_GrenadePrefab1);
+            var start = transform.position;
+            var end = G.PlayerControl.AimPosition + new Vector3(0, 1, 0);
+            var obj = Instantiate(m_GrenadePrefab1);
             obj.transform.position = transform.position;
-            PlayerGrenade g = obj.GetComponent<PlayerGrenade>();
+            var g = obj.GetComponent<PlayerGrenade>();
             g.m_StartPosition = start;
             g.m_TargetPosition = end;
             //Destroy(obj, 3);
@@ -390,7 +332,7 @@ namespace Shooter.Gameplay
 
         IEnumerator Co_Dash()
         {
-            GameObject obj = Instantiate(m_DashParticle);
+            var obj = Instantiate(m_DashParticle);
             obj.transform.position = transform.position + new Vector3(0, 1, 0);
             obj.transform.forward = m_DashDirection;
             Destroy(obj, 3);

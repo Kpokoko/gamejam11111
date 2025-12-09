@@ -3,11 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Shooter.ScriptableObjects;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Shooter.Gameplay
 {
-    [DefaultExecutionOrder(-1000)]
+    [DefaultExecutionOrder(1000)]
     public class GameControl : MonoBehaviour
     {
         public GameObject playerPrefab;
@@ -20,21 +19,25 @@ namespace Shooter.Gameplay
         
         public bool Paused = false;
         public UnityEvent OnGameOver = new();
+        public UnityEvent OnGameStart = new();
         
         void Awake()
         {
             G.GameControl = this;
         }
+        
         void Start()
         {
-            OnGameOver.AddListener(Console);
+            OnGameOver.AddListener(GameOverHandler);
             Instantiate(playerPrefab, PlayerSpawnPoint.position, PlayerSpawnPoint.rotation);
             StartCoroutine(Co_Start());
+            OnGameStart.Invoke();
+            G.LevelController.StartLevel();
         }
 
-        void Console()
+        void GameOverHandler()
         {
-            Debug.Log("DEAth");
+            G.LevelController.isLevelRunning = false;
         }
 
         IEnumerator Co_Start()
@@ -45,6 +48,7 @@ namespace Shooter.Gameplay
                 //FadeControl.m_Current.StartFadeIn();
                 //yield return new WaitForSeconds(4f);
                 //FadeControl.m_Current.StartFadeOut();
+                
                 yield return new WaitForSeconds(3f);
                 m_TextUI_1.SetActive(false);
                 //FadeControl.m_Current.StartFadeIn();

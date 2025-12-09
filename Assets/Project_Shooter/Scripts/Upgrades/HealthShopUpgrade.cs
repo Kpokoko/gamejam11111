@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HealthShopUpgrade : BaseUpgradeUIData
 {
+    public int DeltaHealth;
+    
     void Start()
     {
         OnBuy += OnBuyUpgrade;
@@ -9,7 +11,7 @@ public class HealthShopUpgrade : BaseUpgradeUIData
 
     void OnBuyUpgrade()
     {
-        Debug.Log("купили макс хп");
+        G.Player.Health.MaxHealth += DeltaHealth;
     }
 }
 

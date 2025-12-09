@@ -89,6 +89,7 @@ namespace Shooter.Gameplay
         public void AddHealth(float h)
         {
             CurrentHealth = Mathf.Clamp(CurrentHealth + h, 0, MaxHealth);
+            G.UIHUD.UpdatePlayerHealth();
         }
 
         public void ApplyDamageShake()

@@ -9,6 +9,6 @@ public class FastShotShopUpgrade : BaseUpgradeUIData
 
     void OnBuyUpgrade()
     {
-        Debug.Log("купили ускорение стрельбы");
+        G.Player.Weapons[0].FireDelay = 0.15f;
     }
 }
