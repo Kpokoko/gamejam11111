@@ -127,7 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthShopUpgrade
   UpgradeCosts: 01000000020000000300000004000000
   CurrentUpgrade: 0
-  DeltaHealth: 0
 --- !u!1 &461034983201061175
 GameObject:
   m_ObjectHideFlags: 0
@@ -2248,7 +2247,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthShopUpgrade
   UpgradeCosts: 01000000020000000300000004000000
   CurrentUpgrade: 0
-  DeltaHealth: 0
 --- !u!1 &2555400253228723473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2339,7 +2337,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthShopUpgrade
   UpgradeCosts: 01000000020000000300000004000000
   CurrentUpgrade: 0
-  DeltaHealth: 0
 --- !u!1 &2884744579829624792
 GameObject:
   m_ObjectHideFlags: 0
