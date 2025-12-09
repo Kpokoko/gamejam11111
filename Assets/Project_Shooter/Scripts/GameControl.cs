@@ -23,10 +23,6 @@ namespace Shooter.Gameplay
         
         void Awake()
         {
-<<<<<<< Updated upstream:Assets/Project_Shooter/Scripts/GameControl.cs
-=======
-            m_Current = this;
->>>>>>> Stashed changes:Assets/Project_Shooter/Scripts/Gameplay/GameControl.cs
             G.GameControl = this;
         }
         void Start()

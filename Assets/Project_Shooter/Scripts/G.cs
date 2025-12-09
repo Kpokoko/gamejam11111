@@ -6,16 +6,7 @@ public static class G
     public static LevelController LevelController;
     public static PlayerChar Player;
     public static PlayerStats PlayerStats;
-<<<<<<< Updated upstream
     public static GameControl  GameControl;
     public static PlayerControl  PlayerControl;
     public static UI_HUD UIHUD;
-=======
-    public static GameControl GameControl;
-}
-
-public class PlayerStats
-{
-    public Dictionary<BaseUpgradeUIData, int> UpgradeData;
->>>>>>> Stashed changes
 }
