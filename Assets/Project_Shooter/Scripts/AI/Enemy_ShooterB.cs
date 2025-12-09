@@ -13,8 +13,16 @@ namespace Shooter.Gameplay
         void Start()
         {
             InitPosition = transform.position;
+            health = GetComponent<Health>();
             
+            health.OnDeath.AddListener(SendAboutDeath);
             
+            m_FacePlayer = false;
+        }
+        
+        void SendAboutDeath()
+        {
+            G.LevelController.OnEnemyDied();
         }
 
         // Update is called once per frame

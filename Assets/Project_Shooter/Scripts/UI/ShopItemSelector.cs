@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Shooter.Gameplay;
 using UnityEngine;
 
@@ -9,9 +10,10 @@ public class ShopItemSelector : MonoBehaviour
     [SerializeField] private List<EnemyPreset> enemies;
     private List<GameObject> _shopItems = new();
     private List<GameObject> _enemiesCards = new();
+    private GameObject _shopExit;
     private int _shopIndexator = 0;
     
-    void OnEnable()
+    void Start()
     {
         var upgradesContainer = shopCanvas.transform.Find("UpgradesContainer").gameObject;
         var enemiesCardsContainer = shopCanvas.transform.Find("EnemiesCardsContainer").gameObject;
@@ -19,8 +21,15 @@ public class ShopItemSelector : MonoBehaviour
             _shopItems.Add(upgrade.gameObject);
         foreach (Transform enemyCard in enemiesCardsContainer.transform)
             _enemiesCards.Add(enemyCard.gameObject);
+        _shopExit = shopCanvas.transform.Find("ShopExit").gameObject;
         _shopIndexator = 0;
         Cursor.transform.position = _shopItems[_shopIndexator].transform.position;
+    }
+    
+    void OnEnable()
+    {
+        foreach (var card in _enemiesCards)
+            card.GetComponent<EnemyCard>().ResetCard();
     }
     
     void Update()
@@ -38,13 +47,15 @@ public class ShopItemSelector : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (_shopIndexator < _shopItems.Count + _enemiesCards.Count - 1)
+            if (_shopIndexator < _shopItems.Count + _enemiesCards.Count)
             {
                 ++_shopIndexator;
                 if (_shopIndexator < _shopItems.Count)
                     Cursor.transform.position = _shopItems[_shopIndexator].transform.position;
-                else
+                else if (_shopIndexator < _shopItems.Count + _enemiesCards.Count)
                     Cursor.transform.position = _enemiesCards[_shopIndexator % _shopItems.Count].transform.position;
+                else
+                    Cursor.transform.position = _shopExit.transform.position;
             }
         }
         if (Input.GetKeyDown(KeyCode.Return))
@@ -60,14 +71,22 @@ public class ShopItemSelector : MonoBehaviour
                 else
                     Debug.Log("не купили");
             }
-            else
+            else if (_shopIndexator < _shopItems.Count + _enemiesCards.Count)
             {
                 var enemyCard = _enemiesCards[_shopIndexator % _enemiesCards.Count].GetComponent<EnemyCard>();
                 if (enemyCard.TryFlip())
                 {
-                    var enemySO = this.enemies[Random.Range(0, this.enemies.Count)];
+                    var enemySO = enemies[Random.Range(0, enemies.Count)];
                     enemyCard.SetEnemySO(enemySO);
                 }
+            }
+            else
+            {
+                var pickedEnemies = new List<EnemyPreset>(_enemiesCards
+                    .Where(x => x.GetComponent<EnemyCard>().IsFlipped)
+                    .Select(x => x.GetComponent<EnemyCard>().EnemySO));
+                G.LevelController.EnemyPresets = pickedEnemies;
+                G.LevelController.StartLevel();
             }
         }
     }
