@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
 namespace Shooter.Gameplay
 {
     public class Weapon_Base : MonoBehaviour
     {
-
         public int WpnID = 0;
         public string Title = "SMG 1";
         public bool AutoFire = true;
@@ -59,8 +58,8 @@ namespace Shooter.Gameplay
         [HideInInspector]
         public Vector3 Forward;
 
-        [HideInInspector]
-        public int m_PowerLevel = 0;
+        [FormerlySerializedAs("m_PowerLevel")] [HideInInspector]
+        public int PowerLevel = 0;
 
         //[SerializeField, Space]
         //private Content m_Contents;

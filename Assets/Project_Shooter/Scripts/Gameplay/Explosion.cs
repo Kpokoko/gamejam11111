@@ -30,7 +30,7 @@ namespace Shooter.Gameplay
                 {
                     float lerp = Vector3.Distance(col.bounds.center, transform.position) / (float)Radius;
                     PlayerChar p = col.gameObject.GetComponent<PlayerChar>();
-                    p.mEnemyHealth.ApplyDamage(Mathf.Lerp(40, 5, lerp), p.transform.position + new Vector3(0, 2, 0) - transform.position, 4);
+                    p.Health.ApplyDamage(Mathf.Lerp(40, 5, lerp), p.transform.position + new Vector3(0, 2, 0) - transform.position, 4);
                 }
                 else if (col.gameObject.tag == "Block")
                 {
@@ -40,7 +40,7 @@ namespace Shooter.Gameplay
                         rb.AddForceAtPosition(col.gameObject.transform.position - transform.forward, transform.position);
                     }
 
-                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
+                    Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
                         float lerp = Vector3.Distance(col.bounds.center, transform.position) / Radius;

@@ -14,11 +14,11 @@ namespace Shooter.Gameplay
         // Update is called once per frame
         void Update()
         {
-            if (m_PowerLevel == 0)
+            if (PowerLevel == 0)
             {
                 FireDelay = .4f;
             }
-            else if (m_PowerLevel == 1)
+            else if (PowerLevel == 1)
             {
                 FireDelay = .3f;
             }
@@ -52,7 +52,7 @@ namespace Shooter.Gameplay
 
             GameObject obj;
 
-            if (m_PowerLevel == 0)
+            if (PowerLevel == 0)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -68,7 +68,7 @@ namespace Shooter.Gameplay
                 }
 
             }
-            else if (m_PowerLevel == 1)
+            else if (PowerLevel == 1)
             {
                 for (int i = 0; i < 6; i++)
                 {

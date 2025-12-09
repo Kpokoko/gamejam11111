@@ -7,7 +7,7 @@ namespace Shooter.Gameplay
 {
     public class Enemy : MonoBehaviour
     {
-        [FormerlySerializedAs("MEnemyHealth")] public EnemyHealth EnemyHealth;
+        public Health health;
         [SerializeField]
         protected GameObject m_DeathParticlePrefab;
         [SerializeField]
@@ -47,11 +47,11 @@ namespace Shooter.Gameplay
         public Animator m_Animator;
 
         public int m_ItemDropCount = 1;
-        // Start is called before the first frame update
+        
         void Start()
         {
             m_CanDamage = true;
-            EnemyHealth = GetComponent<EnemyHealth>();
+            
 
             InitPosition = transform.position;
 
@@ -60,8 +60,9 @@ namespace Shooter.Gameplay
             Destroy(obj, 3);
 
         }
+        
+       
 
-        // Update is called once per frame
         void Update()
         {
             //AI
@@ -70,19 +71,18 @@ namespace Shooter.Gameplay
             Quaternion rotation = Quaternion.LookRotation(forward);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 10 * Time.deltaTime);
 
-            Vector3 axis = Quaternion.Euler(0, 30 * EnemyHealth.DamageShakeAngle, 0) * Vector3.right;
-            ShakeBase.transform.localRotation = Quaternion.AngleAxis(-30 * EnemyHealth.DamageShakeAmount, axis);
+            Vector3 axis = Quaternion.Euler(0, 30 * health.DamageShakeAngle, 0) * Vector3.right;
+            ShakeBase.transform.localRotation = Quaternion.AngleAxis(-30 * health.DamageShakeAmount, axis);
 
             HandleDeath();
-
             CheckAlert();
         }
 
         public virtual void HandleDeath()
         {
-            EnemyHealth = GetComponent<EnemyHealth>();
+            health = GetComponent<Health>();
             //Death
-            if (EnemyHealth.Health <= 0)
+            if (health.CurrentHealth <= 0)
             {
                 GameObject obj = Instantiate(m_DeathParticlePrefab);
                 obj.transform.position = transform.position;

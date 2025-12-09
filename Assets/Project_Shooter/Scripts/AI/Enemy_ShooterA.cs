@@ -11,10 +11,16 @@ namespace Shooter.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            //StateSystem stateSys = GetComponent<StateSystem>();
-            //stateSys.StartState(-2);
-            //StartCoroutine(Co_EnterLevel());
+            health = GetComponent<Health>();
+            
+            health.OnDeath.AddListener(SendAboutDeath);
+            
             m_FacePlayer = false;
+        }
+        
+        void SendAboutDeath()
+        {
+            G.LevelController.OnEnemyDied();
         }
 
         // Update is called once per frame

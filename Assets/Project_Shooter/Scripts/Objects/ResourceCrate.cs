@@ -9,8 +9,8 @@ namespace Shooter.Gameplay
     {
         public GameObject[] m_ItemPrefabs;
 
-        [FormerlySerializedAs("m_DamageControl")] [HideInInspector]
-        public EnemyHealth mEnemyHealth;
+        [FormerlySerializedAs("mEnemyHealth")] [FormerlySerializedAs("m_DamageControl")] [HideInInspector]
+        public Health mHealth;
 
         public GameObject m_ExplodeParticle;
 
@@ -21,7 +21,7 @@ namespace Shooter.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            mEnemyHealth = GetComponent<EnemyHealth>();
+            mHealth = GetComponent<Health>();
         }
 
         // Update is called once per frame
@@ -33,7 +33,7 @@ namespace Shooter.Gameplay
             //}
             if (!m_Opened)
             {
-                if (mEnemyHealth.IsDead)
+                if (mHealth.IsDead)
                 {
                     TargetsControl.m_Main.RemoveTarget(GetComponent<TargetObject>());
                     GetComponent<Collider>().enabled = false;

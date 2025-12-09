@@ -7,8 +7,8 @@ namespace Shooter.Gameplay
 {
     public class DestructObject : MonoBehaviour
     {
-        [FormerlySerializedAs("MyDamageControl")] [HideInInspector]
-        public EnemyHealth myEnemyHealth;
+        [FormerlySerializedAs("myEnemyHealth")] [FormerlySerializedAs("MyDamageControl")] [HideInInspector]
+        public Health myHealth;
 
         public GameObject BrakeEffectPrefab1;
         public GameObject DestroyedObjectPrefab1;
@@ -27,7 +27,7 @@ namespace Shooter.Gameplay
         // Use this for initialization
         void Start()
         {
-            myEnemyHealth = GetComponent<EnemyHealth>();
+            myHealth = GetComponent<Health>();
             InitRotation = transform.rotation;
             InitPosition = transform.position;
         }
@@ -53,7 +53,7 @@ namespace Shooter.Gameplay
 
             //if (CanDestroy)
             {
-                if (myEnemyHealth.IsDead)
+                if (myHealth.IsDead)
                 {
                     GameObject obj = Instantiate(BrakeEffectPrefab1);
                     if (m_ExplodeCenter!=null)

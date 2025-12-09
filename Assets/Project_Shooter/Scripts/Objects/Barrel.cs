@@ -7,8 +7,8 @@ namespace Shooter.Gameplay
 {
     public class Barrel : MonoBehaviour
     {
-        [FormerlySerializedAs("m_DamageControl")] [HideInInspector]
-        public EnemyHealth mEnemyHealth;
+        [FormerlySerializedAs("mEnemyHealth")] [FormerlySerializedAs("m_DamageControl")] [HideInInspector]
+        public Health mHealth;
 
         public GameObject m_ExplodeParticle;
 
@@ -16,7 +16,7 @@ namespace Shooter.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            mEnemyHealth = GetComponent<EnemyHealth>();
+            mHealth = GetComponent<Health>();
         }
 
         // Update is called once per frame
@@ -24,7 +24,7 @@ namespace Shooter.Gameplay
         {
             if (!exploded)
             {
-                if (mEnemyHealth.IsDead)
+                if (mHealth.IsDead)
                 {
                     exploded = true;
                     Invoke("Explode", .2f);

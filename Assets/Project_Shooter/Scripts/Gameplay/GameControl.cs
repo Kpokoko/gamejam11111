@@ -9,30 +9,21 @@ namespace Shooter.Gameplay
     {
         public static GameControl m_Current;
 
-        public bool m_EnteredBossFight = false;
         public GameObject m_LevelBoss;
-
         public SaveData m_MainSaveData;
-
         public GameObject m_TextUI_1;
-
-
         public GameObject[] m_Tutorials;
-
         public GameObject m_PauseUI;
 
-        // public GameObject m_DeathEff;
 
         public bool m_Pausesd = false;
         void Awake()
         {
             m_Current = this;
         }
-        // Start is called before the first frame update
         void Start()
         {
             StartCoroutine(Co_Start());
-            //m_DeathEff.SetActive(false);
         }
 
         IEnumerator Co_Start()
@@ -64,7 +55,6 @@ namespace Shooter.Gameplay
             }
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -84,13 +74,6 @@ namespace Shooter.Gameplay
             }
         }
 
-        void FixedUpdate()
-        {
-
-
-
-        }
-
         public void HandleCheckpoint(int num)
         {
             if (num > m_MainSaveData.m_CheckpointNumber)
@@ -107,7 +90,6 @@ namespace Shooter.Gameplay
 
         IEnumerator Co_HandleGameOver()
         {
-            // m_DeathEff.SetActive(true);
             CameraControl.m_Current.StartShake(.4f, .3f);
             yield return new WaitForSeconds(1);
             FadeControl.m_Current.StartFadeOut();
@@ -122,6 +104,7 @@ namespace Shooter.Gameplay
             Time.timeScale = 1;
             m_PauseUI.SetActive(false);
         }
+        
         public void Exit()
         {
             m_Pausesd = false;

@@ -27,7 +27,7 @@ namespace Shooter.Gameplay
                 if (col.gameObject.tag == "Player" && m_IsEnemyTeam)
                 {
 
-                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
+                    Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
                         d.ApplyDamage(m_Damage, transform.forward, 1);
@@ -39,7 +39,7 @@ namespace Shooter.Gameplay
                 }
                 else if (col.gameObject.tag == "Block")
                 {
-                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
+                    Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
                         d.ApplyDamage(m_Damage, transform.forward, 1);
@@ -49,7 +49,7 @@ namespace Shooter.Gameplay
                 }
                 else if (col.gameObject.tag == "Enemy" && !m_IsEnemyTeam)
                 {
-                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
+                    Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
                         d.ApplyDamage(m_Damage, transform.forward, 1);

@@ -6,28 +6,19 @@ using UnityEngine.Serialization;
 
 namespace Shooter.Gameplay
 {
-    public class EnemyHealth : MonoBehaviour
+    public class Health : MonoBehaviour
     {
+        public float CurrentHealth = 100;
+        public float MaxHealth = 100;
 
-        [FormerlySerializedAs("Damage")] [HideInInspector]
-        public float Health = 100;
+        [HideInInspector] public bool IsDead = false;
+        [HideInInspector] public bool m_NoDamage = false;
 
-        [FormerlySerializedAs("MaxDamage")] public float MaxHealth = 100;
+        [HideInInspector] public Vector3 LastDamageDirection;
+        [HideInInspector] public float LastDamageFactor = 1;
 
-        [HideInInspector]
-        public bool IsDead = false;
-        [HideInInspector]
-        public bool m_NoDamage = false;
-
-        [HideInInspector]
-        public Vector3 LastDamageDirection;
-        [HideInInspector]
-        public float LastDamageFactor = 1;
-
-        [HideInInspector]
-        public float DamageShakeAmount;
-        [HideInInspector]
-        public float DamageShakeAngle;
+        [HideInInspector] public float DamageShakeAmount;
+        [HideInInspector] public float DamageShakeAngle;
 
         public UnityEvent OnDamaged = new();
         public UnityEvent OnDeath = new();
@@ -37,15 +28,16 @@ namespace Shooter.Gameplay
         {
             OnDamaged = new UnityEvent();
         }
-        
+
         void Start()
         {
-            Health = MaxHealth;
+            CurrentHealth = MaxHealth;
             IsDead = false;
             LastDamageDirection = Vector3.forward;
             DamageShakeAmount = 0;
             DamageShakeAngle = 0;
         }
+
 
         void Update()
         {
@@ -63,13 +55,15 @@ namespace Shooter.Gameplay
             LastDamageDirection = dir;
             LastDamageDirection.Normalize();
             LastDamageFactor = DamageFactor;
-            Health -= dmg;
-            if (Health <= 0)
+            CurrentHealth -= dmg;
+            if (CurrentHealth <= 0)
             {
-                Health = 0;
-                IsDead = true;
                 OnDeath.Invoke();
+                Debug.Log("ALOOO");
+                CurrentHealth = 0;
+                IsDead = true;
             }
+
             OnDamaged.Invoke();
             StartCoroutine(Co_HitGlow());
         }
@@ -95,7 +89,7 @@ namespace Shooter.Gameplay
 
         public void AddHealth(float h)
         {
-            Health = Mathf.Clamp(Health + h, 0, MaxHealth);
+            CurrentHealth = Mathf.Clamp(CurrentHealth + h, 0, MaxHealth);
         }
 
         public void ApplyDamageShake()
@@ -109,7 +103,7 @@ namespace Shooter.Gameplay
 
         public void Reset()
         {
-            Health = MaxHealth;
+            CurrentHealth = MaxHealth;
             IsDead = false;
         }
     }

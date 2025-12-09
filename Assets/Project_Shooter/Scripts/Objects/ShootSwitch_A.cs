@@ -20,7 +20,7 @@ namespace Shooter.Gameplay
         // Update is called once per frame
         void Update()
         {
-            EnemyHealth damage = GetComponent<EnemyHealth>();
+            Health damage = GetComponent<Health>();
 
             if (!m_Activated)
             {

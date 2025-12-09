@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,8 +8,8 @@ namespace Shooter.Gameplay
 {
     public class PlayerChar : MonoBehaviour
     {
-        [FormerlySerializedAs("m_DamageControl")] [HideInInspector]
-        public EnemyHealth mEnemyHealth;
+        [HideInInspector]
+        public Health Health;
         public static PlayerChar m_Current;
 
         [SerializeField]
@@ -19,7 +20,6 @@ namespace Shooter.Gameplay
         [HideInInspector]
         public CameraControl m_MyCamera;
 
-        //-------------------------------
         [HideInInspector]
         public bool m_InControl = false;
         [HideInInspector]
@@ -29,7 +29,6 @@ namespace Shooter.Gameplay
         public Transform m_FirePoint;
         public GameObject m_WeaponPowerParticle;
         public GameObject m_DeathParticle;
-        //public WeaponControl m_MyWeaponControl;
 
         Vector3 m_MovementInput;
         Vector3 m_DashDirection;
@@ -72,6 +71,10 @@ namespace Shooter.Gameplay
 
         public GameObject m_ShieldObject;
 
+
+        public bool SoftAimActive;
+        
+        
         void Awake()
         {
             m_Current = this;
@@ -80,8 +83,8 @@ namespace Shooter.Gameplay
 
         void Start()
         {
-            mEnemyHealth = GetComponent<EnemyHealth>();
-            mEnemyHealth.OnDamaged.AddListener(HandleDamage);
+            Health = GetComponent<Health>();
+            Health.OnDamaged.AddListener(HandleDamage);
             m_InControl = true;
 
 
@@ -136,7 +139,7 @@ namespace Shooter.Gameplay
 
                 if (Input.GetKeyDown(KeyCode.V))
                 {
-                    SetWeaponPowerLevel(100);
+                    SetWeaponPowerLevel(1);
                 }
 
                 //if (Input.GetMouseButtonDown(1))
@@ -157,46 +160,12 @@ namespace Shooter.Gameplay
                 Vector3 axis = Vector3.Cross(Vector3.up, m_MovementInput);
                 Quaternion newRotation = Quaternion.AngleAxis(20, axis);
 
-                //find target
-                List<TargetObject> targets = TargetsControl.m_Main.m_Targets;
-
-                TargetObject bestTarget = null;
-                float minAngle = 40;
-                foreach (TargetObject target in targets)
+                if (SoftAimActive)
                 {
-                    if (target == null)
-                        continue;
-
-                    Vector3 targetPos = target.m_TargetCenter.position;
-                    Vector3 dir = targetPos - transform.position;
-                    dir.y = 0;
-                    float delta = Vector3.Angle(m_TurnBase.forward, dir);
-                    float distance = dir.magnitude;
-
-                    if (distance > 30)
-                        continue;
-
-                    if (delta < minAngle)
-                    {
-                        bestTarget = target;
-                        minAngle = delta;
-                    }
+                    UpdateSoftAiming();
                 }
-
-                if (bestTarget != null)
-                {
-                    Vector3 targetPos = bestTarget.m_TargetCenter.position;
-                    Vector3 targetDir = targetPos - m_FirePoint.position;
-                    targetDir.y = 0;
-                    //m_AimBase.forward = targetDir;
-                    m_AimBase.rotation = Quaternion.Lerp(m_AimBase.rotation, Quaternion.LookRotation(targetDir), 20 * Time.deltaTime);
-                    m_TempTarget = bestTarget;
-                }
-                else
-                {
-                    m_TempTarget = null;
-                    m_AimBase.localRotation = Quaternion.Lerp(m_AimBase.localRotation, Quaternion.identity, 20 * Time.deltaTime);
-                }
+                
+                
 
                 //Vector3 dir = PlayerControl.MainPlayerController.AimPosition - transform.position;
                 //dir.y = 0;
@@ -255,7 +224,7 @@ namespace Shooter.Gameplay
 
             if (!m_IsDead)
             {
-                if (mEnemyHealth.Health <= 0)
+                if (Health.CurrentHealth <= 0)
                 {
                     //die
                     m_IsDead = true;
@@ -267,7 +236,48 @@ namespace Shooter.Gameplay
                 }
             }
         }
+        void UpdateSoftAiming()
+        {
+            // find target
+            List<TargetObject> targets = TargetsControl.m_Main.m_Targets;
 
+            TargetObject bestTarget = null;
+            float minAngle = 40;
+            foreach (TargetObject target in targets)
+            {
+                if (target == null)
+                    continue;
+
+                Vector3 targetPos = target.m_TargetCenter.position;
+                Vector3 dir = targetPos - transform.position;
+                dir.y = 0;
+                float delta = Vector3.Angle(m_TurnBase.forward, dir);
+                float distance = dir.magnitude;
+
+                if (distance > 30)
+                    continue;
+
+                if (delta < minAngle)
+                {
+                    bestTarget = target;
+                    minAngle = delta;
+                }
+            }
+
+            if (bestTarget != null)
+            {
+                Vector3 targetPos = bestTarget.m_TargetCenter.position;
+                Vector3 targetDir = targetPos - m_FirePoint.position;
+                targetDir.y = 0;
+                m_AimBase.rotation = Quaternion.Lerp(m_AimBase.rotation, Quaternion.LookRotation(targetDir), 20 * Time.deltaTime);
+                m_TempTarget = bestTarget;
+            }
+            else
+            {
+                m_TempTarget = null;
+                m_AimBase.localRotation = Quaternion.Lerp(m_AimBase.localRotation, Quaternion.identity, 20 * Time.deltaTime);
+            }
+        }
         void FixedUpdate()
         {
             Rigidbody rigidBody = GetComponent<Rigidbody>();
@@ -310,7 +320,7 @@ namespace Shooter.Gameplay
             {
                 if (col.gameObject.tag == "Enemy")
                 {
-                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
+                    Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
                         Vector3 dir = col.gameObject.transform.position - transform.position;
@@ -328,7 +338,7 @@ namespace Shooter.Gameplay
                     //    rb.AddForceAtPosition(3000 * dir, col.gameObject.transform.position);
                     //}
 
-                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
+                    Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
                         //float lerp = Vector3.Distance(col.bounds.center, transform.position) / Radius;
@@ -337,7 +347,7 @@ namespace Shooter.Gameplay
                 }
             }
         }
-
+        
         public void AddAmmo(int count)
         {
 
@@ -354,7 +364,7 @@ namespace Shooter.Gameplay
 
             foreach (Weapon_Base w in m_Weapons)
             {
-                w.m_PowerLevel = level;
+                w.PowerLevel = level;
             }
         }
 
@@ -403,7 +413,7 @@ namespace Shooter.Gameplay
             }
             else if (itemType == "Health")
             {
-                mEnemyHealth.AddHealth(count);
+                Health.AddHealth(count);
             }
             else if (itemType == "Key")
             {

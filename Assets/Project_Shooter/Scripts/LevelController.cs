@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Shooter.Gameplay;
@@ -14,20 +15,24 @@ public class LevelController : MonoBehaviour
     public List<EnemyPreset> EnemyPresets;
     
     public UnityEvent AllEnemyDead; 
+    public UnityEvent StartWave; 
     
-    // Внутренний счетчик живых врагов
     private int _enemiesAliveCount;
-    // Флаг, указывающий, завершился ли спавн
     private bool _isSpawningFinished;
-    
+
+    private void Awake()
+    {
+        G.LevelController = this;
+    }
+
     public void Start()
     {
-        // EnemyPresets = selectedPresets; // Разблокировать, если получаете список извне
         StartCoroutine(SpawnEnemiesRoutine());
     }
 
     private IEnumerator SpawnEnemiesRoutine()
     {
+        StartWave.Invoke();
         if (EnemyPresets == null || EnemyPresets.Count == 0)
         {
             Debug.LogWarning("Список пресетов врагов пуст.");
@@ -48,28 +53,17 @@ public class LevelController : MonoBehaviour
             var newEnemyObj = Instantiate(enemyPrefab, randomSpawnPos, Quaternion.identity);
             newEnemyObj.name = $"{enemyPrefab.name} (Spawned)";
 
-            var enemy = newEnemyObj.GetOrAddComponent<Enemy>();
-            
-            if (enemy)
-            {
-                enemy.EnemyHealth.OnDeath.AddListener(OnEnemyDied);
-            }
-            else
-            {
-                Debug.LogError($"На префабе {enemyPrefab.name} отсутствует компонент EnemyDeathNotifier!");
-                _enemiesAliveCount--;
-            }
             
             yield return new WaitForSeconds(SpawnInterval);
         }
 
         Debug.Log("Спавн всех врагов завершен.");
-        _isSpawningFinished = true; // Устанавливаем флаг, что спавн окончен
+        _isSpawningFinished = true;
         
         CheckWinCondition();
     }
     
-    private void OnEnemyDied()
+    public void OnEnemyDied()
     {
         _enemiesAliveCount--;
         Debug.Log($"Враг умер. Осталось живых: {_enemiesAliveCount}");
@@ -89,15 +83,11 @@ public class LevelController : MonoBehaviour
     
     private List<GameObject> CreateShuffledQueue(List<EnemyPreset> presets)
     {
-        List<GameObject> allEnemies = new List<GameObject>();
+        var allEnemies = new List<GameObject>();
         
         foreach (var preset in presets)
-        {
             for (int i = 0; i < preset.Count; i++)
-            {
                 allEnemies.Add(preset.EnemyPrefab);
-            }
-        }
 
         int n = allEnemies.Count;
         while (n > 1)
@@ -118,13 +108,13 @@ public class LevelController : MonoBehaviour
             return Vector3.zero;
         }
         
-        Vector3 center = ArenaSize.position;
-        Vector3 halfScale = ArenaSize.localScale / 2f; 
+        var center = ArenaSize.position;
+        var halfScale = ArenaSize.localScale / 2f; 
         
-        float randomX = Random.Range(center.x - halfScale.x, center.x + halfScale.x);
-        float randomZ = Random.Range(center.z - halfScale.z, center.z + halfScale.z);
+        var randomX = Random.Range(center.x - halfScale.x, center.x + halfScale.x);
+        var randomZ = Random.Range(center.z - halfScale.z, center.z + halfScale.z);
         
-        float fixedY = center.y; 
+        var fixedY = center.y; 
         
         return new Vector3(randomX, fixedY, randomZ);
     }

@@ -1,24 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 namespace Shooter.Gameplay
 {
     public class PWeapon_Pistol : Weapon_Base
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
         void Update()
         {
-            if (m_PowerLevel == 0)
+            if (PowerLevel == 0)
             {
                 FireDelay = .2f;
             }
-            else if (m_PowerLevel == 1)
+            else if (PowerLevel == 1)
             {
                 FireDelay = .17f;
             }
@@ -52,7 +44,7 @@ namespace Shooter.Gameplay
 
             GameObject obj;
 
-            if (m_PowerLevel == 0)
+            if (PowerLevel == 0)
             {
 
                 obj = Instantiate(BulletPrefab);
@@ -65,7 +57,7 @@ namespace Shooter.Gameplay
                 proj.m_Range = Range;
                 Destroy(obj, 5);
             }
-            else if (m_PowerLevel == 1)
+            else if (PowerLevel == 1)
             {
                 for (int i = -1; i < 2; i++)
                 {

@@ -48,7 +48,7 @@ namespace Shooter.UI
         {
             m_GemCountText.text = PlayerControl.MainPlayerController.m_GemCount.ToString();
 
-            if (PlayerChar.m_Current.m_TempTarget != null)
+            if (PlayerChar.m_Current.m_TempTarget)
             {
                 m_AimTargetImage.gameObject.SetActive(true);
                 Vector3 v = CameraControl.m_Current.m_MyCamera.WorldToScreenPoint(PlayerChar.m_Current.m_TempTarget.m_TargetCenter.position);
@@ -71,16 +71,16 @@ namespace Shooter.UI
 
             m_WeaponPowerTime.fillAmount = PlayerChar.m_Current.m_WpnPowerTime / 16f;
 
-            EnemyHealth damage = PlayerChar.m_Current.GetComponent<EnemyHealth>();
-            m_PlayerHealth.fillAmount = damage.Health / damage.MaxHealth;
+            Health damage = PlayerChar.m_Current.GetComponent<Health>();
+            m_PlayerHealth.fillAmount = damage.CurrentHealth / damage.MaxHealth;
 
 
             m_GunNameText.text = m_WeaponNames[PlayerChar.m_Current.m_WeaponNum];
 
             if (GameControl.m_Current.m_LevelBoss != null)
             {
-                damage = GameControl.m_Current.m_LevelBoss.GetComponent<EnemyHealth>();
-                m_BossHealth.fillAmount = damage.Health / damage.MaxHealth;
+                damage = GameControl.m_Current.m_LevelBoss.GetComponent<Health>();
+                m_BossHealth.fillAmount = damage.CurrentHealth / damage.MaxHealth;
             }
 
             PlayerPowers p = PlayerChar.m_Current.GetComponent<PlayerPowers>();
