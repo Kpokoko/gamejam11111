@@ -5,25 +5,8 @@ namespace Shooter.Gameplay
 {
     public class PWeapon_Shotgun : Weapon_Base
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
         void Update()
         {
-            if (PowerLevel == 0)
-            {
-                FireDelay = .4f;
-            }
-            else if (PowerLevel == 1)
-            {
-                FireDelay = .3f;
-            }
-
-
             FireDelayTimer -= Time.deltaTime;
             if (FireDelayTimer <= 0)
                 FireDelayTimer = 0;
@@ -36,20 +19,17 @@ namespace Shooter.Gameplay
             {
                 if (FireDelayTimer == 0)
                 {
-
                     FireWeapon();
                     FireDelayTimer = FireDelay;
                     RecoilTimer = 1f;
                 }
-
             }
 
-            //Input_FireHold = false;
+            Input_FireHold = false;
         }
 
         public override void FireWeapon()
         {
-
             GameObject obj;
 
             if (PowerLevel == 0)

@@ -25,18 +25,19 @@ namespace Shooter.Gameplay
         {
             G.GameControl = this;
         }
+        
         void Start()
         {
-            OnGameOver.AddListener(Console);
+            OnGameOver.AddListener(GameOverHandler);
             Instantiate(playerPrefab, PlayerSpawnPoint.position, PlayerSpawnPoint.rotation);
             StartCoroutine(Co_Start());
             OnGameStart.Invoke();
             G.LevelController.StartLevel();
         }
 
-        void Console()
+        void GameOverHandler()
         {
-            Debug.Log("DEAth");
+            G.LevelController.isLevelRunning = false;
         }
 
         IEnumerator Co_Start()

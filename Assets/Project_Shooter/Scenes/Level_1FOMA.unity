@@ -21416,6 +21416,7 @@ MonoBehaviour:
   PlayerSpawnPoint: {fileID: 922368029}
   ArenaSize: {fileID: 7354541984436945690}
   SpawnInterval: 2
+  SpawnMedkitInterval: 30
   EnemyPresets:
   - {fileID: 11400000, guid: 90d5492c2fee8d745b9f8fc8d8964364, type: 2}
   AllEnemyDead:
@@ -21472,6 +21473,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  MedkitPrefab: {fileID: 1111121737912469067, guid: feb604b8ff71dd049bb5cb12819b0a42,
+    type: 3}
+  isLevelRunning: 0
 --- !u!4 &1221531874
 Transform:
   m_ObjectHideFlags: 0

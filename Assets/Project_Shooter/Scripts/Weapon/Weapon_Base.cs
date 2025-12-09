@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
+
 namespace Shooter.Gameplay
 {
     public class Weapon_Base : MonoBehaviour
@@ -13,59 +11,43 @@ namespace Shooter.Gameplay
         public float BurstDelay = .5f;
         public int BurstFireCount = 3;
         public float RecoilSpeed = 5;
-        [Space]
-        public int InitAmmo = 80;
+        [Space] public int InitAmmo = 80;
         public int MaxAmmo = 80;
         public int AddAmmo = 10;
         public int PowerWeaponMaxAmmo = 80;
-        [Space]
-        public Sprite WeaponIcon;
+        [Space] public Sprite WeaponIcon;
         public float Damage = 1;
         public float ProjectileSpeed = 200;
         public float Range = 100;
 
         public bool InfiniteAmmo = false;
-        [Space]
-        public GameObject WeaponModelPrefab;
+        [Space] public GameObject WeaponModelPrefab;
         public GameObject BulletPrefab;
         public GameObject EffectPrefab;
-        [Space]
-        [HideInInspector]
-        public bool WeaponEnable = true;
-        [HideInInspector]
-        public int AmmoCount = 50;
+        [Space] [HideInInspector] public bool WeaponEnable = true;
+        [HideInInspector] public int AmmoCount = 50;
 
         public Transform m_FirePoint;
         public Transform m_ParticlePoint;
         public GameObject m_Owner;
 
 
-        [HideInInspector]
-        public PlayerControl Owner;
+        [HideInInspector] public PlayerControl Owner;
 
-        [HideInInspector]
-        public float FireDelayTimer = 0;
-        [HideInInspector]
-        public float BurstDelayTimer = 0;
-        [HideInInspector]
-        public int BurstFireCounter = 0;
-        [HideInInspector]
-        public float RecoilTimer = 0;
+        [HideInInspector] public float FireDelayTimer = 0;
+        [HideInInspector] public float BurstDelayTimer = 0;
+        [HideInInspector] public int BurstFireCounter = 0;
+        [HideInInspector] public float RecoilTimer = 0;
 
 
-        [HideInInspector]
-        public bool Input_FireHold = false;
-        [HideInInspector]
-        public Vector3 Forward;
+        [HideInInspector] public bool Input_FireHold = false;
+        [HideInInspector] public Vector3 Forward;
 
-        [HideInInspector]
-        public int PowerLevel = 0;
+        [HideInInspector] public int PowerLevel = 0;
 
 
-        // Update is called once per frame
         void Update()
         {
-
             FireDelayTimer -= Time.deltaTime;
             if (FireDelayTimer <= 0)
                 FireDelayTimer = 0;
@@ -81,6 +63,7 @@ namespace Shooter.Gameplay
 
             if (Input_FireHold)
             {
+
                 if (FireDelayTimer == 0)
                 {
                     if (BurstDelayTimer == 0)
@@ -91,6 +74,7 @@ namespace Shooter.Gameplay
                             {
                                 CameraControl.m_Current.StartShake(.2f, 1f);
                             }
+
                             FireWeapon();
                             AmmoCount -= 1;
                             RecoilTimer = 1;
@@ -105,6 +89,7 @@ namespace Shooter.Gameplay
                         {
                             //SoundGallery.PlaySound("EmptyFire1");
                         }
+
                         FireDelayTimer = FireDelay;
                     }
                 }

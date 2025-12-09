@@ -27,7 +27,7 @@ namespace Shooter.Gameplay
 
         public GameObject m_HitParticlePrefab;
 
-        public Weapon_Base[] m_Weapons;
+        public Weapon_Base[] Weapons;
         [HideInInspector] public int m_WeaponNum = 0;
 
         public TargetObject m_TempTarget;
@@ -119,7 +119,8 @@ namespace Shooter.Gameplay
 
         private void UpdateInput()
         {
-            m_Weapons[m_WeaponNum].Input_FireHold = G.PlayerControl.Input_FireHold;
+            Weapons[m_WeaponNum].Input_FireHold = G.PlayerControl.Input_FireHold;
+            //Debug.Log(G.PlayerControl.Input_FireHold);
 
             if (Input.GetKeyDown(KeyCode.C))
                 CheckMelleeAttack();
@@ -191,22 +192,20 @@ namespace Shooter.Gameplay
 
         void FixedUpdate()
         {
-            var rigidBody = GetComponent<Rigidbody>();
-
-            var totalVelocity = rigidBody.linearVelocity;
+            var totalVelocity = Rigidbody.linearVelocity;
             if (m_MovementInput != Vector3.zero)
             {
                 totalVelocity += 5 * m_MovementInput;
                 totalVelocity.y = 0;
                 totalVelocity = Vector3.ClampMagnitude(totalVelocity, 11);
-                totalVelocity.y = rigidBody.linearVelocity.y;
-                rigidBody.linearVelocity = totalVelocity;
+                totalVelocity.y = Rigidbody.linearVelocity.y;
+                Rigidbody.linearVelocity = totalVelocity;
             }
             else
             {
                 totalVelocity -= .4f * totalVelocity;
-                totalVelocity.y = rigidBody.linearVelocity.y;
-                rigidBody.linearVelocity = totalVelocity;
+                totalVelocity.y = Rigidbody.linearVelocity.y;
+                Rigidbody.linearVelocity = totalVelocity;
             }
         }
 
@@ -217,7 +216,7 @@ namespace Shooter.Gameplay
 
         void LateUpdate()
         {
-            float recoil = m_Weapons[m_WeaponNum].RecoilTimer;
+            float recoil = Weapons[m_WeaponNum].RecoilTimer;
             m_WeaponHands[0].localRotation *= Quaternion.Euler(0, -4 * recoil, 0);
             m_WeaponHands[1].localRotation *= Quaternion.Euler(0, -4 * recoil, 0);
             m_WeaponHands[0].localPosition += new Vector3(0, 0, -.5f * recoil);
@@ -266,7 +265,7 @@ namespace Shooter.Gameplay
                 m_WeaponPowerParticle.SetActive(true);
             }
 
-            foreach (Weapon_Base w in m_Weapons)
+            foreach (var w in Weapons)
             {
                 w.PowerLevel = level;
             }
@@ -274,11 +273,11 @@ namespace Shooter.Gameplay
 
         public void SetWeapon(int num)
         {
-            foreach (Weapon_Base w in m_Weapons)
+            foreach (Weapon_Base w in Weapons)
             {
                 w.Input_FireHold = false;
             }
-
+        
             m_WeaponNum = num;
         }
 
