@@ -5,12 +5,10 @@ namespace Shooter.Gameplay
 {
     public class PlayerControl : MonoBehaviour
     {
-
         [HideInInspector]
         public PlayerChar MyPlayerChar;
         [HideInInspector]
         public GameObject MyPlayerPlane;
-
 
         public Transform m_SpawnPoint;
 
@@ -351,8 +349,8 @@ namespace Shooter.Gameplay
             float dis = 0;
             new Plane(Vector3.up, Vector3.zero).Raycast(ray, out dis);
             AimPosition = ray.origin + dis * ray.direction;
-            m_AimPointTransofrm.position = AimPosition;
-            ReticlePosition = m_AimPointTransofrm.position;
+            //m_AimPointTransofrm.position = AimPosition;
+            //ReticlePosition = m_AimPointTransofrm.position;
         }
         public void Kill()
         {

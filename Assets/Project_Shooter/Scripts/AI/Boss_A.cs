@@ -20,9 +20,9 @@ namespace Shooter.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            m_DamageControl = GetComponent<DamageControl>();
+            EnemyHealth = GetComponent<EnemyHealth>();
             InitPosition = transform.position;
-            m_DamageControl.m_NoDamage = true;
+            EnemyHealth.m_NoDamage = true;
             transform.position = InitPosition + new Vector3(0, 0, 20);
 
             m_AttackLevel = 0;
@@ -31,7 +31,7 @@ namespace Shooter.Gameplay
         // Update is called once per frame
         void Update()
         {
-            float damage = m_DamageControl.Damage / m_DamageControl.MaxDamage;
+            float damage = EnemyHealth.Health / EnemyHealth.MaxHealth;
             if (damage>.6f)
             {
                 m_AttackLevel = 0;
@@ -152,7 +152,7 @@ namespace Shooter.Gameplay
             transform.position = InitPosition;
 
             yield return new WaitForSeconds(1f);
-            m_DamageControl.m_NoDamage = false;
+            EnemyHealth.m_NoDamage = false;
             m_FacePlayer = true;
             StartCoroutine(Co_MoveLoop());
             yield return new WaitForSeconds(1f);
@@ -200,7 +200,7 @@ namespace Shooter.Gameplay
         {
             if (!m_IsDead)
             {
-                if (m_DamageControl.Damage <= 0)
+                if (EnemyHealth.Health <= 0)
                 {
                     //base.HandleDeath();
                     StopAllCoroutines();

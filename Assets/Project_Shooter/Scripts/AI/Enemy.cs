@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Shooter.Gameplay
 {
     public class Enemy : MonoBehaviour
     {
-        protected DamageControl m_DamageControl;
+        [FormerlySerializedAs("MEnemyHealth")] public EnemyHealth EnemyHealth;
         [SerializeField]
         protected GameObject m_DeathParticlePrefab;
         [SerializeField]
@@ -50,7 +51,7 @@ namespace Shooter.Gameplay
         void Start()
         {
             m_CanDamage = true;
-            m_DamageControl = GetComponent<DamageControl>();
+            EnemyHealth = GetComponent<EnemyHealth>();
 
             InitPosition = transform.position;
 
@@ -69,8 +70,8 @@ namespace Shooter.Gameplay
             Quaternion rotation = Quaternion.LookRotation(forward);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 10 * Time.deltaTime);
 
-            Vector3 axis = Quaternion.Euler(0, 30 * m_DamageControl.DamageShakeAngle, 0) * Vector3.right;
-            ShakeBase.transform.localRotation = Quaternion.AngleAxis(-30 * m_DamageControl.DamageShakeAmount, axis);
+            Vector3 axis = Quaternion.Euler(0, 30 * EnemyHealth.DamageShakeAngle, 0) * Vector3.right;
+            ShakeBase.transform.localRotation = Quaternion.AngleAxis(-30 * EnemyHealth.DamageShakeAmount, axis);
 
             HandleDeath();
 
@@ -79,9 +80,9 @@ namespace Shooter.Gameplay
 
         public virtual void HandleDeath()
         {
-            m_DamageControl = GetComponent<DamageControl>();
+            EnemyHealth = GetComponent<EnemyHealth>();
             //Death
-            if (m_DamageControl.Damage <= 0)
+            if (EnemyHealth.Health <= 0)
             {
                 GameObject obj = Instantiate(m_DeathParticlePrefab);
                 obj.transform.position = transform.position;

@@ -39,7 +39,7 @@ namespace Shooter.Gameplay
                 {
                     if (col.gameObject != Creator)
                     {
-                        DamageControl d = col.gameObject.GetComponent<DamageControl>();
+                        EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
                         if (d != null)
                         {
                             d.ApplyDamage(Damage, transform.forward, 1);
@@ -51,7 +51,7 @@ namespace Shooter.Gameplay
                 else if (col.gameObject.tag == "Block")
                 {
 
-                    DamageControl d = col.gameObject.GetComponent<DamageControl>();
+                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
                     if (d != null)
                     {
                         d.ApplyDamage(Damage, transform.forward, 1);
@@ -61,7 +61,7 @@ namespace Shooter.Gameplay
                 else if (col.gameObject.tag == "Enemy")
                 {
 
-                    DamageControl d = col.gameObject.GetComponent<DamageControl>();
+                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
                     if (d != null)
                     {
                         d.ApplyDamage(Damage, transform.forward, 1);

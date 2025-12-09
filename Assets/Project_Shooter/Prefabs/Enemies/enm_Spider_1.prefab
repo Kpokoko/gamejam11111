@@ -593,8 +593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0809dd1c0f1ba4885320eba1b0bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 100
-  MaxDamage: 2
+  Health: 100
+  MaxHealth: 2
   IsDead: 0
   m_NoDamage: 0
   LastDamageDirection: {x: 0, y: 0, z: 0}
@@ -602,6 +602,9 @@ MonoBehaviour:
   DamageShakeAmount: 0
   DamageShakeAngle: 0
   OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
     m_PersistentCalls:
       m_Calls: []
 --- !u!136 &7068718085531289385
@@ -639,6 +642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c45f2d69b0ec6747803403422737780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHealth: {fileID: 4913222759651675307}
   m_DeathParticlePrefab: {fileID: 5599717751194728857, guid: 20d399b6501120447b60f51be1a00524,
     type: 3}
   m_SpawnParticlePrefab: {fileID: 100002, guid: c2583fbe1221c0c4193e7c9ed91e3082,

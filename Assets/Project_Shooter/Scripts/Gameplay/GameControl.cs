@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Shooter.ScriptableObjects;
@@ -40,13 +39,13 @@ namespace Shooter.Gameplay
         {
             if (m_MainSaveData.m_CheckpointNumber == 0)
             {
-                m_TextUI_1.SetActive(true);
-                FadeControl.m_Current.StartFadeIn();
-                yield return new WaitForSeconds(4f);
-                FadeControl.m_Current.StartFadeOut();
+                //m_TextUI_1.SetActive(true);
+                //FadeControl.m_Current.StartFadeIn();
+                //yield return new WaitForSeconds(4f);
+                //FadeControl.m_Current.StartFadeOut();
                 yield return new WaitForSeconds(3f);
                 m_TextUI_1.SetActive(false);
-                FadeControl.m_Current.StartFadeIn();
+                //FadeControl.m_Current.StartFadeIn();
 
 
                 yield return new WaitForSeconds(2f);

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 namespace Shooter.Gameplay
 {
     public class DestructObject : MonoBehaviour
     {
-        [HideInInspector]
-        public DamageControl MyDamageControl;
+        [FormerlySerializedAs("MyDamageControl")] [HideInInspector]
+        public EnemyHealth myEnemyHealth;
 
         public GameObject BrakeEffectPrefab1;
         public GameObject DestroyedObjectPrefab1;
@@ -25,7 +27,7 @@ namespace Shooter.Gameplay
         // Use this for initialization
         void Start()
         {
-            MyDamageControl = GetComponent<DamageControl>();
+            myEnemyHealth = GetComponent<EnemyHealth>();
             InitRotation = transform.rotation;
             InitPosition = transform.position;
         }
@@ -51,7 +53,7 @@ namespace Shooter.Gameplay
 
             //if (CanDestroy)
             {
-                if (MyDamageControl.IsDead)
+                if (myEnemyHealth.IsDead)
                 {
                     GameObject obj = Instantiate(BrakeEffectPrefab1);
                     if (m_ExplodeCenter!=null)

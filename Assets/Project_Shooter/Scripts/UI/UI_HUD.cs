@@ -71,16 +71,16 @@ namespace Shooter.UI
 
             m_WeaponPowerTime.fillAmount = PlayerChar.m_Current.m_WpnPowerTime / 16f;
 
-            DamageControl damage = PlayerChar.m_Current.GetComponent<DamageControl>();
-            m_PlayerHealth.fillAmount = damage.Damage / damage.MaxDamage;
+            EnemyHealth damage = PlayerChar.m_Current.GetComponent<EnemyHealth>();
+            m_PlayerHealth.fillAmount = damage.Health / damage.MaxHealth;
 
 
             m_GunNameText.text = m_WeaponNames[PlayerChar.m_Current.m_WeaponNum];
 
             if (GameControl.m_Current.m_LevelBoss != null)
             {
-                damage = GameControl.m_Current.m_LevelBoss.GetComponent<DamageControl>();
-                m_BossHealth.fillAmount = damage.Damage / damage.MaxDamage;
+                damage = GameControl.m_Current.m_LevelBoss.GetComponent<EnemyHealth>();
+                m_BossHealth.fillAmount = damage.Health / damage.MaxHealth;
             }
 
             PlayerPowers p = PlayerChar.m_Current.GetComponent<PlayerPowers>();

@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 namespace Shooter.Gameplay
 {
     public class ResourceCrate : MonoBehaviour
     {
         public GameObject[] m_ItemPrefabs;
 
-        [HideInInspector]
-        public DamageControl m_DamageControl;
+        [FormerlySerializedAs("m_DamageControl")] [HideInInspector]
+        public EnemyHealth mEnemyHealth;
 
         public GameObject m_ExplodeParticle;
 
@@ -19,7 +21,7 @@ namespace Shooter.Gameplay
         // Start is called before the first frame update
         void Start()
         {
-            m_DamageControl = GetComponent<DamageControl>();
+            mEnemyHealth = GetComponent<EnemyHealth>();
         }
 
         // Update is called once per frame
@@ -31,7 +33,7 @@ namespace Shooter.Gameplay
             //}
             if (!m_Opened)
             {
-                if (m_DamageControl.IsDead)
+                if (mEnemyHealth.IsDead)
                 {
                     TargetsControl.m_Main.RemoveTarget(GetComponent<TargetObject>());
                     GetComponent<Collider>().enabled = false;

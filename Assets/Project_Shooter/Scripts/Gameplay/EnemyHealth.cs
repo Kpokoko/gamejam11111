@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+
 namespace Shooter.Gameplay
 {
-    public class DamageControl : MonoBehaviour
+    public class EnemyHealth : MonoBehaviour
     {
 
-        [HideInInspector]
-        public float Damage = 100;
+        [FormerlySerializedAs("Damage")] [HideInInspector]
+        public float Health = 100;
 
-        public float MaxDamage = 100;
+        [FormerlySerializedAs("MaxDamage")] public float MaxHealth = 100;
 
         [HideInInspector]
         public bool IsDead = false;
@@ -27,26 +29,24 @@ namespace Shooter.Gameplay
         [HideInInspector]
         public float DamageShakeAngle;
 
-        public UnityEvent OnDamaged;
+        public UnityEvent OnDamaged = new();
+        public UnityEvent OnDeath = new();
 
-
-        // Use this for initialization
 
         void Awake()
         {
             OnDamaged = new UnityEvent();
         }
+        
         void Start()
         {
-            Damage = MaxDamage;
+            Health = MaxHealth;
             IsDead = false;
             LastDamageDirection = Vector3.forward;
             DamageShakeAmount = 0;
             DamageShakeAngle = 0;
-            //
         }
 
-        // Update is called once per frame
         void Update()
         {
             DamageShakeAmount -= 12 * Time.deltaTime;
@@ -63,11 +63,12 @@ namespace Shooter.Gameplay
             LastDamageDirection = dir;
             LastDamageDirection.Normalize();
             LastDamageFactor = DamageFactor;
-            Damage -= dmg;
-            if (Damage <= 0)
+            Health -= dmg;
+            if (Health <= 0)
             {
-                Damage = 0;
+                Health = 0;
                 IsDead = true;
+                OnDeath.Invoke();
             }
             OnDamaged.Invoke();
             StartCoroutine(Co_HitGlow());
@@ -94,7 +95,7 @@ namespace Shooter.Gameplay
 
         public void AddHealth(float h)
         {
-            Damage = Mathf.Clamp(Damage + h, 0, MaxDamage);
+            Health = Mathf.Clamp(Health + h, 0, MaxHealth);
         }
 
         public void ApplyDamageShake()
@@ -108,7 +109,7 @@ namespace Shooter.Gameplay
 
         public void Reset()
         {
-            Damage = MaxDamage;
+            Health = MaxHealth;
             IsDead = false;
         }
     }

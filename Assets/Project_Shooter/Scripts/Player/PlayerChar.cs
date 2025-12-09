@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Shooter.Gameplay
 {
     public class PlayerChar : MonoBehaviour
     {
-        [HideInInspector]
-        public DamageControl m_DamageControl;
+        [FormerlySerializedAs("m_DamageControl")] [HideInInspector]
+        public EnemyHealth mEnemyHealth;
         public static PlayerChar m_Current;
 
         [SerializeField]
@@ -79,8 +80,8 @@ namespace Shooter.Gameplay
 
         void Start()
         {
-            m_DamageControl = GetComponent<DamageControl>();
-            m_DamageControl.OnDamaged.AddListener(HandleDamage);
+            mEnemyHealth = GetComponent<EnemyHealth>();
+            mEnemyHealth.OnDamaged.AddListener(HandleDamage);
             m_InControl = true;
 
 
@@ -128,15 +129,15 @@ namespace Shooter.Gameplay
                     }
                 }
 
-                //if (Input.GetKeyDown(KeyCode.C))
-                //{
-                //    CheckMelleeAttack();
-                //}
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    CheckMelleeAttack();
+                }
 
-                //if (Input.GetKeyDown(KeyCode.V))
-                //{
-                //    SetWeaponPowerLevel(1);
-                //}
+                if (Input.GetKeyDown(KeyCode.V))
+                {
+                    SetWeaponPowerLevel(100);
+                }
 
                 //if (Input.GetMouseButtonDown(1))
                 //{
@@ -254,7 +255,7 @@ namespace Shooter.Gameplay
 
             if (!m_IsDead)
             {
-                if (m_DamageControl.Damage <= 0)
+                if (mEnemyHealth.Health <= 0)
                 {
                     //die
                     m_IsDead = true;
@@ -309,7 +310,7 @@ namespace Shooter.Gameplay
             {
                 if (col.gameObject.tag == "Enemy")
                 {
-                    DamageControl d = col.gameObject.GetComponent<DamageControl>();
+                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
                     if (d != null)
                     {
                         Vector3 dir = col.gameObject.transform.position - transform.position;
@@ -327,7 +328,7 @@ namespace Shooter.Gameplay
                     //    rb.AddForceAtPosition(3000 * dir, col.gameObject.transform.position);
                     //}
 
-                    DamageControl d = col.gameObject.GetComponent<DamageControl>();
+                    EnemyHealth d = col.gameObject.GetComponent<EnemyHealth>();
                     if (d != null)
                     {
                         //float lerp = Vector3.Distance(col.bounds.center, transform.position) / Radius;
@@ -402,7 +403,7 @@ namespace Shooter.Gameplay
             }
             else if (itemType == "Health")
             {
-                m_DamageControl.AddHealth(count);
+                mEnemyHealth.AddHealth(count);
             }
             else if (itemType == "Key")
             {

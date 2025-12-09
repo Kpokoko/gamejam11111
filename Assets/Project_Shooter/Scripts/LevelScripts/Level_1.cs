@@ -25,7 +25,7 @@ namespace Shooter.Gameplay
             if (!m_KilledBoss)
             {
                 //check boss
-                DamageControl bossDamage = m_BossObject.GetComponent<DamageControl>();
+                EnemyHealth bossDamage = m_BossObject.GetComponent<EnemyHealth>();
                 if (bossDamage.IsDead)
                 {
                     m_KilledBoss = true;
