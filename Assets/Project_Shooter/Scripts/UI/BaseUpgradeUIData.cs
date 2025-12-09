@@ -1,11 +1,18 @@
 using System;
 using UnityEngine;
 
-public class BaseUpgradeUIData : MonoBehaviour
+public class BaseUpgradeUIData : ScriptableObject
 {
+    public Sprite Icon;
+    public string Description;
     public int[] UpgradeCosts;
-    public int CurrentUpgrade = 0;
+    [HideInInspector] public int CurrentUpgrade;
     public Action OnBuy;
+    
+    public void Subscribe()
+    {
+        OnBuy += OnBuyUpgrade;
+    }
 
     public bool TryBuy(int money, out int newMoney)
     {
@@ -20,5 +27,10 @@ public class BaseUpgradeUIData : MonoBehaviour
         }
 
         return false;
+    }
+
+    public virtual void OnBuyUpgrade()
+    {
+        
     }
 }

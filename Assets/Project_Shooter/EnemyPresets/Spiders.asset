@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a394df8bc62e41dba6ac220180d3efc1, type: 3}
   m_Name: Spiders
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
-  Sprite: {fileID: 21300000, guid: cdb950438ef0ead45a287822e66f5fa6, type: 3}
+  Sprite: {fileID: -1124196499, guid: 781ffab057722a44fa216ad32ace39b9, type: 3}
   EnemyPrefab: {fileID: 8216884134074516976, guid: 3f5159906be3d0d47ab6ccaf5b5325f8,
     type: 3}
   Count: 2

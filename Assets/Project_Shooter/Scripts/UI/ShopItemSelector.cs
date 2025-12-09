@@ -8,12 +8,15 @@ public class ShopItemSelector : MonoBehaviour
     [SerializeField] private GameObject shopCanvas;
     [SerializeField] private GameObject Cursor;
     [SerializeField] private List<EnemyPreset> enemies;
+    [SerializeField] private GameObject UpgradePrefab;
+    public List<BaseUpgradeUIData> upgrades;
+    
     private List<GameObject> _shopItems = new();
     private List<GameObject> _enemiesCards = new();
     private List<GameObject> _controls = new();
-    private int _shopItemsIndexator = 0;
-    private int _enemiesCardsIterator = 0;
-    private int _controlsIndexator = 0;
+    private int _shopItemsIndexator;
+    private int _enemiesCardsIterator;
+    private int _controlsIndexator;
     public Mode Mode;
     
     void Awake()
@@ -21,10 +24,16 @@ public class ShopItemSelector : MonoBehaviour
         var upgradesContainer = shopCanvas.transform.Find("UpgradesContainer").gameObject;
         var enemiesCardsContainer = shopCanvas.transform.Find("EnemiesCardsContainer").gameObject;
         var controlsContainer = shopCanvas.transform.Find("ShopControlsContainer").gameObject;
-        foreach (Transform upgrade in upgradesContainer.transform)
+        foreach (var upgrade in upgrades)
         {
-            _shopItems.Add(upgrade.gameObject);
-            UpdateCost(upgrade);
+            var go = Instantiate(UpgradePrefab);
+            _shopItems.Add(go);
+            
+            upgrade.Subscribe();
+            
+            var view = go.GetComponent<ShopItemView>();
+            view.image.sprite = upgrade.Icon;
+            UpdateCost(upgrade, view);
         }
         foreach (Transform enemyCard in enemiesCardsContainer.transform)
             _enemiesCards.Add(enemyCard.gameObject);
@@ -142,11 +151,11 @@ public class ShopItemSelector : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             var upgradeData = _shopItems[_shopItemsIndexator].GetComponentInChildren<BaseUpgradeUIData>();
-            Debug.Log(G.PlayerStats is null);
+            var upgradeView = _shopItems[_shopItemsIndexator].GetComponentInChildren<ShopItemView>();
             if (upgradeData.TryBuy(G.PlayerStats.GemCount, out var newMoney))
             {
                 G.PlayerStats.GemCount = newMoney;
-                UpdateCost(_shopItems[_shopItemsIndexator].transform);
+                UpdateCost(upgradeData, upgradeView);
                 Debug.Log("купили");
             }
             else
@@ -214,10 +223,8 @@ public class ShopItemSelector : MonoBehaviour
         Cursor.transform.position = _controls[_controlsIndexator].transform.position;
     }
 
-    private void UpdateCost(Transform upgrade)
+    private void UpdateCost(BaseUpgradeUIData upgrade, ShopItemView view)
     {
-        var upgradeData = upgrade.GetChild(0).gameObject.GetComponent<BaseUpgradeUIData>();
-        upgrade.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text =
-            upgradeData.UpgradeCosts[upgradeData.CurrentUpgrade].ToString();
+        view.text.text = upgrade.UpgradeCosts[upgrade.CurrentUpgrade].ToString();
     }
 }

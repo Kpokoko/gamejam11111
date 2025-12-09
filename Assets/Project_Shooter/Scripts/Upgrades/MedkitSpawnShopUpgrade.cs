@@ -1,12 +1,10 @@
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "Create MedkitSpawnShopUpgrade", fileName = "MedkitSpawnShopUpgrade", order = 0 )]
 public class MedkitSpawnShopUpgrade : BaseUpgradeUIData
 {
-    void Start()
+    public override void OnBuyUpgrade()
     {
-        OnBuy += OnBuyUpgrade;
-    }
-
-    void OnBuyUpgrade()
-    {
-        G.PlayerStats.MedkitSpawnUnlock = true;
+        G.PlayerStats.MedkitSpawnUnlock =  true;
     }
 }

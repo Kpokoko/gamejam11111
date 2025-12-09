@@ -15,4 +15,5 @@ public class PlayerStats : MonoBehaviour
     public bool SoftAimActive;
     public bool DashUnlock;
     public bool MedkitSpawnUnlock;
+    public bool MultShotUnlock;
 }

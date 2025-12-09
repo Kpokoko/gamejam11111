@@ -1,13 +1,10 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Create FastShotShopUpgrade", fileName = "FastShotShopUpgrade", order = 0)]
 public class FastShotShopUpgrade : BaseUpgradeUIData
 {
-    void Start()
-    {
-        OnBuy += OnBuyUpgrade;
-    }
 
-    void OnBuyUpgrade()
+    public override void OnBuyUpgrade()
     {
         G.Player.Weapons[0].FireDelay = 0.15f;
     }

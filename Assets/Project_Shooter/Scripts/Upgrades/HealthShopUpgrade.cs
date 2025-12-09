@@ -1,15 +1,11 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Create HealthShopUpgrade", fileName = "HealthShopUpgrade", order = 0)]
 public class HealthShopUpgrade : BaseUpgradeUIData
 {
     public int DeltaHealth;
-    
-    void Start()
-    {
-        OnBuy += OnBuyUpgrade;
-    }
 
-    void OnBuyUpgrade()
+    public override void OnBuyUpgrade()
     {
         G.Player.Health.MaxHealth += DeltaHealth;
     }
