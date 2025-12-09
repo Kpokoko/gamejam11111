@@ -59,7 +59,6 @@ namespace Shooter.Gameplay
             if (CurrentHealth <= 0)
             {
                 OnDeath.Invoke();
-                Debug.Log("ALOOO");
                 CurrentHealth = 0;
                 IsDead = true;
             }
