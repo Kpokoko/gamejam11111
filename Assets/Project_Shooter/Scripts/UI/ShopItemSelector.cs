@@ -278,9 +278,6 @@ public class ShopItemSelector : MonoBehaviour
     {
         var targetRT = list[indexator].GetComponent<RectTransform>();
         var cursorRT = Cursor.GetComponent<RectTransform>();
-        Cursor.transform.position = targetRT.transform.position;
-        cursorRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetRT.rect.width);
-        cursorRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetRT.rect.height);
+        cursorRT.transform.position = targetRT.transform.position;
     }
-
 }
