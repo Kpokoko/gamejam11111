@@ -94,10 +94,10 @@ namespace Shooter.Gameplay
                 Destroy(gameObject);
             }
 
-            if (transform.position.z<CameraControl.m_Current.m_CameraBottomPosition.z-5)
-            {
-                Destroy(gameObject);
-            }
+            // if (transform.position.z<CameraControl.m_Current.m_CameraBottomPosition.z-5)
+            // {
+            //     Destroy(gameObject);
+            // }
         }
 
         public virtual void HandleFacePlayer()

@@ -66,11 +66,11 @@ public class ShopItemSelector : MonoBehaviour
             }
         }
 
-        _text.text = G.PlayerStats.GemCount.ToString();
+        if (G.PlayerStats)
+            _text.text = G.PlayerStats.GemCount.ToString();
         ResizeCursor(_controls, 0);
         Description.text = "Выбери усиление";
         _controlsIndexator = 0;
-        Debug.Log(G.PlayerStats.GemCount);
     }
     
     void Update()
