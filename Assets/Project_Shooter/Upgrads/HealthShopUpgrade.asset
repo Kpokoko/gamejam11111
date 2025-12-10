@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HealthShopUpgrade
   m_EditorClassIdentifier: Assembly-CSharp::HealthShopUpgrade
   Icon: {fileID: -1135668554, guid: ed8365ecb3ece3a41b4a92fbd11394c5, type: 3}
-  Description: 
+  Description: "\u0423\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442
+    \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
   UpgradeCosts: 28000000
-  CurrentUpgrade: 0
   DeltaHealth: 5

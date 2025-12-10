@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseUpgradeUIData : ScriptableObject
@@ -6,7 +7,6 @@ public class BaseUpgradeUIData : ScriptableObject
     public Sprite Icon;
     public string Description;
     public int[] UpgradeCosts;
-    [HideInInspector] public int CurrentUpgrade;
     public Action OnBuy;
     
     public void Subscribe()
@@ -14,23 +14,19 @@ public class BaseUpgradeUIData : ScriptableObject
         OnBuy += OnBuyUpgrade;
     }
 
-    public bool TryBuy(int money, out int newMoney)
-    {
-        newMoney = 0;
-        if (UpgradeCosts.Length >= CurrentUpgrade + 1 && UpgradeCosts[CurrentUpgrade] <= money)
-        {
-            newMoney = money - UpgradeCosts[CurrentUpgrade];
-            ++CurrentUpgrade;
-            Debug.Log($"денег: {newMoney}, ещё таких апгрейдов: {UpgradeCosts.Length - CurrentUpgrade}");
-            OnBuy?.Invoke();
-            return true;
-        }
-
-        return false;
-    }
-
     public virtual void OnBuyUpgrade()
     {
         
     }
 }
+[Serializable]
+public class UpgradeRuntimeData
+{
+    public int CurrentUpgrade;
+}
+
+public static class PlayerProgress
+{
+    public static Dictionary<BaseUpgradeUIData, UpgradeRuntimeData> Upgrades = new();
+}
+

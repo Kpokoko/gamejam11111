@@ -7,4 +7,6 @@ public class ShopItemView : MonoBehaviour
     public Image image;
     public TMP_Text text;
     public BaseUpgradeUIData upgradeData;
+    public GameObject SoldOutImage;
+    public TextMeshProUGUI Description;
 }

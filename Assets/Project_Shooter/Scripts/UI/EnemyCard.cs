@@ -23,6 +23,7 @@ public class EnemyCard : MonoBehaviour
 
     public void ResetCard()
     {
+        BaskSide.transform.localScale = new Vector3(1, 1, 1);
         BaskSide.SetActive(true);
         CardImage.sprite = BaseCardSprite;
         RewardTextGO.GetComponent<TextMeshProUGUI>().text = "";
@@ -43,6 +44,7 @@ public class EnemyCard : MonoBehaviour
 
     private IEnumerator Flip()
     {
+        BaskSide.transform.localScale = new Vector3(-1, 1, 1);
         IsFlipped = true;
         var angle = 180f;
 

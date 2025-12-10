@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: MultShot
   m_EditorClassIdentifier: Assembly-CSharp::MultShot
   Icon: {fileID: 1892197475, guid: ed8365ecb3ece3a41b4a92fbd11394c5, type: 3}
-  Description: 
+  Description: "\u0422\u0440\u043E\u0439\u043D\u043E\u0439 \u0432\u044B\u0441\u0442\u0440\u0435\u043B"
   UpgradeCosts: c8000000
-  CurrentUpgrade: 0

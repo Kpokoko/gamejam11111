@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopItemSelector : MonoBehaviour
 {
@@ -19,23 +20,25 @@ public class ShopItemSelector : MonoBehaviour
     private int _enemiesCardsIterator;
     private int _controlsIndexator;
     public Mode Mode;
+    private TextMeshProUGUI _text;
+    public TextMeshProUGUI Description;
     
     void Awake()
     {
-        var upgradesContainer = shopCanvas.transform.Find("UpgradesContainer").gameObject;
         var enemiesCardsContainer = shopCanvas.transform.Find("EnemiesCardsContainer").gameObject;
         var controlsContainer = shopCanvas.transform.Find("ShopControlsContainer").gameObject;
+        var moneyInfo = shopCanvas.transform.Find("MoneyInfo").gameObject;
+        _text = moneyInfo.GetComponentInChildren<TextMeshProUGUI>();
         foreach (var upgrade in upgrades)
         {
+            if (!PlayerProgress.Upgrades.ContainsKey(upgrade))
+                PlayerProgress.Upgrades.Add(upgrade, new UpgradeRuntimeData());
             var go = Instantiate(UpgradePrefab, UpgradesContainer.transform, false);
-
             _shopItems.Add(go);
-    
             upgrade.Subscribe();
-    
             var view = go.GetComponent<ShopItemView>();
             view.image.sprite = upgrade.Icon;
-            view.upgradeData =  upgrade;
+            view.upgradeData = upgrade;
             UpdateCost(upgrade, view);
         }
         foreach (Transform enemyCard in enemiesCardsContainer.transform)
@@ -61,7 +64,11 @@ public class ShopItemSelector : MonoBehaviour
                 G.PlayerStats.GemCount += enemyCard.CardPrize;
             }
         }
+
+        _text.text = G.PlayerStats.GemCount.ToString();
         Cursor.transform.position = _controls[0].transform.position;
+        Description.text = "";
+        _controlsIndexator = 0;
         Debug.Log(G.PlayerStats.GemCount);
     }
     
@@ -88,7 +95,7 @@ public class ShopItemSelector : MonoBehaviour
             if (_controlsIndexator > 0)
             {
                 --_controlsIndexator;
-                Cursor.transform.position = _controls[_controlsIndexator].transform.position;
+                ResizeCursor(_controls, _controlsIndexator);
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -96,7 +103,7 @@ public class ShopItemSelector : MonoBehaviour
             if (_controlsIndexator < _controls.Count - 1)
             {
                 ++_controlsIndexator;
-                Cursor.transform.position = _controls[_controlsIndexator].transform.position;
+                ResizeCursor(_controls, _controlsIndexator);
             }
         }
 
@@ -119,7 +126,10 @@ public class ShopItemSelector : MonoBehaviour
             var temp = _controls[_controlsIndexator];
             Mode = temp.GetComponent<ModeWrapper>().Mode;
             if (Mode is Mode.Upgrades)
-                Cursor.transform.position = _shopItems[_shopItemsIndexator].transform.position;
+            {
+                ResizeCursor(_shopItems, _shopItemsIndexator);
+                Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
+            }
             else if (Mode is Mode.Enemies)
                 Cursor.transform.position = _enemiesCards[_enemiesCardsIterator].transform.position;
         }
@@ -132,7 +142,8 @@ public class ShopItemSelector : MonoBehaviour
             if (_shopItemsIndexator > 0)
             {
                 --_shopItemsIndexator;
-                Cursor.transform.position = _shopItems[_shopItemsIndexator].transform.position;
+                ResizeCursor(_shopItems, _shopItemsIndexator);
+                Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
             }
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -140,7 +151,8 @@ public class ShopItemSelector : MonoBehaviour
             if (_shopItemsIndexator > 2)
             {
                 _shopItemsIndexator -= 3;
-                Cursor.transform.position = _shopItems[_shopItemsIndexator].transform.position;
+                ResizeCursor(_shopItems, _shopItemsIndexator);
+                Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -148,7 +160,8 @@ public class ShopItemSelector : MonoBehaviour
             if (_shopItemsIndexator < _shopItems.Count - 1)
             {
                 ++_shopItemsIndexator;
-                Cursor.transform.position = _shopItems[_shopItemsIndexator].transform.position;
+                ResizeCursor(_shopItems, _shopItemsIndexator);
+                Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -156,23 +169,36 @@ public class ShopItemSelector : MonoBehaviour
             if (_shopItemsIndexator < _shopItems.Count - 3)
             {
                 _shopItemsIndexator += 3;
-                Cursor.transform.position = _shopItems[_shopItemsIndexator].transform.position;
+                ResizeCursor(_shopItems, _shopItemsIndexator);
+                Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
             }
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            //var upgradeData = _shopItems[_shopItemsIndexator].GetComponentInChildren<BaseUpgradeUIData>();
-            var upgradeView = _shopItems[_shopItemsIndexator].GetComponentInChildren<ShopItemView>();
+            var upgradeView = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>();
             var upgradeData = upgradeView.upgradeData;
-            if (upgradeData.TryBuy(G.PlayerStats.GemCount, out var newMoney))
+            var runtime = PlayerProgress.Upgrades[upgradeData];
+
+            if (runtime.CurrentUpgrade < upgradeData.UpgradeCosts.Length)
             {
-                G.PlayerStats.GemCount = newMoney;
-                UpdateCost(upgradeData, upgradeView);
-                Debug.Log("купили");
+                var cost = upgradeData.UpgradeCosts[runtime.CurrentUpgrade];
+
+                if (G.PlayerStats.GemCount >= cost)
+                {
+                    G.PlayerStats.GemCount -= cost;
+                    ++runtime.CurrentUpgrade;
+                    upgradeData.OnBuy?.Invoke();
+                    UpdateCost(upgradeData, upgradeView);
+                    _text.text = G.PlayerStats.GemCount.ToString();
+                    Debug.Log("купили");
+                }
+                else
+                {
+                    Debug.Log("не купили: мало денег");
+                }
             }
-            else
-                Debug.Log("не купили");
         }
+
 
         if (Input.GetKeyDown(KeyCode.X))
             ReturnToControls();
@@ -187,7 +213,7 @@ public class ShopItemSelector : MonoBehaviour
                 if (_enemiesCardsIterator > 0)
                 {
                     --_enemiesCardsIterator;
-                    Cursor.transform.position = _enemiesCards[_enemiesCardsIterator].transform.position;
+                    ResizeCursor(_enemiesCards, _enemiesCardsIterator);
                 }
             }
         }
@@ -196,7 +222,7 @@ public class ShopItemSelector : MonoBehaviour
             if (_enemiesCardsIterator > 2)
             {
                 _enemiesCardsIterator -= 3;
-                Cursor.transform.position = _enemiesCards[_enemiesCardsIterator].transform.position;
+                ResizeCursor(_enemiesCards, _enemiesCardsIterator);
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -204,7 +230,7 @@ public class ShopItemSelector : MonoBehaviour
             if (_enemiesCardsIterator < _enemiesCards.Count - 1)
             {
                 ++_enemiesCardsIterator;
-                Cursor.transform.position = _enemiesCards[_enemiesCardsIterator].transform.position;
+                ResizeCursor(_enemiesCards, _enemiesCardsIterator);
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -212,7 +238,7 @@ public class ShopItemSelector : MonoBehaviour
             if (_enemiesCardsIterator < _enemiesCards.Count - 3)
             {
                 _enemiesCardsIterator += 3;
-                Cursor.transform.position = _enemiesCards[_enemiesCardsIterator].transform.position;
+                ResizeCursor(_enemiesCards, _enemiesCardsIterator);
             }
         }
         if (Input.GetKeyDown(KeyCode.Z))
@@ -232,11 +258,29 @@ public class ShopItemSelector : MonoBehaviour
     private void ReturnToControls()
     {
         Mode = Mode.Controls;
-        Cursor.transform.position = _controls[_controlsIndexator].transform.position;
+        ResizeCursor(_controls, _controlsIndexator);
+        Description.text = "";
     }
 
     private void UpdateCost(BaseUpgradeUIData upgrade, ShopItemView view)
     {
-        view.text.text = upgrade.UpgradeCosts[upgrade.CurrentUpgrade].ToString();
+        var runtime = PlayerProgress.Upgrades[upgrade];
+        if (runtime.CurrentUpgrade < upgrade.UpgradeCosts.Length)
+            view.text.text = upgrade.UpgradeCosts[runtime.CurrentUpgrade].ToString();
+        else
+        {
+            view.SoldOutImage.SetActive(true);
+            view.text.text = "Выкуплено";
+        }
     }
+
+    private void ResizeCursor(List<GameObject> list, int indexator)
+    {
+        var targetRT = list[indexator].GetComponent<RectTransform>();
+        var cursorRT = Cursor.GetComponent<RectTransform>();
+        Cursor.transform.position = targetRT.transform.position;
+        cursorRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetRT.rect.width);
+        cursorRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetRT.rect.height);
+    }
+
 }
