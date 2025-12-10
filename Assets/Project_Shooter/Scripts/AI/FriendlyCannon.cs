@@ -48,11 +48,11 @@ namespace Shooter.Gameplay
                     particle.transform.localPosition = Vector3.zero;
                     Destroy(particle, 3);
 
-                    yield return new WaitForSeconds(1.3f);
+                    yield return new WaitForSeconds(0.3f);
                     ShootBullet();
                 }
 
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(0.5f);
 
             }
         }
@@ -64,7 +64,9 @@ namespace Shooter.Gameplay
             Vector3 dir = _currentTarget.transform.position - transform.position;
             dir.y = 0;
             obj.transform.forward = dir;
-            obj.GetComponent<ProjectileCollision>().m_Creator = gameObject;
+            var r = obj.GetComponent<ProjectileCollision>();
+            r.m_Creator = gameObject;
+            r.m_Damage = 5;
             Destroy(obj, 10);
 
             obj = Instantiate(m_FireParticlePrefab1);

@@ -68,7 +68,7 @@ public class LevelController : MonoBehaviour
     {
         while (isLevelRunning)
         {
-            yield return new WaitForSeconds(SpawnMedkitInterval);
+            yield return new WaitForSeconds(G.PlayerStats.MedKitCooldown);
 
             var randomSpawnPos = GetRandomPositionInBounds();
 
@@ -139,6 +139,7 @@ public class LevelController : MonoBehaviour
         {
             Debug.Log("Все враги уничтожены. ДЕНЬ ПРОЙДЕН.");
             isLevelRunning = false;
+            G.Player.Health.AddHealth(999);
             StartCoroutine(EndWave());
         }
     }

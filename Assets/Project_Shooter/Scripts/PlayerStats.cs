@@ -15,6 +15,8 @@ public class PlayerStats : MonoBehaviour
     public bool DashUnlock;
     public bool MedkitSpawnUnlock;
     public bool MultShotUnlock;
+    public int MultShotBulletCount = 1;
     public bool TurrelUnlock;
     public bool BounceUpgrade;
+    public int MedKitCooldown = 40;
 }

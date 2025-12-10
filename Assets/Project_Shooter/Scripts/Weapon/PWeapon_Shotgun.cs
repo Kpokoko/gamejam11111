@@ -34,7 +34,7 @@ namespace Shooter.Gameplay
 
             if (PowerLevel == 0)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < G.PlayerStats.MultShotBulletCount; i++)
                 {
                     obj = Instantiate(BulletPrefab);
                     obj.transform.position = m_FirePoint.position;

@@ -163,8 +163,6 @@ GameObject:
   - component: {fileID: 4913222759651675316}
   - component: {fileID: 4913222759651675307}
   - component: {fileID: 7068718085531289385}
-  - component: {fileID: 6289355687444377551}
-  - component: {fileID: 7363474625084360625}
   - component: {fileID: 4854535216596800132}
   - component: {fileID: 7869962331199602607}
   m_Layer: 9
@@ -240,41 +238,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &6289355687444377551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4913222759651675319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1117261ef877b3b43a3788db86c5a5e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MovementDirection: {x: 0, y: 0, z: 0}
-  m_MovementTargetPosition: {x: 0, y: 0, z: 0}
-  m_MovementEnable: 1
-  m_MovementSpeed: 0
-  m_ReachedTargetPosition: 0
-  m_FaceMoveDirection: 1
-  m_UsePhysics: 1
-  m_Animator: {fileID: 0}
---- !u!114 &7363474625084360625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4913222759651675319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5a8b536feba92b46941a78c95f0fcaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentState: 0
-  StateTimer: 0
-  StateStartTime: 0
 --- !u!114 &4854535216596800132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +261,8 @@ MonoBehaviour:
   ShakeBase: {fileID: 0}
   m_RotationBase: {fileID: 4913222759651675316}
   m_FirePoint: {fileID: 4913222759651675316}
-  m_ItemPrefabs: []
+  m_ItemPrefabs:
+  - {fileID: 1111121737912469067, guid: 5f187d5a928aca340ab01f24334b47c9, type: 3}
   m_FacePlayer: 0
   m_StartAttack: 0
   m_StartWalkDistance: 10
@@ -306,9 +270,12 @@ MonoBehaviour:
   m_Alerted: 0
   m_Animator: {fileID: 0}
   m_ItemDropCount: 1
-  m_BulletPrefab1: {fileID: 0}
-  m_FireParticlePrefab1: {fileID: 0}
-  m_PreFireParticlePrefab1: {fileID: 0}
+  m_BulletPrefab1: {fileID: 3369402403857273917, guid: 6f37a7e9d514a664db41debf3f28d247,
+    type: 3}
+  m_FireParticlePrefab1: {fileID: 4230452510541733725, guid: a987604c3574f324096b4c9be0cd72c8,
+    type: 3}
+  m_PreFireParticlePrefab1: {fileID: 4230452510541733725, guid: 39311bb9ce234df498f87ab6b78a55a9,
+    type: 3}
   _currentTarget: {fileID: 0}
 --- !u!114 &7869962331199602607
 MonoBehaviour:
