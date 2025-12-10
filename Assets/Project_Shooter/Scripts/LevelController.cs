@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class LevelController : MonoBehaviour
@@ -48,6 +49,8 @@ public class LevelController : MonoBehaviour
         G.Player.Health.AddHealth(999);
         AllSpawned.Clear();
         DayNumber++;
+        if (DayNumber == 8)
+            SceneManager.LoadScene("GoodEnding");
         
         isLevelRunning = true;
         G.Player.transform.position = PlayerSpawnPoint.position;
