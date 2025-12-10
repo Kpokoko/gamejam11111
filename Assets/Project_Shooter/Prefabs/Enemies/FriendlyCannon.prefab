@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Alerted: 0
   m_Animator: {fileID: 0}
   m_ItemDropCount: 1
-  m_BulletPrefab1: {fileID: 3369402403857273917, guid: 6f37a7e9d514a664db41debf3f28d247,
+  m_BulletPrefab1: {fileID: 3369402403857273917, guid: 73cbc7bdda70e6a47aebe1cc56c40fd4,
     type: 3}
   m_FireParticlePrefab1: {fileID: 4230452510541733725, guid: a987604c3574f324096b4c9be0cd72c8,
     type: 3}
@@ -357,7 +357,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5df28732270a3f448bc39b5f718fc54e, type: 2}
+  - {fileID: 2100000, guid: f16c75a7c54299844b242cd846d8b06d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -448,7 +448,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5df28732270a3f448bc39b5f718fc54e, type: 2}
+  - {fileID: 2100000, guid: f16c75a7c54299844b242cd846d8b06d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -9,6 +9,7 @@ public class AudioPlayer : MonoBehaviour
     public AudioClip ShopNavigation;
     public AudioClip BuyUpgrade;
     public AudioClip FlipCard;
+    public AudioClip PickupCoin;
 
     void Start()
     {
@@ -44,5 +45,10 @@ public class AudioPlayer : MonoBehaviour
     public void PlayFlipCard()
     {
         AudioManager.Instance.PlaySFX(FlipCard);
+    }
+    
+    public void PlayPickupCoin(float volume)
+    {
+        AudioManager.Instance.PlaySFX(PickupCoin, volume);
     }
 }

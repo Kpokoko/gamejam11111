@@ -287,6 +287,7 @@ namespace Shooter.Gameplay
             if (itemType == "Gem")
             {
                 G.PlayerStats.GemCount++;
+                AudioManager.Instance.GetComponent<AudioPlayer>().PlayPickupCoin(0.3f);
             }
             else if (itemType == "WeaponPower")
             {

@@ -11516,8 +11516,10 @@ MonoBehaviour:
   DashUnlock: 0
   MedkitSpawnUnlock: 0
   MultShotUnlock: 0
+  MultShotBulletCount: 1
   TurrelUnlock: 0
   BounceUpgrade: 0
+  MedKitCooldown: 40
 --- !u!114 &7021728048323989855
 MonoBehaviour:
   m_ObjectHideFlags: 0

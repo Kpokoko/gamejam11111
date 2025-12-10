@@ -5048,6 +5048,7 @@ MonoBehaviour:
   ShopNavigation: {fileID: 8300000, guid: 2765381105553da4bb0b18bcece2bfeb, type: 3}
   BuyUpgrade: {fileID: 8300000, guid: b06c1cbdf6360a44d8c7e588128f95e4, type: 3}
   FlipCard: {fileID: 8300000, guid: 2375430fc92c4fd4194b1344c42c5f7a, type: 3}
+  PickupCoin: {fileID: 8300000, guid: 15837ae9f820dbe42bb82d27c899395a, type: 3}
 --- !u!1 &1186797029
 GameObject:
   m_ObjectHideFlags: 0

@@ -106,7 +106,7 @@ public class LevelController : MonoBehaviour
         var shuffledSpawnQueue = CreateShuffledQueue(EnemyPresets);
 
         _enemiesAliveCount = shuffledSpawnQueue.Count;
-        G.UIHUD.CountEnemies.text = _enemiesAliveCount.ToString();
+        G.UIHUD.CountEnemies.text = "Осталось врагов: " + _enemiesAliveCount;
 
         Debug.Log($"Начало спавна (День {DayNumber}). Всего врагов: {_enemiesAliveCount}");
 
@@ -139,7 +139,7 @@ public class LevelController : MonoBehaviour
     {
         _enemiesAliveCount--;
         Debug.Log($"Враг умер. Осталось: {_enemiesAliveCount}");
-        G.UIHUD.CountEnemies.text = _enemiesAliveCount.ToString();
+        G.UIHUD.CountEnemies.text = "Осталось врагов: " + _enemiesAliveCount;
         CheckWinCondition();
     }
 
