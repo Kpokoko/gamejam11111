@@ -55,6 +55,7 @@ public class ShopItemSelector : MonoBehaviour
     
     void OnEnable()
     {
+        AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopTheme();
         foreach (var card in _enemiesCards)
         {
             var enemyCard = card.GetComponent<EnemyCard>();
@@ -67,7 +68,7 @@ public class ShopItemSelector : MonoBehaviour
 
         _text.text = G.PlayerStats.GemCount.ToString();
         ResizeCursor(_controls, 0);
-        Description.text = "";
+        Description.text = "Выбери усиление";
         _controlsIndexator = 0;
         Debug.Log(G.PlayerStats.GemCount);
     }
@@ -94,6 +95,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_controlsIndexator > 0)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 --_controlsIndexator;
                 ResizeCursor(_controls, _controlsIndexator);
             }
@@ -102,6 +104,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_controlsIndexator < _controls.Count - 1)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 ++_controlsIndexator;
                 ResizeCursor(_controls, _controlsIndexator);
             }
@@ -109,6 +112,7 @@ public class ShopItemSelector : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
             if (_controlsIndexator == 2)
             {
                 var pickedEnemies = new List<EnemyPreset>(_enemiesCards
@@ -144,6 +148,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_shopItemsIndexator > 0)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 --_shopItemsIndexator;
                 ResizeCursor(_shopItems, _shopItemsIndexator);
                 Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
@@ -153,6 +158,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_shopItemsIndexator > 2)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 _shopItemsIndexator -= 3;
                 ResizeCursor(_shopItems, _shopItemsIndexator);
                 Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
@@ -162,6 +168,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_shopItemsIndexator < _shopItems.Count - 1)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 ++_shopItemsIndexator;
                 ResizeCursor(_shopItems, _shopItemsIndexator);
                 Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
@@ -171,6 +178,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_shopItemsIndexator < _shopItems.Count - 3)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 _shopItemsIndexator += 3;
                 ResizeCursor(_shopItems, _shopItemsIndexator);
                 Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
@@ -178,6 +186,7 @@ public class ShopItemSelector : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
             var upgradeView = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>();
             var upgradeData = upgradeView.upgradeData;
             var runtime = PlayerProgress.Upgrades[upgradeData];
@@ -188,6 +197,7 @@ public class ShopItemSelector : MonoBehaviour
 
                 if (G.PlayerStats.GemCount >= cost)
                 {
+                    AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayBuySound();
                     G.PlayerStats.GemCount -= cost;
                     ++runtime.CurrentUpgrade;
                     upgradeData.OnBuy?.Invoke();
@@ -215,6 +225,7 @@ public class ShopItemSelector : MonoBehaviour
             {
                 if (_enemiesCardsIterator > 0)
                 {
+                    AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                     --_enemiesCardsIterator;
                     ResizeCursor(_enemiesCards, _enemiesCardsIterator);
                 }
@@ -224,6 +235,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_enemiesCardsIterator > 2)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 _enemiesCardsIterator -= 3;
                 ResizeCursor(_enemiesCards, _enemiesCardsIterator);
             }
@@ -232,6 +244,7 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_enemiesCardsIterator < _enemiesCards.Count - 1)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 ++_enemiesCardsIterator;
                 ResizeCursor(_enemiesCards, _enemiesCardsIterator);
             }
@@ -240,15 +253,18 @@ public class ShopItemSelector : MonoBehaviour
         {
             if (_enemiesCardsIterator < _enemiesCards.Count - 3)
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
                 _enemiesCardsIterator += 3;
                 ResizeCursor(_enemiesCards, _enemiesCardsIterator);
             }
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
             var enemyCard = _enemiesCards[_enemiesCardsIterator].GetComponent<EnemyCard>();
             if (enemyCard.TryFlip())
             {
+                AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayFlipCard();
                 var enemySO = enemies[Random.Range(0, enemies.Count)];
                 enemyCard.SetEnemySO(enemySO);
             }
@@ -260,9 +276,10 @@ public class ShopItemSelector : MonoBehaviour
 
     private void ReturnToControls()
     {
+        AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayShopNavigation();
         Mode = Mode.Controls;
         ResizeCursor(_controls, _controlsIndexator);
-        Description.text = "";
+        Description.text = "Выбери усиление";
     }
 
     private void UpdateCost(BaseUpgradeUIData upgrade, ShopItemView view)
