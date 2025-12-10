@@ -56,7 +56,10 @@ public class ShopItemSelector : MonoBehaviour
         {
             var enemyCard = card.GetComponent<EnemyCard>();
             if (enemyCard.IsFlipped)
+            {
+                enemyCard.ResetCard();
                 G.PlayerStats.GemCount += enemyCard.CardPrize;
+            }
         }
         Cursor.transform.position = _controls[0].transform.position;
         Debug.Log(G.PlayerStats.GemCount);
