@@ -34,7 +34,26 @@ namespace Shooter.Gameplay
         {
             GameObject obj;
 
-            if (PowerLevel == 0)
+            if(G.PlayerStats.MultShotUnlock)
+            {
+                if (PowerLevel == 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        obj = Instantiate(BulletPrefab);
+                        obj.transform.position = m_FirePoint.position;
+                        obj.transform.forward = Quaternion.Euler(0,-6+ i * 6, 0) * m_FirePoint.forward;
+                        Projectile_Base proj = obj.GetComponent<Projectile_Base>();
+                        proj.Creator = m_Owner;
+                        proj.Speed = ProjectileSpeed;
+                        proj.Damage = Damage;
+                        proj.m_Range = Range;
+                        Destroy(obj, 5);
+                    }
+
+                }
+            }
+            else if (PowerLevel == 0)
             {
                 obj = Instantiate(BulletPrefab);
                 obj.transform.position = m_FirePoint.position;

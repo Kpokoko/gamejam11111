@@ -25,7 +25,7 @@ namespace Shooter.Gameplay
                 }
             }
 
-            Input_FireHold = false;
+            //Input_FireHold = false;
         }
 
         public override void FireWeapon()
