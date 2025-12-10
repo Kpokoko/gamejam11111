@@ -9,7 +9,7 @@ public class LevelController : MonoBehaviour
 {
     public Transform PlayerSpawnPoint;
     public Transform ArenaSize;
-    public float SpawnMedkitInterval = 30f;
+    public Transform BossSpawnPoint;
     public List<EnemyPreset> EnemyPresets;
 
     public UnityEvent AllEnemyDead;
@@ -17,6 +17,7 @@ public class LevelController : MonoBehaviour
 
     public GameObject MedkitPrefab; 
     public GameObject TurrelPrefab;
+    public GameObject BossPrefab;
 
     public bool isLevelRunning;
 
@@ -49,8 +50,7 @@ public class LevelController : MonoBehaviour
         G.Player.Health.AddHealth(999);
         AllSpawned.Clear();
         DayNumber++;
-        if (DayNumber == 8)
-            SceneManager.LoadScene("GoodEnding");
+        
         
         isLevelRunning = true;
         G.Player.transform.position = PlayerSpawnPoint.position;
@@ -120,6 +120,13 @@ public class LevelController : MonoBehaviour
 
             // ★★★ ВАЖНО! Используем динамический интервал ★★★
             yield return new WaitForSeconds(GetSpawnInterval());
+        }
+        if (DayNumber == 1)
+        {
+            _enemiesAliveCount++;
+            G.UIHUD.m_BossHealthBase.gameObject.SetActive(true);
+            var r =Instantiate(BossPrefab, BossSpawnPoint.position, Quaternion.identity);
+            AllSpawned.Add(r);
         }
 
         Debug.Log("Спавн всех врагов завершен.");

@@ -5,7 +5,6 @@ namespace Shooter.Gameplay
 {
     public class Boss_A : Enemy
     {
-        
         bool CanFire = true;
 
         public Transform ShotPoint;
@@ -22,10 +21,19 @@ namespace Shooter.Gameplay
         {
             health = GetComponent<Health>();
             InitPosition = transform.position;
-            health.m_NoDamage = true;
+            //health.m_NoDamage = true;
             transform.position = InitPosition + new Vector3(0, 0, 20);
-
             m_AttackLevel = 0;
+            UI();
+            EnableEnemy();
+
+            health.OnDamaged.AddListener(UI);
+            health.OnDeath.AddListener(G.LevelController.OnEnemyDied);
+        }
+
+        void UI()
+        {
+            G.UIHUD.m_BossHealth.fillAmount = health.CurrentHealth / health.MaxHealth;
         }
 
         // Update is called once per frame

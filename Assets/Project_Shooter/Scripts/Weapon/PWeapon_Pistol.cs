@@ -48,7 +48,6 @@ namespace Shooter.Gameplay
                         proj.Speed = ProjectileSpeed;
                         proj.Damage = Damage;
                         proj.m_Range = Range;
-                        Destroy(obj, 5);
                     }
 
                 }

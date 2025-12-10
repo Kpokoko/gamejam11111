@@ -7,7 +7,6 @@ namespace Shooter.Gameplay
 {
     public class Level_1 : MonoBehaviour
     {
-
         public GameObject m_BossObject;
         [HideInInspector]
         public bool m_KilledBoss = false;
