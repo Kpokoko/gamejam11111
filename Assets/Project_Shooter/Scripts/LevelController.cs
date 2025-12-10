@@ -8,7 +8,6 @@ public class LevelController : MonoBehaviour
 {
     public Transform PlayerSpawnPoint;
     public Transform ArenaSize;
-    public float SpawnInterval = 4f;
     public float SpawnMedkitInterval = 30f;
     public List<EnemyPreset> EnemyPresets;
 
@@ -22,8 +21,17 @@ public class LevelController : MonoBehaviour
 
     private int _enemiesAliveCount;
     private bool _isSpawningFinished;
-    
+
     private List<GameObject> AllSpawned = new();
+
+    [Header("DAY SYSTEM")]
+    public int DayNumber = 0;          // День начинается с 1
+
+    [Header("ENEMY SPAWN SETTINGS")]
+    public float baseInterval = 2f;    // Интервал на 1-й день (твой запрос)
+    [Range(0.5f, 0.99f)] public float factor = 0.85f;
+    public float minInterval = 0.4f;   // Ограничение, чтобы не было 100 врагов/с
+    [Range(0f, 0.5f)] public float jitter = 0.1f;   // Случайность для естественности
 
     private void Awake()
     {
@@ -33,16 +41,20 @@ public class LevelController : MonoBehaviour
     public void StartLevel()
     {
         foreach (var go in AllSpawned)
-        {
             Destroy(go);
-        }
-        
+
+        AllSpawned.Clear();
+
+        DayNumber++;
         isLevelRunning = true;
-        
+
         G.Player.transform.position = PlayerSpawnPoint.position;
+
         StartCoroutine(SpawnEnemiesRoutine());
+
         if (G.PlayerStats.MedkitSpawnUnlock)
             StartCoroutine(SpawnMedkitRoutine());
+
         if (G.PlayerStats.TurrelUnlock)
         {
             var t = Instantiate(TurrelPrefab, PlayerSpawnPoint.position, Quaternion.identity);
@@ -58,15 +70,27 @@ public class LevelController : MonoBehaviour
 
             var randomSpawnPos = GetRandomPositionInBounds();
 
-            var newEnemyObj = Instantiate(MedkitPrefab, randomSpawnPos, Quaternion.identity);
-            newEnemyObj.name = $"{MedkitPrefab.name} (Spawned)";
-            AllSpawned.Add(newEnemyObj);
+            var medkitObj = Instantiate(MedkitPrefab, randomSpawnPos, Quaternion.identity);
+            medkitObj.name = $"{MedkitPrefab.name} (Spawned)";
+            AllSpawned.Add(medkitObj);
         }
+    }
+
+    // ★★★ ГЛАВНАЯ ФОРМУЛА ★★★
+    private float GetSpawnInterval()
+    {
+        float interval = baseInterval * Mathf.Pow(factor, Mathf.Max(0, DayNumber - 1));
+        interval = Mathf.Max(minInterval, interval);
+
+        // добавляем джиттер (± j %)
+        float offset = interval * jitter * Random.Range(-1f, 1f);
+        return interval + offset;
     }
 
     private IEnumerator SpawnEnemiesRoutine()
     {
         StartWave.Invoke();
+
         if (EnemyPresets == null || EnemyPresets.Count == 0)
         {
             Debug.LogWarning("Список пресетов врагов пуст.");
@@ -77,16 +101,18 @@ public class LevelController : MonoBehaviour
 
         _enemiesAliveCount = shuffledSpawnQueue.Count;
 
-        Debug.Log($"Начало спавна. Всего врагов в очереди: {_enemiesAliveCount}");
+        Debug.Log($"Начало спавна (День {DayNumber}). Всего врагов: {_enemiesAliveCount}");
 
         foreach (GameObject enemyPrefab in shuffledSpawnQueue)
         {
             var randomSpawnPos = GetRandomPositionInBounds();
 
-            var newEnemyObj = Instantiate(enemyPrefab, randomSpawnPos, Quaternion.identity);
-            newEnemyObj.name = $"{enemyPrefab.name} (Spawned)";
+            var enemyObj = Instantiate(enemyPrefab, randomSpawnPos, Quaternion.identity);
+            enemyObj.name = $"{enemyPrefab.name} (Spawned)";
+            AllSpawned.Add(enemyObj);
 
-            yield return new WaitForSeconds(SpawnInterval);
+            // ★★★ ВАЖНО! Используем динамический интервал ★★★
+            yield return new WaitForSeconds(GetSpawnInterval());
         }
 
         Debug.Log("Спавн всех врагов завершен.");
@@ -98,8 +124,7 @@ public class LevelController : MonoBehaviour
     public void OnEnemyDied()
     {
         _enemiesAliveCount--;
-        Debug.Log($"Враг умер. Осталось живых: {_enemiesAliveCount}");
-
+        Debug.Log($"Враг умер. Осталось: {_enemiesAliveCount}");
         CheckWinCondition();
     }
 
@@ -107,12 +132,11 @@ public class LevelController : MonoBehaviour
     {
         if (_isSpawningFinished && _enemiesAliveCount <= 0)
         {
-            Debug.Log("ВСЕ ВРАГИ УНИЧТОЖЕНЫ! Вызов события AllEnemyDead.");
+            Debug.Log("Все враги уничтожены. ДЕНЬ ПРОЙДЕН.");
             isLevelRunning = false;
             AllEnemyDead.Invoke();
         }
     }
-
 
     private List<GameObject> CreateShuffledQueue(List<EnemyPreset> presets)
     {
@@ -125,8 +149,8 @@ public class LevelController : MonoBehaviour
         int n = allEnemies.Count;
         while (n > 1)
         {
+            int k = Random.Range(0, n);
             n--;
-            int k = Random.Range(0, n + 1);
             (allEnemies[n], allEnemies[k]) = (allEnemies[k], allEnemies[n]);
         }
 
@@ -136,19 +160,14 @@ public class LevelController : MonoBehaviour
     private Vector3 GetRandomPositionInBounds()
     {
         if (!ArenaSize)
-        {
-            Debug.LogError("ArenaSize не назначен! Возвращаю (0,0,0).");
             return Vector3.zero;
-        }
 
         var center = ArenaSize.position;
-        var halfScale = ArenaSize.localScale / 2f;
+        var halfScale = ArenaSize.localScale * 0.5f;
 
-        var randomX = Random.Range(center.x - halfScale.x, center.x + halfScale.x);
-        var randomZ = Random.Range(center.z - halfScale.z, center.z + halfScale.z);
+        float x = Random.Range(center.x - halfScale.x, center.x + halfScale.x);
+        float z = Random.Range(center.z - halfScale.z, center.z + halfScale.z);
 
-        var fixedY = center.y;
-
-        return new Vector3(randomX, fixedY, randomZ);
+        return new Vector3(x, center.y, z);
     }
 }
