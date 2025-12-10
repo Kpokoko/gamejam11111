@@ -121,7 +121,7 @@ public class LevelController : MonoBehaviour
             // ★★★ ВАЖНО! Используем динамический интервал ★★★
             yield return new WaitForSeconds(GetSpawnInterval());
         }
-        if (DayNumber == 1)
+        if (DayNumber == 7)
         {
             _enemiesAliveCount++;
             G.UIHUD.m_BossHealthBase.gameObject.SetActive(true);

@@ -290,7 +290,7 @@ public class ShopItemSelector : MonoBehaviour
         else
         {
             view.SoldOutImage.SetActive(true);
-            view.text.text = "Выкуплено";
+            view.text.text = "Куплено";
         }
     }
 

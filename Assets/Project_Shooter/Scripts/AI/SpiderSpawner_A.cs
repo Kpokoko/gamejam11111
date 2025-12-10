@@ -13,6 +13,7 @@ namespace Shooter.Gameplay
         void Start()
         {
             health = GetComponent<Health>();
+            health.m_NoDamage = true;
             m_Base.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(Co_StartSpawn());
 
@@ -43,6 +44,8 @@ namespace Shooter.Gameplay
             // ——— Бесконечный спавн пачками ———
             while (true)
             {
+                if (health.m_NoDamage)
+                    health.m_NoDamage = false;
                 // Спавним 3 врага
                 for (int i = 0; i < 2; i++)
                 {
