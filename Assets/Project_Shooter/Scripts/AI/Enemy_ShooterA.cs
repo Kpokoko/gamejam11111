@@ -13,7 +13,10 @@ namespace Shooter.Gameplay
         {
             health = GetComponent<Health>();
             
-            health.OnDeath.AddListener(SendAboutDeath);
+            if (!isClone)
+            {
+                health.OnDeath.AddListener(SendAboutDeath);
+            }
             
             m_FacePlayer = false;
         }

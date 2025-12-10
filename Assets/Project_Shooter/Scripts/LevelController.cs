@@ -144,6 +144,8 @@ public class LevelController : MonoBehaviour
     IEnumerator EndWave()
     {
         yield return new WaitForSeconds(0.25f);
+        if(DayNumber == 1)
+            G.PlayerStats.GemCount+=100;
         AllEnemyDead.Invoke();
     }
     
@@ -172,10 +174,21 @@ public class LevelController : MonoBehaviour
             return Vector3.zero;
 
         var center = ArenaSize.position;
+        // Используем halfScale для вычисления границ
         var halfScale = ArenaSize.localScale * 0.5f;
 
-        float x = Random.Range(center.x - halfScale.x, center.x + halfScale.x);
-        float z = Random.Range(center.z - halfScale.z, center.z + halfScale.z);
+        // Ваш код был близок, но вычисление min/max можно сделать более явным:
+    
+        // Вычисляем минимальные и максимальные координаты
+        float minX = center.x - halfScale.x;
+        float maxX = center.x + halfScale.x;
+    
+        float minZ = center.z - halfScale.z;
+        float maxZ = center.z + halfScale.z;
+
+        // Генерируем случайную позицию
+        float x = Random.Range(minX, maxX);
+        float z = Random.Range(minZ, maxZ);
 
         return new Vector3(x, center.y, z);
     }

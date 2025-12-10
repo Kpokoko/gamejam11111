@@ -1,22 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace Shooter.Gameplay
 {
     public class Enemy_Canon_A : Enemy
     {
         public GameObject m_BulletPrefab1;
         public GameObject m_FireParticlePrefab1;
+
         public GameObject m_PreFireParticlePrefab1;
+
         // Start is called before the first frame update
         void Start()
         {
             health = GetComponent<Health>();
-            
-            health.OnDeath.AddListener(SendAboutDeath);
+
+            if (!isClone)
+            {
+                health.OnDeath.AddListener(SendAboutDeath);
+            }
+
             StartCoroutine(Co_AttackLoop());
         }
-        
+
         void SendAboutDeath()
         {
             G.LevelController.OnEnemyDied();
@@ -40,7 +47,6 @@ namespace Shooter.Gameplay
 
         IEnumerator Co_AttackLoop()
         {
-           
             while (true)
             {
                 yield return new WaitForSeconds(.5f);
@@ -54,8 +60,8 @@ namespace Shooter.Gameplay
                     yield return new WaitForSeconds(1.3f);
                     ShootBullet();
                 }
-                yield return new WaitForSeconds(1.5f);
 
+                yield return new WaitForSeconds(1.5f);
             }
         }
 

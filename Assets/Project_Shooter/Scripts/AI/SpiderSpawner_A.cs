@@ -8,12 +8,20 @@ namespace Shooter.Gameplay
         public Transform m_SpawnPoint;
         public GameObject m_EnemyPrefab1;
         public Health health;
+        
         void Start()
         {
             health = GetComponent<Health>();
             m_Base.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(Co_StartSpawn());
-            health.OnDeath.AddListener(G.LevelController.OnEnemyDied);
+            
+            health.OnDeath.AddListener(Death);
+        }
+
+        void Death()
+        {
+            G.LevelController.OnEnemyDied();
+            Destroy(gameObject);
         }
 
         IEnumerator Co_StartSpawn()
@@ -38,6 +46,7 @@ namespace Shooter.Gameplay
                 obj.transform.forward = Vector3.back ;
 
                 Enemy e = obj.GetComponent<Enemy>();
+                e.isClone = true;
                 e.m_StartWalkDistance = 10;
 
                 yield return new WaitForSeconds(1);
