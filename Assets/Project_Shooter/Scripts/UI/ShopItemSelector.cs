@@ -53,8 +53,13 @@ public class ShopItemSelector : MonoBehaviour
     void OnEnable()
     {
         foreach (var card in _enemiesCards)
-            card.GetComponent<EnemyCard>().ResetCard();
+        {
+            var enemyCard = card.GetComponent<EnemyCard>();
+            if (enemyCard.IsFlipped)
+                G.PlayerStats.GemCount += enemyCard.CardPrize;
+        }
         Cursor.transform.position = _controls[0].transform.position;
+        Debug.Log(G.PlayerStats.GemCount);
     }
     
     void Update()

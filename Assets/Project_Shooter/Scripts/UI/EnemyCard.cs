@@ -14,6 +14,7 @@ public class EnemyCard : MonoBehaviour
     [SerializeField] private Sprite BaseCardSprite;
     [SerializeField] private Image CardImage;
     public EnemyPreset EnemySO;
+    public int CardPrize;
 
     private void Awake()
     {
@@ -61,6 +62,7 @@ public class EnemyCard : MonoBehaviour
                 CardImage.sprite = EnemySO.Sprite;
                 RewardTextGO.GetComponent<TextMeshProUGUI>().text = EnemySO.Reward.ToString();
                 AmountTextGO.GetComponent<TextMeshProUGUI>().text = EnemySO.Count.ToString();
+                CardPrize = EnemySO.Reward;
             }
 
             yield return null;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Shooter.ScriptableObjects;
@@ -16,7 +14,7 @@ namespace Shooter
 
         public void BtnStart()
         {
-            SceneManager.LoadScene("Level_1");
+            SceneManager.LoadScene("StartCutscene");
         }
     }
 }
