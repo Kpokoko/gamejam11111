@@ -16,4 +16,4 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 8216884134074516976, guid: 3f5159906be3d0d47ab6ccaf5b5325f8,
     type: 3}
   Count: 2
-  Reward: 200
+  Reward: 100

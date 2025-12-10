@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 namespace Shooter.Gameplay
 {
@@ -8,10 +7,13 @@ namespace Shooter.Gameplay
         public Transform m_Base;
         public Transform m_SpawnPoint;
         public GameObject m_EnemyPrefab1;
+        public Health health;
         void Start()
         {
+            health = GetComponent<Health>();
             m_Base.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(Co_StartSpawn());
+            health.OnDeath.AddListener(G.LevelController.OnEnemyDied);
         }
 
         IEnumerator Co_StartSpawn()

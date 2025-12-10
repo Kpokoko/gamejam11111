@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpiderSpawner
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
   Sprite: {fileID: 21300000, guid: 19f32ea9278875a44a98d4b12a4b89d9, type: 3}
-  EnemyPrefab: {fileID: 4913222759651675319, guid: 385bd2fcde5f46f448539dc3e1b55a09,
+  EnemyPrefab: {fileID: 3035535724052710653, guid: e9153a0c4c607a74b899b8713ca67b97,
     type: 3}
   Count: 2
-  Reward: 200
+  Reward: 150
