@@ -23,6 +23,8 @@ namespace Shooter.Gameplay
                     Health d = col.gameObject.GetComponent<Health>();
                     if (d != null)
                     {
+                        if(d.IsDead) return;
+                        if (!d.isActiveAndEnabled) return;
                         d.ApplyDamage(m_Damage, transform.forward, 1);
                     }
                     PlayerChar p = col.gameObject.GetComponent<PlayerChar>();

@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0809dd1c0f1ba4885320eba1b0bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth: 7
-  MaxHealth: 7
+  CurrentHealth: 15
+  MaxHealth: 15
   IsDead: 0
   m_NoDamage: 0
   LastDamageDirection: {x: 0, y: 0, z: 0}
@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73a57ccd7849aa45b706e9ac598e627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isClone: 0
   health: {fileID: 0}
   m_DeathParticlePrefab: {fileID: 5599717751194728857, guid: 20d399b6501120447b60f51be1a00524,
     type: 3}

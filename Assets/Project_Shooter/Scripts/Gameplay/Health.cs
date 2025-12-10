@@ -58,9 +58,9 @@ namespace Shooter.Gameplay
             CurrentHealth -= dmg;
             if (CurrentHealth <= 0)
             {
-                OnDeath.Invoke();
                 CurrentHealth = 0;
                 IsDead = true;
+                OnDeath.Invoke();
             }
 
             OnDamaged.Invoke();
@@ -101,10 +101,10 @@ namespace Shooter.Gameplay
             }
         }
 
-        public void Reset()
-        {
-            CurrentHealth = MaxHealth;
-            IsDead = false;
-        }
+        // public void Reset()
+        // {
+        //     CurrentHealth = MaxHealth;
+        //     IsDead = false;
+        // }
     }
 }

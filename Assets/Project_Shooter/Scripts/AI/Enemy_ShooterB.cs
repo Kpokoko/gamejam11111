@@ -9,13 +9,16 @@ namespace Shooter.Gameplay
         public GameObject m_FireParticlePrefab1;
 
         public float m_WalkDistance = 3;
-        // Start is called before the first frame update
+        
         void Start()
         {
             InitPosition = transform.position;
             health = GetComponent<Health>();
             
-            health.OnDeath.AddListener(SendAboutDeath);
+            if (!isClone)
+            {
+                health.OnDeath.AddListener(SendAboutDeath);
+            }
             
             m_FacePlayer = false;
         }

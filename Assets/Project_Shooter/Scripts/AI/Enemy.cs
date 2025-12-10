@@ -7,6 +7,7 @@ namespace Shooter.Gameplay
 {
     public class Enemy : MonoBehaviour
     {
+        public bool isClone = false;
         public Health health;
         [SerializeField]
         protected GameObject m_DeathParticlePrefab;
@@ -161,5 +162,4 @@ namespace Shooter.Gameplay
 
         }
     }
-
 }

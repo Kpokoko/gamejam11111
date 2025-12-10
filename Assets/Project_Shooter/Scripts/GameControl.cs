@@ -49,18 +49,18 @@ namespace Shooter.Gameplay
                 //yield return new WaitForSeconds(4f);
                 //FadeControl.m_Current.StartFadeOut();
                 
-                yield return new WaitForSeconds(3f);
-                m_TextUI_1.SetActive(false);
-                //FadeControl.m_Current.StartFadeIn();
-
-
-                yield return new WaitForSeconds(2f);
-                m_Tutorials[0].SetActive(true);
-                yield return new WaitForSeconds(4f);
-                m_Tutorials[0].SetActive(false);
-                m_Tutorials[1].SetActive(true);
-                yield return new WaitForSeconds(4f);
-                m_Tutorials[1].SetActive(false);
+                // yield return new WaitForSeconds(3f);
+                // m_TextUI_1.SetActive(false);
+                // //FadeControl.m_Current.StartFadeIn();
+                //
+                //
+                // yield return new WaitForSeconds(2f);
+                // m_Tutorials[0].SetActive(true);
+                // yield return new WaitForSeconds(4f);
+                // m_Tutorials[0].SetActive(false);
+                // m_Tutorials[1].SetActive(true);
+                // yield return new WaitForSeconds(4f);
+                // m_Tutorials[1].SetActive(false);
             }
             else
             {
