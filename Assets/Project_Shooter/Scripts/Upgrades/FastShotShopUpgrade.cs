@@ -6,6 +6,6 @@ public class FastShotShopUpgrade : BaseUpgradeUIData
 
     public override void OnBuyUpgrade()
     {
-        G.Player.Weapons[0].FireDelay -= 0.10f;
+        G.Player.Weapons[0].FireDelay -= 0.075f;
     }
 }

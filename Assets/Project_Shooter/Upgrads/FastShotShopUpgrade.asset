@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FastShotShopUpgrade
   Icon: {fileID: -1473274697, guid: ed8365ecb3ece3a41b4a92fbd11394c5, type: 3}
   Description: "\u0423\u0441\u043A\u043E\u0440\u044F\u0435\u0442 \u0441\u0442\u0440\u0435\u043B\u044C\u0431\u0443"
-  UpgradeCosts: 64000000
+  UpgradeCosts: 960000005e010000
