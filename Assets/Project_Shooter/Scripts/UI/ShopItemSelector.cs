@@ -9,6 +9,7 @@ public class ShopItemSelector : MonoBehaviour
     [SerializeField] private GameObject Cursor;
     [SerializeField] private List<EnemyPreset> enemies;
     [SerializeField] private GameObject UpgradePrefab;
+    public GameObject UpgradesContainer;
     public List<BaseUpgradeUIData> upgrades;
     
     private List<GameObject> _shopItems = new();
@@ -26,13 +27,15 @@ public class ShopItemSelector : MonoBehaviour
         var controlsContainer = shopCanvas.transform.Find("ShopControlsContainer").gameObject;
         foreach (var upgrade in upgrades)
         {
-            var go = Instantiate(UpgradePrefab);
+            var go = Instantiate(UpgradePrefab, UpgradesContainer.transform, false);
+
             _shopItems.Add(go);
-            
+    
             upgrade.Subscribe();
-            
+    
             var view = go.GetComponent<ShopItemView>();
             view.image.sprite = upgrade.Icon;
+            view.upgradeData =  upgrade;
             UpdateCost(upgrade, view);
         }
         foreach (Transform enemyCard in enemiesCardsContainer.transform)
@@ -150,8 +153,9 @@ public class ShopItemSelector : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            var upgradeData = _shopItems[_shopItemsIndexator].GetComponentInChildren<BaseUpgradeUIData>();
+            //var upgradeData = _shopItems[_shopItemsIndexator].GetComponentInChildren<BaseUpgradeUIData>();
             var upgradeView = _shopItems[_shopItemsIndexator].GetComponentInChildren<ShopItemView>();
+            var upgradeData = upgradeView.upgradeData;
             if (upgradeData.TryBuy(G.PlayerStats.GemCount, out var newMoney))
             {
                 G.PlayerStats.GemCount = newMoney;

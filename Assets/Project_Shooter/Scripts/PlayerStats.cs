@@ -11,9 +11,10 @@ public class PlayerStats : MonoBehaviour
 
     public int GemCount;
     
-    
     public bool SoftAimActive;
     public bool DashUnlock;
     public bool MedkitSpawnUnlock;
     public bool MultShotUnlock;
+    public bool TurrelUnlock;
+    public bool BounceUpgrade;
 }

@@ -13,7 +13,7 @@ public class ShopItemSelectorEditor : Editor
         DrawDefaultInspector();
 
         // Получаем ссылку на текущий объект (скрипт ShopItemSelector)
-        ShopItemSelector shopSelector = (ShopItemSelector)target;
+        ShopItemSelector shopSelector = (ShopItemSelector)target;   
 
         EditorGUILayout.Space(10);
         EditorGUILayout.LabelField("Автоматическое заполнение списка", EditorStyles.boldLabel);

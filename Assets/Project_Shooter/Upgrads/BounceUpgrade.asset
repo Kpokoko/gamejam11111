@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e0b65c9d481dba41b27b0b27ba7102f, type: 3}
-  m_Name: HealthShopUpgrade
-  m_EditorClassIdentifier: Assembly-CSharp::HealthShopUpgrade
-  Icon: {fileID: -1135668554, guid: ed8365ecb3ece3a41b4a92fbd11394c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 806bba9e337944f2a039b7772b30ac1a, type: 3}
+  m_Name: BounceUpgrade
+  m_EditorClassIdentifier: Assembly-CSharp::BounceUpgrade
+  Icon: {fileID: 901379751, guid: ed8365ecb3ece3a41b4a92fbd11394c5, type: 3}
   Description: 
-  UpgradeCosts: 28000000
+  UpgradeCosts: c8000000
   CurrentUpgrade: 0
-  DeltaHealth: 5

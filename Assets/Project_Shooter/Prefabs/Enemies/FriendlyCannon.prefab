@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0809dd1c0f1ba4885320eba1b0bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth: 100
-  MaxHealth: 100
+  CurrentHealth: 7
+  MaxHealth: 7
   IsDead: 0
   m_NoDamage: 0
   LastDamageDirection: {x: 0, y: 0, z: 0}
@@ -308,6 +308,7 @@ MonoBehaviour:
   m_BulletPrefab1: {fileID: 0}
   m_FireParticlePrefab1: {fileID: 0}
   m_PreFireParticlePrefab1: {fileID: 0}
+  _currentTarget: {fileID: 0}
 --- !u!114 &7869962331199602607
 MonoBehaviour:
   m_ObjectHideFlags: 0

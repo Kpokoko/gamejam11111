@@ -10,6 +10,7 @@ public class EnemyCard : MonoBehaviour
     [SerializeField] private float flipSpeed = 300f;
     [SerializeField] private GameObject RewardTextGO;
     [SerializeField] private GameObject AmountTextGO;
+    [SerializeField] private GameObject BaskSide;
     [SerializeField] private Sprite BaseCardSprite;
     [SerializeField] private Image CardImage;
     public EnemyPreset EnemySO;
@@ -21,6 +22,7 @@ public class EnemyCard : MonoBehaviour
 
     public void ResetCard()
     {
+        BaskSide.SetActive(true);
         CardImage.sprite = BaseCardSprite;
         RewardTextGO.GetComponent<TextMeshProUGUI>().text = "";
         AmountTextGO.GetComponent<TextMeshProUGUI>().text = "";
@@ -54,6 +56,7 @@ public class EnemyCard : MonoBehaviour
             if (angle <= 90f && angle + step > 90f)
             {
                 Debug.Log("=== CARD AT 90 DEGREES ===");
+                BaskSide.SetActive(false);
                 Debug.Log(EnemySO is null);
                 CardImage.sprite = EnemySO.Sprite;
                 RewardTextGO.GetComponent<TextMeshProUGUI>().text = EnemySO.Reward.ToString();

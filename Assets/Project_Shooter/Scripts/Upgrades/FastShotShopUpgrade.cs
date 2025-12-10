@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Create FastShotShopUpgrade", fileName = "FastShotShopUpgrade", order = 0)]
+[CreateAssetMenu(menuName = "Upgrade/FastShotShopUpgrade", fileName = "FastShotShopUpgrade", order = 0)]
 public class FastShotShopUpgrade : BaseUpgradeUIData
 {
 

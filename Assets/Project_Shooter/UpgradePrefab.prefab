@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9402da935411498781fc6e58a4dd4b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopItemView
-  image: {fileID: 2653934204244020080}
+  image: {fileID: 8678163333700198296}
   text: {fileID: 4362800794424123681}
 --- !u!1 &5927848642552210371
 GameObject:

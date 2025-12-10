@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Create HealthShopUpgrade", fileName = "HealthShopUpgrade", order = 0)]
+[CreateAssetMenu(menuName = "Upgrade/HealthShopUpgrade", fileName = "HealthShopUpgrade", order = 0)]
 public class HealthShopUpgrade : BaseUpgradeUIData
 {
     public int DeltaHealth;
