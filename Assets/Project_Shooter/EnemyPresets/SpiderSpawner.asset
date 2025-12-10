@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a394df8bc62e41dba6ac220180d3efc1, type: 3}
-  m_Name: Soldiers
+  m_Name: SpiderSpawner
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
-  Sprite: {fileID: -268733426, guid: 781ffab057722a44fa216ad32ace39b9, type: 3}
-  EnemyPrefab: {fileID: 8216884134074516976, guid: 7882ef79a0856624590d06362fca2a0e,
+  Sprite: {fileID: 21300000, guid: 19f32ea9278875a44a98d4b12a4b89d9, type: 3}
+  EnemyPrefab: {fileID: 4913222759651675319, guid: 385bd2fcde5f46f448539dc3e1b55a09,
     type: 3}
-  Count: 5
-  Reward: 500
+  Count: 2
+  Reward: 200

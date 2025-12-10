@@ -14,7 +14,7 @@ public class LevelController : MonoBehaviour
     public UnityEvent AllEnemyDead;
     public UnityEvent StartWave;
 
-    public GameObject MedkitPrefab;
+    public GameObject MedkitPrefab; 
     public GameObject TurrelPrefab;
 
     public bool isLevelRunning;
@@ -46,6 +46,8 @@ public class LevelController : MonoBehaviour
         AllSpawned.Clear();
 
         DayNumber++;
+        
+
         isLevelRunning = true;
 
         G.Player.transform.position = PlayerSpawnPoint.position;
@@ -134,10 +136,16 @@ public class LevelController : MonoBehaviour
         {
             Debug.Log("Все враги уничтожены. ДЕНЬ ПРОЙДЕН.");
             isLevelRunning = false;
-            AllEnemyDead.Invoke();
+            StartCoroutine(EndWave());
         }
     }
 
+    IEnumerator EndWave()
+    {
+        yield return new WaitForSeconds(0.25f);
+        AllEnemyDead.Invoke();
+    }
+    
     private List<GameObject> CreateShuffledQueue(List<EnemyPreset> presets)
     {
         var allEnemies = new List<GameObject>();

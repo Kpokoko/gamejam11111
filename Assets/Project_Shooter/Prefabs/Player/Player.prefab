@@ -11498,12 +11498,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c52b7a65d6f4fe29b25793b96258cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  GemCount: 1000
+  GemCount: 0
   SoftAimActive: 1
   DashUnlock: 0
   MedkitSpawnUnlock: 0
   MultShotUnlock: 0
-  TurrelUnlock: 1
+  TurrelUnlock: 0
   BounceUpgrade: 0
 --- !u!114 &7021728048323989855
 MonoBehaviour:

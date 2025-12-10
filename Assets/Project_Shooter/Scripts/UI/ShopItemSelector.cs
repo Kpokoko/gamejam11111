@@ -278,6 +278,11 @@ public class ShopItemSelector : MonoBehaviour
     {
         var targetRT = list[indexator].GetComponent<RectTransform>();
         var cursorRT = Cursor.GetComponent<RectTransform>();
-        cursorRT.transform.position = targetRT.transform.position;
+
+        Cursor.transform.position = targetRT.transform.position;
+
+        // РЕАЛЬНОЕ изменение размера
+        cursorRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetRT.rect.width);
+        cursorRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetRT.rect.height);
     }
 }
