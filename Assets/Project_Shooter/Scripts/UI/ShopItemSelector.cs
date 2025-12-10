@@ -66,7 +66,7 @@ public class ShopItemSelector : MonoBehaviour
         }
 
         _text.text = G.PlayerStats.GemCount.ToString();
-        Cursor.transform.position = _controls[0].transform.position;
+        ResizeCursor(_controls, 0);
         Description.text = "";
         _controlsIndexator = 0;
         Debug.Log(G.PlayerStats.GemCount);
@@ -131,7 +131,10 @@ public class ShopItemSelector : MonoBehaviour
                 Description.text = _shopItems[_shopItemsIndexator].GetComponent<ShopItemView>().upgradeData.Description;
             }
             else if (Mode is Mode.Enemies)
+            {
+                ResizeCursor(_shopItems, _shopItemsIndexator);
                 Cursor.transform.position = _enemiesCards[_enemiesCardsIterator].transform.position;
+            }
         }
     }
 
