@@ -40,7 +40,7 @@ public class LevelController : MonoBehaviour
 
     public void StartLevel()
     {
-        AudioManager.Instance.gameObject.GetComponent<AudioPlayer>().PlayFightTheme();
+        AudioManager.Instance?.gameObject.GetComponent<AudioPlayer>().PlayFightTheme();
         foreach (var go in AllSpawned)
             Destroy(go);
 
