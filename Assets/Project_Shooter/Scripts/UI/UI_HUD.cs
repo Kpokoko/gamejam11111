@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Shooter.Gameplay;
+using TMPro;
 
 namespace Shooter.UI
 {
@@ -28,6 +29,7 @@ namespace Shooter.UI
         public Image m_PowerBar;
         public Text m_PowerNameText;
         public Text m_PowerAmountText;
+        public TMP_Text CountEnemies;
 
         public string[] m_WeaponNames = new string[4] { "PISTOL", "SHOTGUN", "MACHINGUN", "PLASMA GUN" };
 

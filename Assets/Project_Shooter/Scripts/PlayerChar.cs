@@ -21,7 +21,7 @@ namespace Shooter.Gameplay
 
         Vector3 m_MovementInput;
         Vector3 m_DashDirection;
-        
+
         public AnimationCurve m_DashCurve;
         public GameObject m_DashParticle;
 
@@ -38,22 +38,27 @@ namespace Shooter.Gameplay
         public Animator m_Animator;
         public GameObject m_GrenadePrefab1;
         public GameObject m_ShieldObject;
-        
-        
+
         public Health Health;
         public PlayerPowers PlayerPowers;
         public PlayerControl PlayerControl;
         public PlayerStats PlayerStats;
         public Rigidbody Rigidbody;
-        
-        
+
+        // -------------------------
+        // DASH COOLDOWN
+        // -------------------------
+        [SerializeField] private float dashCooldown = 2f;
+        private float dashCooldownTimer = 0f;
+        // -------------------------
+
         void Awake()
         {
             Health = GetComponent<Health>();
             PlayerPowers = GetComponent<PlayerPowers>();
             PlayerControl = GetComponent<PlayerControl>();
             PlayerStats = GetComponent<PlayerStats>();
-            Rigidbody =  GetComponent<Rigidbody>();
+            Rigidbody = GetComponent<Rigidbody>();
             G.Player = this;
         }
 
@@ -62,7 +67,7 @@ namespace Shooter.Gameplay
             Health.OnDamaged.AddListener(HandleDamage);
             Health.OnDamaged.AddListener(G.UIHUD.UpdatePlayerHealth);
             Health.OnDeath.AddListener(DeathHandler);
-            
+
             m_InControl = true;
 
             m_ShieldObject.transform.SetParent(null);
@@ -74,7 +79,7 @@ namespace Shooter.Gameplay
         {
             if (!(Health.CurrentHealth <= 0)) return;
             G.GameControl.OnGameOver.Invoke();
-            
+
             var obj = Instantiate(m_DeathParticle);
             obj.transform.position = transform.position + new Vector3(0, 1, 0);
             Destroy(obj, 3);
@@ -83,11 +88,15 @@ namespace Shooter.Gameplay
 
         void Update()
         {
+            // Dash cooldown tick
+            if (dashCooldownTimer > 0)
+                dashCooldownTimer -= Time.deltaTime;
+
             if (m_InControl)
             {
                 UpdateInput();
                 UpdateSoftAiming();
-                
+
                 if (m_MovementInput != Vector3.zero)
                 {
                     Vector3 faceDirection = m_MovementInput;
@@ -114,23 +123,12 @@ namespace Shooter.Gameplay
             m_Animator.SetFloat("RunSpeed", runSpeed);
 
             m_ShieldObject.transform.position = transform.position + new Vector3(0, 1, 0);
-            
         }
 
         private void UpdateInput()
         {
             Weapons[m_WeaponNum].Input_FireHold = G.PlayerControl.Input_FireHold;
-            //Debug.Log(G.PlayerControl.Input_FireHold);
 
-            if (Input.GetKeyDown(KeyCode.C))
-                CheckMelleeAttack();
-
-            if (Input.GetKeyDown(KeyCode.V))
-                SetWeaponPowerLevel(1);
-
-            if (Input.GetMouseButtonDown(1))
-                ThrowGrenade();
-                
             if (PlayerControl.Input_Dash)
                 StartDash();
 
@@ -142,13 +140,13 @@ namespace Shooter.Gameplay
             var targets = TargetsControl.m_Main.m_Targets;
 
             TargetObject bestTarget = null;
-            
-            float minAngle = 15f; 
+
+            float minAngle = 15f;
             if (PlayerStats.SoftAimActive)
             {
-                minAngle = 40f; 
+                minAngle = 40f;
             }
-            
+
             foreach (var target in targets)
             {
                 if (target == null)
@@ -163,10 +161,10 @@ namespace Shooter.Gameplay
                 if (distance > 30)
                     continue;
 
-                if (delta < minAngle) 
+                if (delta < minAngle)
                 {
                     bestTarget = target;
-                    minAngle = delta; 
+                    minAngle = delta;
                 }
             }
 
@@ -175,9 +173,9 @@ namespace Shooter.Gameplay
                 var targetPos = bestTarget.m_TargetCenter.position;
                 var targetDir = targetPos - m_FirePoint.position;
                 targetDir.y = 0;
-                
-                var rotationSpeed = PlayerStats.SoftAimActive ? 30f : 20f; 
-                
+
+                var rotationSpeed = PlayerStats.SoftAimActive ? 30f : 20f;
+
                 m_AimBase.rotation = Quaternion.Lerp(m_AimBase.rotation, Quaternion.LookRotation(targetDir),
                     rotationSpeed * Time.deltaTime);
                 m_TempTarget = bestTarget;
@@ -239,14 +237,6 @@ namespace Shooter.Gameplay
                 }
                 else if (col.gameObject.tag == "Block")
                 {
-                    //Rigidbody rb = col.gameObject.GetComponent<Rigidbody>();
-                    //if (rb != null)
-                    //{
-                    //    Vector3 dir = col.gameObject.transform.position - transform.position;
-                    //    dir.Normalize();
-                    //    rb.AddForceAtPosition(3000 * dir, col.gameObject.transform.position);
-                    //}
-
                     var health = col.gameObject.GetComponent<Health>();
                     if (health)
                     {
@@ -277,7 +267,7 @@ namespace Shooter.Gameplay
             {
                 w.Input_FireHold = false;
             }
-        
+
             m_WeaponNum = num;
         }
 
@@ -290,7 +280,6 @@ namespace Shooter.Gameplay
             var g = obj.GetComponent<PlayerGrenade>();
             g.m_StartPosition = start;
             g.m_TargetPosition = end;
-            //Destroy(obj, 3);
         }
 
         public void HandlePickup(string itemType, int count)
@@ -323,9 +312,12 @@ namespace Shooter.Gameplay
 
         public void StartDash()
         {
+            if (dashCooldownTimer > 0) return; // Кулдаун ещё идёт
+
             m_DashDirection = m_MovementInput;
             if (m_DashDirection != Vector3.zero)
             {
+                dashCooldownTimer = dashCooldown; // ставим кулдаун
                 StartCoroutine(Co_Dash());
             }
         }

@@ -43,13 +43,12 @@ public class LevelController : MonoBehaviour
         foreach (var go in AllSpawned)
             Destroy(go);
 
-        AllSpawned.Clear();
 
+        G.Player.Health.AddHealth(999);
+        AllSpawned.Clear();
         DayNumber++;
         
-
         isLevelRunning = true;
-
         G.Player.transform.position = PlayerSpawnPoint.position;
 
         StartCoroutine(SpawnEnemiesRoutine());
@@ -92,6 +91,7 @@ public class LevelController : MonoBehaviour
     private IEnumerator SpawnEnemiesRoutine()
     {
         StartWave.Invoke();
+        
 
         if (EnemyPresets == null || EnemyPresets.Count == 0)
         {
@@ -102,6 +102,7 @@ public class LevelController : MonoBehaviour
         var shuffledSpawnQueue = CreateShuffledQueue(EnemyPresets);
 
         _enemiesAliveCount = shuffledSpawnQueue.Count;
+        G.UIHUD.CountEnemies.text = _enemiesAliveCount.ToString();
 
         Debug.Log($"Начало спавна (День {DayNumber}). Всего врагов: {_enemiesAliveCount}");
 
@@ -127,6 +128,7 @@ public class LevelController : MonoBehaviour
     {
         _enemiesAliveCount--;
         Debug.Log($"Враг умер. Осталось: {_enemiesAliveCount}");
+        G.UIHUD.CountEnemies.text = _enemiesAliveCount.ToString();
         CheckWinCondition();
     }
 

@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Shooter.Gameplay
 {
@@ -100,11 +98,5 @@ namespace Shooter.Gameplay
                 DamageShakeAngle = Random.Range(-1f, 1f);
             }
         }
-
-        // public void Reset()
-        // {
-        //     CurrentHealth = MaxHealth;
-        //     IsDead = false;
-        // }
     }
 }
