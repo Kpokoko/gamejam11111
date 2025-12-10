@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviour
 
     public void UpdateInputs()
     {
+        if(!G.LevelController.isLevelRunning) return;
         Input_Movement = Vector3.zero;
         Input_Fire = false;
         Input_FireHold = false;

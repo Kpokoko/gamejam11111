@@ -16,11 +16,14 @@ public class LevelController : MonoBehaviour
     public UnityEvent StartWave;
 
     public GameObject MedkitPrefab;
+    public GameObject TurrelPrefab;
 
     public bool isLevelRunning;
 
     private int _enemiesAliveCount;
     private bool _isSpawningFinished;
+    
+    private List<GameObject> AllSpawned = new();
 
     private void Awake()
     {
@@ -29,11 +32,22 @@ public class LevelController : MonoBehaviour
 
     public void StartLevel()
     {
+        foreach (var go in AllSpawned)
+        {
+            Destroy(go);
+        }
+        
         isLevelRunning = true;
+        
         G.Player.transform.position = PlayerSpawnPoint.position;
         StartCoroutine(SpawnEnemiesRoutine());
-        //if(G.PlayerStats.MedkitSpawnUnlock)
+        if (G.PlayerStats.MedkitSpawnUnlock)
             StartCoroutine(SpawnMedkitRoutine());
+        if (G.PlayerStats.TurrelUnlock)
+        {
+            var t = Instantiate(TurrelPrefab, PlayerSpawnPoint.position, Quaternion.identity);
+            AllSpawned.Add(t);
+        }
     }
 
     private IEnumerator SpawnMedkitRoutine()
@@ -41,11 +55,12 @@ public class LevelController : MonoBehaviour
         while (isLevelRunning)
         {
             yield return new WaitForSeconds(SpawnMedkitInterval);
-            
+
             var randomSpawnPos = GetRandomPositionInBounds();
 
             var newEnemyObj = Instantiate(MedkitPrefab, randomSpawnPos, Quaternion.identity);
             newEnemyObj.name = $"{MedkitPrefab.name} (Spawned)";
+            AllSpawned.Add(newEnemyObj);
         }
     }
 

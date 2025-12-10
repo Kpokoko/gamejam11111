@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
         G.PlayerStats = this;
     }
 
-    public int GemCount;
+    public int GemCount = 1000;
     
     public bool SoftAimActive;
     public bool DashUnlock;

@@ -8,17 +8,10 @@ namespace Shooter.Gameplay
         public Transform m_Base;
         public Transform m_SpawnPoint;
         public GameObject m_EnemyPrefab1;
-        // Start is called before the first frame update
         void Start()
         {
             m_Base.localPosition = new Vector3(0, 0, 0);
             StartCoroutine(Co_StartSpawn());
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         IEnumerator Co_StartSpawn()

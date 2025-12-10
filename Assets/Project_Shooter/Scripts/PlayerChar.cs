@@ -49,12 +49,12 @@ namespace Shooter.Gameplay
         
         void Awake()
         {
-            G.Player = this;
+            Health = GetComponent<Health>();
             PlayerPowers = GetComponent<PlayerPowers>();
             PlayerControl = GetComponent<PlayerControl>();
             PlayerStats = GetComponent<PlayerStats>();
             Rigidbody =  GetComponent<Rigidbody>();
-            Health = GetComponent<Health>();
+            G.Player = this;
         }
 
         void Start()
@@ -63,11 +63,11 @@ namespace Shooter.Gameplay
             Health.OnDamaged.AddListener(G.UIHUD.UpdatePlayerHealth);
             Health.OnDeath.AddListener(DeathHandler);
             
-            G.UIHUD.UpdatePlayerHealth();
             m_InControl = true;
 
             m_ShieldObject.transform.SetParent(null);
             m_WeaponPowerParticle.SetActive(false);
+            G.UIHUD.UpdatePlayerHealth();
         }
 
         public void DeathHandler()

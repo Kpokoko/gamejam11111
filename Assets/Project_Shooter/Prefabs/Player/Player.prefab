@@ -11405,8 +11405,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0809dd1c0f1ba4885320eba1b0bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHealth: 100
-  MaxHealth: 6
+  CurrentHealth: 3
+  MaxHealth: 3
   IsDead: 0
   m_NoDamage: 0
   LastDamageDirection: {x: 0, y: 0, z: 0}
@@ -11498,10 +11498,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c52b7a65d6f4fe29b25793b96258cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  GemCount: 0
-  SoftAimActive: 0
+  GemCount: 1000
+  SoftAimActive: 1
   DashUnlock: 0
   MedkitSpawnUnlock: 0
+  MultShotUnlock: 0
+  TurrelUnlock: 1
+  BounceUpgrade: 0
 --- !u!114 &7021728048323989855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11686,6 +11689,11 @@ PrefabInstance:
       propertyPath: m_FirePoint
       value: 
       objectReference: {fileID: 4095636431773020976}
+    - target: {fileID: 2617719491304419813, guid: c0d9e94ebdb60d440b657b746b8354c3,
+        type: 3}
+      propertyPath: Input_FireHold
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2617719491304419813, guid: c0d9e94ebdb60d440b657b746b8354c3,
         type: 3}
       propertyPath: m_ParticlePoint

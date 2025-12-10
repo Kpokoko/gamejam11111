@@ -8,8 +8,8 @@ namespace Shooter.Gameplay
 {
     public class Health : MonoBehaviour
     {
-        public float CurrentHealth = 100;
-        public float MaxHealth = 100;
+        public float CurrentHealth = 11;
+        public float MaxHealth = 11;
 
         [HideInInspector] public bool IsDead = false;
         [HideInInspector] public bool m_NoDamage = false;

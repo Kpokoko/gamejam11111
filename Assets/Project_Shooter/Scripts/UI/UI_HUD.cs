@@ -8,6 +8,7 @@ namespace Shooter.UI
 {
     public class UI_HUD : MonoBehaviour
     {
+        public HealthUI HealthUI;
         public Image m_DamageOverlay;
         public Text[] m_PlayerTexts_1;
         public Text m_GemCountText;
@@ -46,6 +47,7 @@ namespace Shooter.UI
         public void UpdatePlayerHealth()
         {
             var h = G.Player.Health;
+            HealthUI.UpdateHealthDisplay((int)h.CurrentHealth);
             m_PlayerHealth.fillAmount = h.CurrentHealth / h.MaxHealth;
         }
 

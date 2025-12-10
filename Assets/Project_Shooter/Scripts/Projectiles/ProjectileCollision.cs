@@ -9,13 +9,7 @@ namespace Shooter.Gameplay
         public GameObject m_HitParticle;
         public float m_Damage = 1;
         public bool m_IsEnemyTeam = true;
-        // Start is called before the first frame update
-        void Start()
-        {
 
-        }
-
-        // Update is called once per frame
         void Update()
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, 0.1f);
