@@ -11393,6 +11393,7 @@ MonoBehaviour:
   PlayerControl: {fileID: 0}
   PlayerStats: {fileID: 0}
   Rigidbody: {fileID: 0}
+  dashCooldown: 2
 --- !u!114 &6243425237513417537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11418,7 +11419,19 @@ MonoBehaviour:
       m_Calls: []
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 421d0ded7c86e484aae35deb482d4b46, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6441805155031466126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11499,7 +11512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   GemCount: 0
-  SoftAimActive: 1
+  SoftAimActive: 0
   DashUnlock: 0
   MedkitSpawnUnlock: 0
   MultShotUnlock: 0
@@ -11684,6 +11697,11 @@ PrefabInstance:
       propertyPath: m_Owner
       value: 
       objectReference: {fileID: 9180820861068994198}
+    - target: {fileID: 2617719491304419813, guid: c0d9e94ebdb60d440b657b746b8354c3,
+        type: 3}
+      propertyPath: FireDelay
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2617719491304419813, guid: c0d9e94ebdb60d440b657b746b8354c3,
         type: 3}
       propertyPath: m_FirePoint

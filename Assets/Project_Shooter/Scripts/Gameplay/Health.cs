@@ -54,15 +54,17 @@ namespace Shooter.Gameplay
             LastDamageDirection.Normalize();
             LastDamageFactor = DamageFactor;
             CurrentHealth -= dmg;
-            if (CurrentHealth <= 0)
+            if (CurrentHealth > 0)
+            {
+                OnDamaged.Invoke();
+                StartCoroutine(Co_HitGlow());
+            }
+            else
             {
                 CurrentHealth = 0;
                 IsDead = true;
                 OnDeath.Invoke();
             }
-
-            OnDamaged.Invoke();
-            StartCoroutine(Co_HitGlow());
         }
 
         public IEnumerator Co_HitGlow()
