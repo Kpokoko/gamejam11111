@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 89668435}
   - component: {fileID: 89668434}
   - component: {fileID: 89668433}
-  - component: {fileID: 89668432}
+  - component: {fileID: 89668439}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -141,18 +141,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &89668432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89668431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b03de87a9fade404aafaa5ac1135767e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToGame
 --- !u!114 &89668433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +261,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &89668439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89668431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f68e3b2ce551848a70bde54c3284ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToMenu
 --- !u!1 &638648518
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,10 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else
+        {
+            Instance.GetComponent<AudioPlayer>().PlayMenuTheme();
             Destroy(gameObject);
+        }
     }
 
     // Воспроизведение музыки

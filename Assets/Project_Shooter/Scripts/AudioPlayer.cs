@@ -12,6 +12,12 @@ public class AudioPlayer : MonoBehaviour
 
     void Start()
     {
+        PlayMenuTheme();
+    }
+
+    public void PlayMenuTheme()
+    {
+        
         AudioManager.Instance.PlayMusic(MenuTheme);
     }
 

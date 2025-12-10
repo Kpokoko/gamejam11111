@@ -5,7 +5,7 @@ public class ToMenu : MonoBehaviour
 {
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.anyKeyDown)
         {
             SceneManager.LoadScene("MainMenu");
         }
